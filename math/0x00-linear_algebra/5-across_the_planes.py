@@ -5,25 +5,13 @@
 def matrix_shape(matrix):
     """calculates the shape of a matrix"""
     if matrix:
-        size = [len(matrix)]
-        return matrix_shape_recursion(matrix, size)
+        shape = [len(matrix)]
+        while type(matrix[0]) == list:
+            shape.append(len(matrix[0]))
+            matrix = matrix[0]
+        return shape
     else:
-        return 0
-
-
-def matrix_shape_recursion(matrix, size):
-    """recursion to calculates the shape of a matrix"""
-    if type(matrix) == int:
-        return size
-    else:
-        for element in matrix:
-            new = element
-            """print("current matrix {}".format(element))"""
-            if type(element) != int:
-                current_len = len(element)
-                size.append(current_len)
-            break
-        return (matrix_shape_recursion(new, size))
+        return [0]
 
 
 def add_matrices2D(arr1, arr2):
@@ -32,7 +20,6 @@ def add_matrices2D(arr1, arr2):
     shape1 = matrix_shape(arr1)
     shape2 = matrix_shape(arr2)
 
-
     if shape1[0] != shape2[0] or shape1[1] != shape2[1]:
         return None
     else:
@@ -40,7 +27,7 @@ def add_matrices2D(arr1, arr2):
 
         for i in range(shape1[0]):
             new_row = []
-            for j in range (shape1[1]):
+            for j in range(shape1[1]):
                 new_row.append(arr1[i][j] + arr2[i][j])
             new_matrix.append(new_row)
         return new_matrix
