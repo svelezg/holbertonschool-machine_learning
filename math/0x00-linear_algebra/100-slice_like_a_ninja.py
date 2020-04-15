@@ -9,7 +9,6 @@ def np_slice(matrix, axes={}):
     slice_list = [empty_slicer] * len(matrix.shape)
 
     for key, value in sorted(axes.items()):
-        print(*value)
         slice_list[key] = slice(*value)
     matrix = matrix[tuple(slice_list)]
     return matrix
