@@ -12,7 +12,7 @@ def matrix_shape(matrix):
 
 
 def matrix_shape_recursion(matrix, size):
-    """recursion to calculates the shape of a matrix"""
+    """recursion to calculate the shape of a matrix"""
     if type(matrix) == int:
         return size
     else:
