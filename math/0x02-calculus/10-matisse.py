@@ -4,9 +4,16 @@
 
 def poly_derivative(poly):
     """calculates the derivative of a polynomial"""
-    deg = len(poly)
-    if deg <= 0:
+    if type(poly) != list:
         return None
+
+    deg = len(poly)
+    if deg == 0:
+        return None
+
+    for element in poly:
+        if not isinstance(element, (int, float)):
+            return None
 
     if deg == 1:
         return [0]

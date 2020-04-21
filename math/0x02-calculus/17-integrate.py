@@ -4,6 +4,16 @@
 
 def poly_integral(poly, C=0):
     """calculates the integral of a polynomial"""
+    if type(poly) != list:
+        return None
+
+    for element in poly:
+        if not isinstance(element, (int, float)):
+            return None
+
+    if not isinstance(C, (int, float)):
+        return None
+
     deg = len(poly)
 
     integral = [C]
