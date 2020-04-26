@@ -32,7 +32,7 @@ def poly_integral(poly, C=0):
     "3. Trim zeros at the end"
     while integral[index] == 0:
         integral.pop(index)
-        i -= 1
+        index -= 1
 
     "4. Return Trimmed list"
     return integral

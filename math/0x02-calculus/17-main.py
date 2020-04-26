@@ -9,3 +9,8 @@ print('*********')
 
 poly = []
 print(poly_integral(poly, 3))
+
+print('*********')
+
+poly = [5, 3, 0, 0, 0]
+print(poly_integral(poly))
