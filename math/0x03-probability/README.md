@@ -32,9 +32,8 @@ Create a class `Poisson` that represents a poisson distribution:
         *   If `data` is not a `list`, raise a `TypeError` with the message `data must be a list`
         *   If `data` does not contain at least two data points, raise a `ValueError` with the message `data must contain multiple values`  
         
-   
     alexa@ubuntu-xenial:0x03-probability$ cat 0-main.py 
-    #!/usr/bin/env python3
+    \#!/usr/bin/env python3
     
     import numpy as np
     Poisson = __import__('poisson').Poisson
