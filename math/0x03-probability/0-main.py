@@ -21,5 +21,3 @@ print('Lambtha:', p4.lambtha)
 data = {'key': 'value'}
 p4 = Poisson(data)
 print('Lambtha:', p4.lambtha)
-
-
