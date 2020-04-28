@@ -13,6 +13,20 @@
 - What is mean, standard deviation, and variance?
 - Common probability distributions
 
+## Distributions
+
+### Poisson
+![Poisson](./poisson.png)
+
+### Exponential
+![Exponential](./exponential.png)
+
+### Normal
+![Normal](./normal.png)
+
+### Binomial
+![Binomial](./binomial.png)
+
 ## Task
 
 #### 0\. Initialize Poisson
