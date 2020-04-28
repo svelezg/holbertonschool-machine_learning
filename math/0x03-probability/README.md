@@ -45,7 +45,7 @@ Create a class `Poisson` that represents a poisson distribution:
         *   Calculate the `lambtha` of `data`
         *   If `data` is not a `list`, raise a `TypeError` with the message `data must be a list`
         *   If `data` does not contain at least two data points, raise a `ValueError` with the message `data must contain multiple values`  
-        
+   ```     
     alexa@ubuntu-xenial:0x03-probability$ cat 0-main.py 
     \#!/usr/bin/env python3
     
@@ -63,7 +63,7 @@ Create a class `Poisson` that represents a poisson distribution:
     Lambtha: 4.84
     Lambtha: 5.0
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -82,7 +82,7 @@ Update the class `Poisson`:
         *   If `k` is out of range, return `0`
     *   Returns the PMF value for `k`
     
-    
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 1-main.py 
     #!/usr/bin/env python3
     
@@ -100,7 +100,7 @@ Update the class `Poisson`:
     P(9): 0.03175849616802446
     P(9): 0.036265577412911795
     alexa@ubuntu-xenial:0x03-probability$
-    
+```
 
 **Repo:**
 
@@ -120,7 +120,7 @@ Update the class `Poisson`:
         *   If `k` is out of range, return `0`
     *   Returns the CDF value for `k`
     
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 2-main.py 
     #!/usr/bin/env python3
     
@@ -138,7 +138,7 @@ Update the class `Poisson`:
     F(9): 0.9736102067423525
     F(9): 0.9681719426208609
     alexa@ubuntu-xenial:0x03-probability$ 
-    
+```    
 
 **Repo:**
 
@@ -165,7 +165,7 @@ Create a class `Exponential` that represents an exponential distribution:
         *   If `data` is not a `list`, raise a `TypeError` with the message `data must be a list`
         *   If `data` does not contain at least two data points, raise a `ValueError` with the message `data must contain multiple values`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 3-main.py 
     #!/usr/bin/env python3
     
@@ -183,7 +183,7 @@ Create a class `Exponential` that represents an exponential distribution:
     Lambtha: 2.1771114730906937
     Lambtha: 2.0
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -203,7 +203,7 @@ Update the class `Exponential`:
     *   Returns the PDF value for `x`
     *   If `x` is out of range, return `0`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 4-main.py 
     #!/usr/bin/env python3
     
@@ -221,7 +221,7 @@ Update the class `Exponential`:
     f(1): 0.24681591903431568
     f(1): 0.2706705664650693
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -241,7 +241,7 @@ Update the class `Exponential`:
     *   Returns the CDF value for `x`
     *   If `x` is out of range, return `0`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 5-main.py 
     #!/usr/bin/env python3
     
@@ -259,7 +259,7 @@ Update the class `Exponential`:
     F(1): 0.886631473819791
     F(1): 0.8646647167674654
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -287,7 +287,7 @@ Create a class `Normal` that represents a normal distribution:
         *   If `data` is not a `list`, raise a `TypeError` with the message `data must be a list`
         *   If `data` does not contain at least two data points, raise a `ValueError` with the message `data must contain multiple values`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 6-main.py 
     #!/usr/bin/env python3
     
@@ -305,7 +305,7 @@ Create a class `Normal` that represents a normal distribution:
     Mean: 70.59808015534485 , Stddev: 10.078822447165797
     Mean: 70.0 , Stddev: 10.0
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -328,7 +328,7 @@ Update the class `Normal`:
     *   `z` is the z-score
     *   Returns the x-value of `z`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 7-main.py 
     #!/usr/bin/env python3
     
@@ -352,7 +352,7 @@ Update the class `Normal`:
     Z(90): 2.0
     X(2): 90.0
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -371,7 +371,7 @@ Update the class `Normal`:
     *   `x` is the x-value
     *   Returns the PDF value for `x`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 8-main.py 
     #!/usr/bin/env python3
     
@@ -389,7 +389,7 @@ Update the class `Normal`:
     PSI(90): 0.006206096804434349
     PSI(90): 0.005399096651147344
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -408,7 +408,7 @@ Update the class `Normal`:
     *   `x` is the x-value
     *   Returns the CDF value for `x`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 9-main.py 
     #!/usr/bin/env python3
     
@@ -426,7 +426,7 @@ Update the class `Normal`:
     PHI(90): 0.982902011086006
     PHI(90): 0.9922398930667251
     alexa@ubuntu-xenial:0x03-probability$
-    
+```   
 
 **Repo:**
 
@@ -457,7 +457,7 @@ Create a class `Binomial` that represents a binomial distribution:
         *   If `data` is not a `list`, raise a `TypeError` with the message `data must be a list`
         *   If `data` does not contain at least two data points, raise a `ValueError` with the message `data must contain multiple values`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 10-main.py 
     #!/usr/bin/env python3
     
@@ -475,7 +475,7 @@ Create a class `Binomial` that represents a binomial distribution:
     n: 50 p: 0.606
     n: 50 p: 0.6
     alexa@ubuntu-xenial:0x03-probability$ 
-    
+```   
 
 **Repo:**
 
@@ -496,7 +496,7 @@ Update the class `Binomial`:
         *   If `k` is out of range, return `0`
     *   Returns the PMF value for `k`
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 11-main.py 
     #!/usr/bin/env python3
     
@@ -514,7 +514,7 @@ Update the class `Binomial`:
     P(30): 0.11412829839570347
     P(30): 0.114558552829524
     alexa@ubuntu-xenial:0x03-probability$
-    
+```    
 
 **Repo:**
 
@@ -536,7 +536,7 @@ Update the class `Binomial`:
     *   Returns the CDF value for `k`
     *   _Hint: use the `pmf` method_
 
-
+```
     alexa@ubuntu-xenial:0x03-probability$ cat 12-main.py 
     #!/usr/bin/env python3
     
@@ -554,7 +554,7 @@ Update the class `Binomial`:
     F(30): 0.5189392017296368
     F(30): 0.5535236207894576
     alexa@ubuntu-xenial:0x03-probability$
-    
+```   
 
 **Repo:**
 
