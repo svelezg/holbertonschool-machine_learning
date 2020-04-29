@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Contains the Normal class"""
+
+
 class Normal:
     """Normal class"""
 
