@@ -16,7 +16,7 @@ class Normal:
             my_list = [(x - self.mean) ** 2 for x in data]
             self.stddev = (sum(my_list) / len(data)) ** 0.5
         else:
-            if stddev < 0:
+            if stddev <= 0:
                 raise ValueError("stddev must be a positive value")
             self.stddev = float(stddev)
             self.mean = float(mean)

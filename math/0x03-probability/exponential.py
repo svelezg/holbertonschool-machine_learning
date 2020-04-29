@@ -14,7 +14,7 @@ class Exponential:
                 raise ValueError("data must contain multiple values")
             self.lambtha = 1 / float(sum(data) / len(data))
         else:
-            if lambtha < 0:
+            if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
             self.lambtha = float(lambtha)
 
