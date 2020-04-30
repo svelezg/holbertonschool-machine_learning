@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 Poisson = __import__('poisson').Poisson
 
 np.random.seed(0)
-data = np.random.poisson(4., 9999).tolist()
+data = np.random.poisson(4., 999).tolist()
+print(data.count(10))
+print(data)
+
 p = Poisson(data)
 print('p--> P(9):', p.pmf(9))
 print('F(9):', p.cdf(1))
@@ -21,11 +24,11 @@ fig, ax1 = plt.subplots()
 ax2 = ax1.twinx()
 
 plt.title('Poisson Distribution')
-ax1.hist(data, 16, density=True)
+ax1.hist(data, x, density=True)
 pdf = ax1.plot(x, y, color='red', label='pmf')
 cdf = ax2.plot(x, z, color='green', label='cdf')
-plt.xticks(np.arange(0, 12, step=1))
-plt.xlim(0, 12)
+plt.xticks(np.arange(0, 13, step=1))
+plt.xlim(0, 11)
 plt.ylim(0, 1)
 
 ax1.set_xlabel('x')
