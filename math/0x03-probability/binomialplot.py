@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 Binomial = __import__('binomial').Binomial
 
 np.random.seed(0)
-data = np.random.binomial(50, 0.6, 9999).tolist()
+data = np.random.binomial(50, 0.5, 9999).tolist()
 b = Binomial(data)
 print('P(30):', b.pmf(30))
 print('F(30):', b.cdf(30))
@@ -25,7 +25,7 @@ ax1.hist(data, x, density=True)
 pdf = ax1.plot(x, y, color='red', label='pmf')
 cdf = ax2.plot(x, z, color='green', label='cdf')
 plt.xticks(np.arange(5, 55, step=5))
-plt.xlim(15, 45)
+plt.xlim(0, 45)
 plt.ylim(0, 1)
 
 ax1.set_xlabel('x')

@@ -14,6 +14,7 @@ print('p--> P(9):', p.pmf(9))
 print('F(9):', p.cdf(1))
 
 x = np.arange(0, 12, 1)
+print(x)
 y = [p.pmf(x) for x in x]
 z = [p.cdf(x) for x in x]
 
