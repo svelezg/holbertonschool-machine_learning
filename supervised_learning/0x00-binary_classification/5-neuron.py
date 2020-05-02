@@ -4,6 +4,7 @@
 import numpy as np
 np.set_printoptions(threshold=200, edgeitems=8, linewidth=55)
 
+
 # Miscellaneous functions
 def sigmoid(Z):
     """sigmoid function"""
@@ -93,7 +94,6 @@ class Neuron:
         alpha is the learning rate
         """
         dZ = A - Y
-        print(dZ.shape)
-        dW = (np.matmul(X, dZ.T))
+        dW = np.matmul(X, dZ.T) / dZ.shape[1]
         self.__b = -np.sum(alpha * dZ) / dZ.shape[1]
         self.__W -= alpha * dW.T

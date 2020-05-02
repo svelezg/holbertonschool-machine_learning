@@ -15,5 +15,6 @@ nn._NeuralNetwork__b2 = 1
 A1, A2 = nn.forward_prop(X)
 if A1 is nn.A1:
     print(A1)
+print("*****************************++++")
 if A2 is nn.A2:
     print(A2)
