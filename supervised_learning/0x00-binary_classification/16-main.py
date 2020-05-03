@@ -13,5 +13,7 @@ deep = Deep(X.shape[0], [5, 3, 1])
 print(deep.cache)
 print(deep.weights)
 print(deep.L)
+
+print("****")
 deep.L = 10
 print(deep.L)

@@ -118,7 +118,7 @@ class NeuralNetwork:
             m is the number of examples
         :param Y:  is a numpy.ndarray with shape (1, m)
             that contains the correct labels for the input data
-        :return: the neuron’s prediction and the cost of the network, respectively
+        :return: the neuron’s prediction and the cost of the network
         """
         self.forward_prop(X)
         A2 = np.where(self.__A2 >= 0.5, 1, 0)

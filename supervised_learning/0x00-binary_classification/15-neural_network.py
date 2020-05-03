@@ -29,7 +29,7 @@ class NeuralNetwork:
             raise ValueError("nodes must be a positive integer")
         """The weights vector for the hidden layer. Upon instantiation,
             it should be initialized using a random normal distribution"""
-        self.__W1 = np.random.normal(0, 1, (nodes, nx))
+        self.__W1 = np.random.randn(nodes, nx)
 
         """The bias for the hidden layer. Upon instantiation,
             it should be initialized with 0’s"""
@@ -118,7 +118,7 @@ class NeuralNetwork:
             m is the number of examples
         :param Y:  is a numpy.ndarray with shape (1, m)
             that contains the correct labels for the input data
-        :return: the neuron’s prediction and the cost of the network, respectively
+        :return: the neuron’s prediction and the cost of the network
         """
         self.forward_prop(X)
         A2 = np.where(self.__A2 >= 0.5, 1, 0)
@@ -150,7 +150,7 @@ class NeuralNetwork:
         self.__b1 -= alpha * db1
         self.__W1 -= alpha * dW1.T
 
-    def train(self, X, Y, iterations=5000, alpha=0.05,
+    def train(self, X, Y, iterations=500, alpha=0.05,
               verbose=True, graph=True, step=100):
         """
         Trains the neural network
