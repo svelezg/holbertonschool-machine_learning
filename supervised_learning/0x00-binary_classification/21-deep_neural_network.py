@@ -129,15 +129,15 @@ class DeepNeuralNetwork:
 
         for i in reversed(range(self.__L)):
             if i == self.__L - 1:
-                dZ = self.__cache['A{}'.format(i + 1)] - Y
+                dZ = cache['A{}'.format(i + 1)] - Y
                 dW = np.matmul(cache['A{}'.format(i)], dZ.T) / m
             else:
                 dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ)
-                dZb = (self.__cache['A{}'.format(i + 1)]
-                       * (1 - self.__cache['A{}'.format(i + 1)]))
+                dZb = (cache['A{}'.format(i + 1)]
+                       * (1 - cache['A{}'.format(i + 1)]))
                 dZ = dZa * dZb
 
-                dW = (np.matmul(dZ, self.__cache['A{}'.format(i)].T)) / m
+                dW = (np.matmul(dZ, cache['A{}'.format(i)].T)) / m
 
             db = np.sum(dZ, axis=1, keepdims=True) / m
 
