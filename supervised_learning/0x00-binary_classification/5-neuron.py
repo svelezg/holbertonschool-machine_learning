@@ -2,7 +2,6 @@
 """Contains the Neuron class"""
 
 import numpy as np
-np.set_printoptions(threshold=200, edgeitems=8, linewidth=55)
 
 
 # Miscellaneous functions
@@ -84,16 +83,20 @@ class Neuron:
         return A, cost
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
-        """X is a numpy.ndarray with shape (nx, m) that contains the input data
-        nx is the number of input features to the neuron
-        m is the number of examples
-        Y is a numpy.ndarray with shape (1, m)
-        that contains the correct labels for the input data
-        A is a numpy.ndarray with shape (1, m)
-        containing the activated output of the neuron for each example
-        alpha is the learning rate
         """
+        Calculates one pass of gradient descent on the neuron
+        :param X: a numpy.ndarray with shape (nx, m)
+            that contains the input data
+            nx is the number of input features to the neuron
+            m is the number of examples
+        :param Y: a numpy.ndarray with shape (1, m)
+        :param A: a numpy.ndarray with shape (1, m)
+        :param alpha: the learning rate
+        Updates the private attributes __W and __b
+        """
+        m = Y.shape[1]
         dZ = A - Y
-        dW = np.matmul(X, dZ.T) / dZ.shape[1]
-        self.__b = -np.sum(alpha * dZ) / dZ.shape[1]
+        dW = np.matmul(X, dZ.T) / m
+        db = np.sum(dZ) / m
         self.__W -= alpha * dW.T
+        self.__b = -alpha * db
