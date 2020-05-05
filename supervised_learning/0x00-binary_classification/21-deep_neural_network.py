@@ -132,7 +132,7 @@ class DeepNeuralNetwork:
                 dZ = self.__cache['A{}'.format(i + 1)] - Y
                 dW = np.matmul(self.__cache['A{}'.format(i)], dZ.T) / m
             else:
-                dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZtemp)
+                dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ)
                 dZb = (self.__cache['A{}'.format(i + 1)]
                        * (1 - self.__cache['A{}'.format(i + 1)]))
                 dZ = dZa * dZb
@@ -154,4 +154,3 @@ class DeepNeuralNetwork:
             self.__weights['b{}'.format(i + 1)] = \
                 weights['b{}'.format(i + 1)] \
                 - (alpha * db)
-            dZtemp = dZ
