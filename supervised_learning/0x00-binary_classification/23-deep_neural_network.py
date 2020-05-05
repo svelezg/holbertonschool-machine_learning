@@ -3,7 +3,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-np.set_printoptions(threshold=200, edgeitems=8, linewidth=55)
 
 
 class DeepNeuralNetwork:
@@ -128,7 +127,7 @@ class DeepNeuralNetwork:
         :param alpha: the learning rate
         """
         maxl = self.__L
-        tweights = self.__weights.copy()
+        weight = self.__weights.copy()
         m = Y.shape[1]
 
         for i in reversed(range(maxl)):
@@ -136,24 +135,26 @@ class DeepNeuralNetwork:
                 dZ = cache['A{}'.format(i + 1)] - Y
                 dW = (np.matmul(cache['A{}'.format(i)], dZ.T)) / m
 
-                db = np.sum(dZ, axis=1, keepdims=True) / dZ.shape[1]
+                db = np.sum(dZ, axis=1, keepdims=True) / m
                 self.__weights['W{}'.format(i + 1)] = \
-                    tweights['W{}'.format(i + 1)] \
+                    weight['W{}'.format(i + 1)] \
                     - (alpha * dW).T
 
             else:
-                dZ = np.matmul(self.__weights['W{}'.format(i + 2)].T, dZ) * \
-                     (cache['A{}'.format(i + 1)] *
-                      (1 - cache['A{}'.format(i + 1)]))
+                dZ = \
+                    np.matmul(self.__weights['W{}'.format(i + 2)].T, dZ) * \
+                    (cache['A{}'.format(i + 1)]
+                     * (1 - cache['A{}'.format(i + 1)]))
 
                 dW = (np.matmul(dZ, self.__cache['A{}'.format(i)].T)) / m
                 db = np.sum(dZ, axis=1, keepdims=True) / m
 
                 self.__weights['W{}'.format(i + 1)] = \
-                    tweights['W{}'.format(i + 1)] - alpha * dW
-
+                    weight['W{}'.format(i + 1)] \
+                    - alpha * dW
             self.__weights['b{}'.format(i + 1)] = \
-                tweights['b{}'.format(i + 1)] - alpha * db
+                weight['b{}'.format(i + 1)] \
+                - alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
