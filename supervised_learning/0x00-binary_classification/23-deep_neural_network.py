@@ -155,7 +155,7 @@ class DeepNeuralNetwork:
             self.__weights['b{}'.format(i + 1)] = \
                 tweights['b{}'.format(i + 1)] - alpha * db
 
-    def train(self, X, Y, iterations=2000, alpha=0.05,
+    def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
         """
         Trains the neural network
