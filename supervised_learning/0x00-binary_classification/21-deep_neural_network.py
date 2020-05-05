@@ -130,7 +130,7 @@ class DeepNeuralNetwork:
         for i in reversed(range(self.__L)):
             if i == self.__L - 1:
                 dZ = self.__cache['A{}'.format(i + 1)] - Y
-                dW = np.matmul(self.__cache['A{}'.format(i)], dZ.T) / m
+                dW = np.matmul(cache['A{}'.format(i)], dZ.T) / m
             else:
                 dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ)
                 dZb = (self.__cache['A{}'.format(i + 1)]
