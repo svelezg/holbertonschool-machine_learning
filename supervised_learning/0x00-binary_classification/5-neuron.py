@@ -92,7 +92,7 @@ class Neuron:
         :param Y: a numpy.ndarray with shape (1, m)
         :param A: a numpy.ndarray with shape (1, m)
         :param alpha: the learning rate
-        Updates the private attributes __W and __b
+        Updates the private attri butes __W and __b
         """
         m = Y.shape[1]
         dZ = A - Y
