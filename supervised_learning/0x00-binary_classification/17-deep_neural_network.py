@@ -24,29 +24,29 @@ class DeepNeuralNetwork:
             raise ValueError("nx must be a positive integer")
         if not isinstance(layers, list):
             raise TypeError("layers must be a list of positive integers")
-        for nodes in layers:
-            if nodes < 1 or not isinstance(nodes, int):
-                raise ValueError("layers must be a list of positive integers")
+        if len(layers) == 0:
+            raise TypeError('layers must be a list of positive integers')
         self.nx = nx
         self.layers = layers
         self.__L = len(layers)
         self.__cache = {}
         self.__weights = {}
-        """The weights vector for the hidden layer.
-            Upon instantiation, it should be initialized
-            using a random normal distribution"""
-        self.__weights['W1'] = np.random.randn(layers[0], nx) * np.sqrt(2/nx)
 
-        """The bias for the hidden layer. Upon instantiation,
-            it should be initialized with 0’s"""
-        self.__weights['b1'] = np.zeros((layers[0], 1))
+        for i in range(self.L):
+            if not isinstance(layers[i], int) or layers[i] < 1:
+                raise TypeError("layers must be a list of positive integers")
+            W_key = "W{}".format(i + 1)
+            b_key = "b{}".format(i + 1)
 
-        for l in range(1, self.__L):
-            W_key = "W{}".format(l + 1)
-            b_key = "b{}".format(l + 1)
-            self.__weights[W_key] = np.random.randn(layers[l], layers[l - 1]) \
-                * np.sqrt(2 / layers[l - 1])
-            self.__weights[b_key] = np.zeros((layers[l], 1))
+            self.weights[b_key] = np.zeros((layers[i], 1))
+
+            if i == 0:
+                f = np.sqrt(2 / nx)
+                self.__weights['W1'] = np.random.randn(layers[i], nx) * f
+            else:
+                f = np.sqrt(2 / layers[i - 1])
+                h = np.random.randn(layers[i], layers[i - 1]) * f
+                self.__weights[W_key] = h
 
     @property
     def L(self):
