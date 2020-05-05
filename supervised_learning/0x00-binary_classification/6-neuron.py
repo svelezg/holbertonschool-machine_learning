@@ -2,7 +2,6 @@
 """Contains the Neuron class"""
 
 import numpy as np
-np.set_printoptions(threshold=200, edgeitems=8, linewidth=55)
 
 
 # Miscellaneous functions
@@ -83,29 +82,37 @@ class Neuron:
         return A, self.cost(Y, self.__A)
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
-        """X is a numpy.ndarray with shape (nx, m) that contains the input data
-        nx is the number of input features to the neuron
-        m is the number of examples
-        Y is a numpy.ndarray with shape (1, m)
-        that contains the correct labels for the input data
-        A is a numpy.ndarray with shape (1, m)
-        containing the activated output of the neuron for each example
-        alpha is the learning rate
         """
+        Calculates one pass of gradient descent on the neuron
+        :param X: a numpy.ndarray with shape (nx, m)
+            that contains the input data
+            nx is the number of input features to the neuron
+            m is the number of examples
+        :param Y: a numpy.ndarray with shape (1, m)
+        :param A: a numpy.ndarray with shape (1, m)
+        :param alpha: the learning rate
+        Updates the private attri butes __W and __b
+        """
+        m = Y.shape[1]
         dZ = A - Y
-        dW = np.matmul(X, dZ.T) / dZ.shape[1]
-        self.__b = -np.sum(alpha * dZ) / dZ.shape[1]
-        self.__W -= alpha * dW.T
+        dW = np.matmul(X, dZ.T) / m
+        db = np.sum(dZ) / m
+        self.__W = self.__W - (alpha * dW).T
+        self.__b = self.__b - alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
-        """Trains the neuron
-        X is a numpy.ndarray with shape (nx, m) that contains the input data
-        nx is the number of input features to the neuron
-        m is the number of examples
-        Y is a numpy.ndarray with shape (1, m)
-            that contains the correct labels for the input data
-        iterations is the number of iterations to train over
-        alpha is the learning rate"
+        """
+        Trains the neuron
+        :param X: is a numpy.ndarray with shape (nx, m)
+            that contains the input data
+            nx is the number of input features to the neuron
+            m is the number of examples
+        :param Y: is a numpy.ndarray with shape (1, m)
+            hat contains the correct labels for the input data
+        :param iterations: is the number of iterations to train over
+        :param alpha: the learning rate
+        :return: evaluation of the training data after
+            iterations of training have occurred
         """
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
