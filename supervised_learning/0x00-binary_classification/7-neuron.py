@@ -91,20 +91,21 @@ class Neuron:
     def gradient_descent(self, X, Y, A, alpha=0.05):
         """
         Calculates one pass of gradient descent on the neuron
-        :param X: is a numpy.ndarray with shape (nx, m)
+        :param X: a numpy.ndarray with shape (nx, m)
             that contains the input data
             nx is the number of input features to the neuron
             m is the number of examples
-        :param Y: is a numpy.ndarray with shape (1, m)
-            that contains the correct labels for the input data
-        :param A: is a numpy.ndarray with shape (1, m)
-            containing the activated output of the neuron for each example
-        :param alpha: is the learning rate
+        :param Y: a numpy.ndarray with shape (1, m)
+        :param A: a numpy.ndarray with shape (1, m)
+        :param alpha: the learning rate
+        Updates the private attri butes __W and __b
         """
+        m = Y.shape[1]
         dZ = A - Y
-        dW = (np.matmul(X, dZ.T)) / dZ.shape[1]
-        self.__b = -np.sum(alpha * dZ) / dZ.shape[1]
-        self.__W -= alpha * dW.T
+        dW = np.matmul(X, dZ.T) / m
+        db = np.sum(dZ) / m
+        self.__W = self.__W - (alpha * dW).T
+        self.__b = self.__b - alpha * db
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
               graph=True, step=100):
