@@ -144,7 +144,7 @@ class DeepNeuralNetwork:
             if i == self.__L - 1:
                 self.__weights['W{}'.format(i + 1)] = \
                     (weights['W{}'.format(i + 1)]
-                     - (alpha * dW)).T
+                     - (alpha * dW).T)
 
             else:
                 self.__weights['W{}'.format(i + 1)] = \
