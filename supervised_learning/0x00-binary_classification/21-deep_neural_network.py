@@ -124,32 +124,33 @@ class DeepNeuralNetwork:
             of the network
         :param alpha: the learning rate
         """
-        maxl = self.__L
-        weight = self.__weights.copy()
+        weights = self.__weights.copy()
         m = Y.shape[1]
 
-        for i in reversed(range(maxl)):
-            if i == maxl - 1:
-                dZ = cache['A{}'.format(i + 1)] - Y
-                dW = (np.matmul(cache['A{}'.format(i)], dZ.T)) / m
+        for i in reversed(range(self.__L)):
+            if i == self.__L - 1:
+                dZ = self.__cache['A{}'.format(i + 1)] - Y
+                dW = np.matmul(self.__cache['A{}'.format(i)], dZ.T) / m
+            else:
+                dZa = np.matmul(self.__weights['W{}'.format(i + 2)].T, dZ)
+                dZb = (cache['A{}'.format(i + 1)]
+                       * (1 - cache['A{}'.format(i + 1)]))
+                dZ = dZa * dZb
 
-                db = np.sum(dZ, axis=1, keepdims=True) / m
+                dW = (np.matmul(dZ, self.__cache['A{}'.format(i)].T)) / m
+
+            db = np.sum(dZ, axis=1, keepdims=True) / m
+
+            if i == self.__L - 1:
                 self.__weights['W{}'.format(i + 1)] = \
-                    weight['W{}'.format(i + 1)] \
+                    weights['W{}'.format(i + 1)] \
                     - (alpha * dW).T
 
             else:
-                dZ = \
-                    np.matmul(self.__weights['W{}'.format(i + 2)].T, dZ) * \
-                    (cache['A{}'.format(i + 1)]
-                     * (1 - cache['A{}'.format(i + 1)]))
-
-                dW = (np.matmul(dZ, self.__cache['A{}'.format(i)].T)) / m
-                db = np.sum(dZ, axis=1, keepdims=True) / m
-
                 self.__weights['W{}'.format(i + 1)] = \
-                    weight['W{}'.format(i + 1)] \
+                    weights['W{}'.format(i + 1)] \
                     - alpha * dW
+
             self.__weights['b{}'.format(i + 1)] = \
-                weight['b{}'.format(i + 1)] \
+                weights['b{}'.format(i + 1)] \
                 - alpha * db
