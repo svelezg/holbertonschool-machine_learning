@@ -136,7 +136,7 @@ class NeuralNetwork:
         :param A2: the predicted output
         :param alpha: the learning rate
         """
-        m = Y.shape[1]
+        m = A1.shape[1]
         dZ2 = A2 - Y
         dW2 = np.matmul(A1, dZ2.T) / m
         db2 = np.sum(dZ2, axis=1, keepdims=True) / m
