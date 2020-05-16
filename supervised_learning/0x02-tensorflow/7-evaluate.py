@@ -3,10 +3,6 @@
 
 import tensorflow as tf
 
-calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
-calculate_loss = __import__('4-calculate_loss').calculate_loss
-create_placeholders = __import__('0-create_placeholders').create_placeholders
-
 
 def evaluate(X, Y, save_path):
     """
@@ -24,23 +20,20 @@ def evaluate(X, Y, save_path):
         x = tf.get_collection("x")[0]
         y = tf.get_collection("y")[0]
 
-        # define feed_dict my_input with X as x and Y as y
-        my_input = {x: X, y: Y}
-
         # collect y_pred, result of the forward_prop operation
         y_pred = tf.get_collection("y_pred")[0]
         # execute the forward_prop operation with X and Y as input
-        prediction_ = sess.run(y_pred, feed_dict=my_input)
+        prediction_ = sess.run(y_pred, feed_dict={x: X, y: Y})
 
         # collect accuracy, result of the calculate_accuracy operation
         accuracy = tf.get_collection("accuracy")[0]
         # execute the calculate_accuracy operation with X and Y as input
-        accuracy_ = sess.run(accuracy, feed_dict=my_input)
+        accuracy_ = sess.run(accuracy, feed_dict={x: X, y: Y})
 
         # collect loss, result of the calculate_loss operation
         loss = tf.get_collection("loss")[0]
         # execute the calculate_loss operation with X and Y as input
         # to get the _cost
-        cost_ = sess.run(loss, feed_dict=my_input)
+        cost_ = sess.run(loss, feed_dict={x: X, y: Y})
 
     return prediction_, accuracy_, cost_
