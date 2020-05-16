@@ -13,10 +13,6 @@ def create_placeholders(nx, classes):
         x is the placeholder for the input data to the neural network
         y is the placeholder for the one-hot labels for the input data
     """
-    if not isinstance(nx, int) or nx <= 0:
-        return None
-    if not isinstance(classes, int) or classes <= 0:
-        return None
     x = tf.placeholder(tf.float32, shape=(None, nx), name='x')
     y = tf.placeholder(tf.float32, shape=(None, classes), name='y')
 
