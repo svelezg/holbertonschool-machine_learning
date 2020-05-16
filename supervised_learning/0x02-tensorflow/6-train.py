@@ -67,7 +67,7 @@ def train(X_train, Y_train, X_valid, Y_valid,
                 feed_dict={x: X_valid, y: Y_valid})
 
             if i % 100 == 0 or i == iterations:
-                print('After {} iterations: '.format(i))
+                print('After {} iterations:'.format(i))
                 print('\tTraining Cost: {}'.format(training_cost))
                 print('\tTraining Accuracy: {}'.format(training_accuracy))
                 print('\tValidation Cost: {}'.format(validation_cost))
