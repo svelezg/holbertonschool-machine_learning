@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Contains the normalize function"""
 
-import numpy as np
-
 
 def normalize(X, m, s):
     """

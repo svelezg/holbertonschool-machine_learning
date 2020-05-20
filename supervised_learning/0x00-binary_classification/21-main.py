@@ -2,7 +2,7 @@
 
 import numpy as np
 
-Deep = __import__('21-deep_neural_network').DeepNeuralNetwork
+Deep = __import__('21a-deep_neural_network').DeepNeuralNetwork
 
 lib_train = np.load('../data/Binary_Train.npz')
 X_3D, Y = lib_train['X'], lib_train['Y']

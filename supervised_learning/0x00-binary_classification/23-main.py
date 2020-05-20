@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-Deep = __import__('23-deep_neural_network').DeepNeuralNetwork
+Deep = __import__('23b-deep_neural_network').DeepNeuralNetwork
 
 lib_train = np.load('../data/Binary_Train.npz')
 X_train_3D, Y_train = lib_train['X'], lib_train['Y']
