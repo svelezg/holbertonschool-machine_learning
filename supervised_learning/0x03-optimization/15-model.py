@@ -36,6 +36,26 @@ def create_placeholders(nx, classes):
     return x, y
 
 
+def create_layer(prev, n, activation):
+    """
+    create layer function
+    :param prev: tensor output of the previous layer
+    :param n: number of nodes in the layer to create
+    :param activation: activation function that the layer should use
+    :return: tensor output of the layer
+    """
+    # implement He et. al initialization for the layer weights
+    initializer = \
+        tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
+
+    model = tf.layers.Dense(units=n,
+                            activation=activation,
+                            kernel_initializer=initializer,
+                            name='layer')
+
+    return model(prev)
+
+
 def create_batch_norm_layer(prev, n, activation):
     """
     creates a batch normalization layer for a neural network in tensorflow
@@ -89,7 +109,7 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     """
 
     # first layer activation with features x as input
-    y_pred = create_batch_norm_layer(x, layer_sizes[0], activations[0])
+    y_pred = create_layer(x, layer_sizes[0], activations[0])
 
     # successive layers activations with y_pred from the prev layer as input
     for i in range(1, len(layer_sizes)):
