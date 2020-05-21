@@ -13,11 +13,7 @@ def moving_average(data, beta):
     value = 0
     for i in range(len(data)):
         # Exponentially Weighted Averages
-        value = beta * value + (1 - beta) * (data[i])
-
-        # Bias Correction of Exponentially Weighted Averages
-        correction = 1 / (1 - beta ** (i + 1))
-
-        avg_list.append(correction * value)
+        value = beta * value + (1 - beta) * data[i]
+        avg_list.append(value/(1 - beta ** (i + 1)))
 
     return avg_list
