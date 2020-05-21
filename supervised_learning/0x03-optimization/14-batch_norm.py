@@ -19,7 +19,7 @@ def create_batch_norm_layer(prev, n, activation):
 
     # dense layer model
     model = tf.layers.Dense(units=n,
-                            activation=activation,
+                            activation=None,
                             kernel_initializer=initializer,
                             name='layer')
 
