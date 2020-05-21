@@ -2,6 +2,7 @@
 """Contains the train_mini_batch function"""
 
 import tensorflow as tf
+
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
@@ -49,13 +50,12 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         train_op = tf.get_collection("train_op")[0]
 
         # find number of steps (iterations)
-        m = X_train.shape[0]
-        if m % batch_size == 0:
-            steps = m // batch_size
-            extra = 0
+        steps = X_train.shape[0] // batch_size
+        if steps % batch_size != 0:
+            steps = steps + 1
+            extra = True
         else:
-            steps = m // batch_size + 1
-            extra = 1
+            extra = False
 
         for epoch in range(epochs + 1):
             # execute cost and accuracy operations for training set
@@ -98,10 +98,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     # data selection mini batch from training set and labels
                     start = step_number * batch_size
 
-                    if extra == 1 and (step_number == steps - 1):
-                        end = m
+                    if step_number == steps - 1 and extra:
+                        end = X_train.shape[0]
                     else:
-                        end = (step_number + 1) * batch_size
+                        end = step_number * batch_size + batch_size
 
                     X = X_shuffled[start:end]
                     Y = Y_shuffled[start:end]
@@ -109,10 +109,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     # execute training (from 0 to iteration) on mini set
                     sess.run(train_op, feed_dict={x: X, y: Y})
 
-                    if step_number != 0 and step_number % 100 == 0:
+                    if step_number != 0 and (step_number + 1) % 100 == 0:
                         # where {step_number} is the number of times gradient
                         # descent has been run in the current epoch
-                        print("\tStep {}:".format(step_number))
+                        print("\tStep {}:".format(step_number + 1))
 
                         # calculate cost and accuracy for mini set
                         step_cost, step_accuracy = sess.run(
