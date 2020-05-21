@@ -14,8 +14,4 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
         should occur before alpha is decayed further
     :return: updated value for alpha
     """
-    if decay_step != 0 and global_step > decay_step:
-        epoch = global_step // decay_step
-        alpha = alpha / (1 + decay_rate * epoch)
-
-    return alpha
+    return alpha / (1 + decay_rate * (global_step // decay_step))
