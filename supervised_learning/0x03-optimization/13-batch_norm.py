@@ -19,10 +19,10 @@ def batch_norm(Z, gamma, beta, epsilon):
     :return: normalized Z matrix
     """
     m = np.mean(Z, axis=0)
-    s = np.std(Z, axis=0)
+    s = np.var(Z, axis=0)
 
     # normalization step
-    Z_norm = (Z - m) / ((s + epsilon) ** (1 / 2))
+    Z_norm = (Z - m) / ((s + epsilon)**(1/2))
 
     # introduction of trainable parameters gamma for scale and beta for offset
     # allows to take advantage of a non strictly normalized distribution
