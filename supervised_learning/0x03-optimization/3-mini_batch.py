@@ -52,8 +52,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         m = X_train.shape[0]
         if m % batch_size == 0:
             steps = m // batch_size
+            extra = 0
         else:
             steps = m // batch_size + 1
+            extra = 1
 
         for epoch in range(epochs + 1):
             # execute cost and accuracy operations for training set
@@ -95,10 +97,12 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
 
                     # data selection mini batch from training set and labels
                     start = step_number * batch_size
-                    if (step_number + 1) * batch_size <= m:
-                        end = (step_number + 1) * batch_size
-                    else:
+
+                    if extra == 1 and (step_number == steps - 1):
                         end = m
+                    else:
+                        end = (step_number + 1) * batch_size
+
                     X = X_shuffled[start:end]
                     Y = Y_shuffled[start:end]
 
