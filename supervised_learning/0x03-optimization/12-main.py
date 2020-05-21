@@ -35,5 +35,5 @@ if __name__ == '__main__':
         sess.run(init)
         for i in range(100):
             a = sess.run(alpha)
-            print(a)
+            print(sess.run(global_step), a)
             sess.run(train_op, feed_dict={x: X, y: Y_oh})
