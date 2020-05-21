@@ -2,7 +2,23 @@
 """Contains the model function"""
 
 import tensorflow as tf
-shuffle_data = __import__('2-shuffle_data').shuffle_data
+import numpy as np
+
+
+def shuffle_data(X, Y):
+    """
+    shuffles the data points in two matrices the same way
+    :param X: first numpy.ndarray of shape (m, nx) to shuffle
+        m is the number of data points
+        nx is the number of features in X
+    :param Y: second numpy.ndarray of shape (m, ny) to shuffle
+        m is the same number of data points as in X
+        ny is the number of features in Y
+    :return: the shuffled X and Y matrices
+    """
+    m = X.shape[0]
+    shuffle = np.random.permutation(m)
+    return X[shuffle], Y[shuffle]
 
 
 def create_placeholders(nx, classes):
@@ -18,26 +34,6 @@ def create_placeholders(nx, classes):
     y = tf.placeholder(tf.float32, shape=(None, classes), name='y')
 
     return x, y
-
-
-def create_layer(prev, n, activation):
-    """
-    create layer function
-    :param prev: tensor output of the previous layer
-    :param n: number of nodes in the layer to create
-    :param activation: activation function that the layer should use
-    :return: tensor output of the layer
-    """
-    # implement He et. al initialization for the layer weights
-    initializer = \
-        tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-
-    model = tf.layers.Dense(units=n,
-                            activation=activation,
-                            kernel_initializer=initializer,
-                            name='layer')
-
-    return model(prev)
 
 
 def create_batch_norm_layer(prev, n, activation):
@@ -132,17 +128,6 @@ def calculate_loss(y, y_pred):
     :return: tensor containing the loss of the prediction
     """
     return tf.losses.softmax_cross_entropy(y, y_pred)
-
-
-def create_train_op(loss, alpha):
-    """
-    creates the training operation for the network:
-    :param loss: loss of the network’s prediction
-    :param alpha: learning rate
-    :return: an operation that trains the network using gradient descent
-    """
-    optimizer = tf.train.GradientDescentOptimizer(alpha)
-    return optimizer.minimize(loss)
 
 
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
