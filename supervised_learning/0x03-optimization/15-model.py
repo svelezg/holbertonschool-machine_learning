@@ -81,10 +81,11 @@ def create_batch_norm_layer(prev, n, activation):
 
     # incorporation of trainable parameters beta and gamma
     # for scale and offset
-    beta = tf.Variable(tf.constant(0.0, shape=[n]),
-                       name='beta', trainable=True)
     gamma = tf.Variable(tf.constant(1.0, shape=[n]),
                         name='gamma', trainable=True)
+    beta = tf.Variable(tf.constant(0.0, shape=[n]),
+                       name='beta', trainable=True)
+    epsilon = tf.constant(1e-8)
 
     # normalization parameter calculation
     mean, variance = tf.nn.moments(Z, axes=0)
@@ -94,9 +95,10 @@ def create_batch_norm_layer(prev, n, activation):
     # offset and scale respectively
     adjusted = tf.nn.batch_normalization(x=Z, mean=mean, variance=variance,
                                          offset=beta, scale=gamma,
-                                         variance_epsilon=1e-8)
+                                         variance_epsilon=epsilon)
 
-    return activation(adjusted)
+    A = activation(adjusted)
+    return A
 
 
 def forward_prop(x, layer, activations):
