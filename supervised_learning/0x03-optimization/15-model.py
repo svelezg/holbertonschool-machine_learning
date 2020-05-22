@@ -78,7 +78,6 @@ def create_batch_norm_layer(prev, n, activation):
                             activation=None,
                             kernel_initializer=initializer,
                             name='layer')
-
     # normalization parameter calculation
     mean, variance = tf.nn.moments(model(prev), axes=0, keep_dims=True)
 
@@ -249,16 +248,16 @@ def model(Data_train, Data_valid,
     # Add ops to save and restore all the variables.
     saver = tf.train.Saver()
 
+    # find number of steps (iterations)
+    steps = X_train.shape[0] // batch_size
+    if steps % batch_size != 0:
+        steps = steps + 1
+        extra = True
+    else:
+        extra = False
+
     with tf.Session() as sess:
         sess.run(init)
-
-        # find number of steps (iterations)
-        steps = X_train.shape[0] // batch_size
-        if steps % batch_size != 0:
-            steps = steps + 1
-            extra = True
-        else:
-            extra = False
 
         for epoch in range(epochs + 1):
             # execute cost and accuracy operations for training set
@@ -293,7 +292,8 @@ def model(Data_train, Data_valid,
             if epoch < epochs:
                 # learning rate decay
                 sess.run(global_step.assign(epoch))
-                # print("alpha:", sess.run(alpha))
+                # update learning rate
+                sess.run(alpha)
 
                 # shuffle data, both training set and labels
                 X_shuffled, Y_shuffled = shuffle_data(X_train, Y_train)
