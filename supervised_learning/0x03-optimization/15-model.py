@@ -112,9 +112,13 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     y_pred = create_layer(x, layer_sizes[0], activations[0])
 
     # successive layers activations with y_pred from the prev layer as input
-    for i in range(1, len(layer_sizes)):
+    for i in range(1, len(layer_sizes) - 1):
         y_pred = create_batch_norm_layer(y_pred, layer_sizes[i],
                                          activations[i])
+
+    # last layer
+    y_pred = create_layer(y_pred, layer_sizes[len(layer_sizes) - 1],
+                          activations[len(layer_sizes) - 1])
 
     return y_pred
 
