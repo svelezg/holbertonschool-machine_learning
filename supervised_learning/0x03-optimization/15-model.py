@@ -92,9 +92,7 @@ def create_batch_norm_layer(prev, n, activation):
                                          offset=beta, scale=gamma,
                                          variance_epsilon=1e-8)
 
-    if activation is None:
-        return adjusted
-    return activation(adjusted)
+    return adjusted
 
 
 def forward_prop(x, layer_sizes=[], activations=[]):
