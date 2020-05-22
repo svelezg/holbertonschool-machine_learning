@@ -92,7 +92,7 @@ def create_batch_norm_layer(prev, n, activation):
                                          offset=beta, scale=gamma,
                                          variance_epsilon=1e-8)
 
-    return adjusted
+    return activation(adjusted)
 
 
 def forward_prop(x, layer_sizes=[], activations=[]):
@@ -107,7 +107,7 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     """
 
     # first layer activation with features x as input
-    y_pred = create_layer(x, layer_sizes[0], activations[0])
+    y_pred = create_batch_norm_layer(x, layer_sizes[0], activations[0])
 
     # successive layers activations with y_pred from the prev layer as input
     for i in range(1, len(layer_sizes) - 1):
