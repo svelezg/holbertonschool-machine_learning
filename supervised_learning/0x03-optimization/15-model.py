@@ -21,19 +21,20 @@ def shuffle_data(X, Y):
     return X[shuffle], Y[shuffle]
 
 
-def create_placeholders(nx, classes):
+def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     """
-    returns two placeholders, x and y, for the neural network
-    :param nx: number of feature columns in our data
-    :param classes: number of classes in our classifier
-    :return: placeholders named x and y, respectively
-        x is the placeholder for the input data to the neural network
-        y is the placeholder for the one-hot labels for the input data
+    creates the training operation for a neural network in tensorflow
+    using the RMSProp optimization algorithm
+    :param loss: loss of the network
+    :param alpha: learning rate
+    :param beta1: weight used for the first moment
+    :param beta2: weight used for the second moment
+    :param epsilon: small number to avoid division by zero
+    :return: Adam optimization operation
     """
-    x = tf.placeholder(tf.float32, shape=(None, nx), name='x')
-    y = tf.placeholder(tf.float32, shape=(None, classes), name='y')
-
-    return x, y
+    optimizer = tf.train.AdamOptimizer(learning_rate=alpha, beta1=beta1,
+                                       beta2=beta2, epsilon=epsilon)
+    return optimizer.minimize(loss)
 
 
 def create_layer(prev, n, activation):
@@ -75,11 +76,8 @@ def create_batch_norm_layer(prev, n, activation):
 
     # dense layer model
     model = tf.layers.Dense(units=n,
-                            activation=None,
-                            kernel_initializer=initializer,
-                            name='layer')
-    # normalization parameter calculation
-    mean, variance = tf.nn.moments(model(prev), axes=0, keep_dims=True)
+                            kernel_initializer=initializer)
+    Z = model(prev)
 
     # incorporation of trainable parameters beta and gamma
     # for scale and offset
@@ -88,32 +86,35 @@ def create_batch_norm_layer(prev, n, activation):
     gamma = tf.Variable(tf.constant(1.0, shape=[n]),
                         name='gamma', trainable=True)
 
+    # normalization parameter calculation
+    mean, variance = tf.nn.moments(Z, axes=0)
+
     # Normalization over result after activation (with mean and variance)
     # and later adjusting with beta and gamma for
     # offset and scale respectively
-    adjusted = tf.nn.batch_normalization(model(prev), mean, variance,
+    adjusted = tf.nn.batch_normalization(x=Z, mean=mean, variance=variance,
                                          offset=beta, scale=gamma,
                                          variance_epsilon=1e-8)
 
     return activation(adjusted)
 
 
-def forward_prop(x, layer_sizes=[], activations=[]):
+def forward_prop(x, layer, activations):
     """
     creates the forward propagation graph for the neural network
     :param x: placeholder for the input data
-    :param layer_sizes: list containing the number of nodes in
+    :param layer: list containing the number of nodes in
         each layer of the network
     :param activations: list containing the activation functions
         for each layer of the network
     :return: prediction of the network in tensor form
     """
     # first layer activation with features x as input
-    y_pred = create_batch_norm_layer(x, layer_sizes[0], activations[0])
+    y_pred = create_batch_norm_layer(x, layer[0], activations[0])
 
     # successive layers activations with y_pred from the prev layer as input
-    for i in range(1, len(layer_sizes)):
-        y_pred = create_batch_norm_layer(y_pred, layer_sizes[i],
+    for i in range(1, len(layer)):
+        y_pred = create_batch_norm_layer(y_pred, layer[i],
                                          activations[i])
 
     return y_pred
@@ -162,28 +163,11 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
         before alpha is decayed further
     :return: learning rate decay operation
     """
-    alpha = tf.train.inverse_time_decay(alpha,
-                                        global_step,
-                                        decay_step,
-                                        decay_rate,
-                                        staircase=True)
-
-    return alpha
-
-
-def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
-    """
-    creates the training operation for a neural network in tensorflow
-    using the RMSProp optimization algorithm
-    :param loss: loss of the network
-    :param alpha: learning rate
-    :param beta1: weight used for the first moment
-    :param beta2: weight used for the second moment
-    :param epsilon: small number to avoid division by zero
-    :return: Adam optimization operation
-    """
-    optimizer = tf.train.AdamOptimizer(alpha, beta1, beta2, epsilon)
-    return optimizer.minimize(loss)
+    return tf.train.inverse_time_decay(learning_rate=alpha,
+                                       global_step=global_step,
+                                       decay_steps=decay_step,
+                                       decay_rate=decay_rate,
+                                       staircase=True)
 
 
 def model(Data_train, Data_valid,
@@ -220,10 +204,20 @@ def model(Data_train, Data_valid,
     X_valid = Data_valid[0]
     Y_valid = Data_valid[1]
 
-    nx = X_train.shape[1]
-    classes = Y_train.shape[1]
-    x, y = create_placeholders(nx, classes)
+    # find number of steps (iterations)
+    steps = X_train.shape[0] // batch_size
+    if steps % batch_size != 0:
+        steps = steps + 1
+        extra = True
+    else:
+        extra = False
+
+    x = tf.placeholder(tf.float32, shape=[None, Data_train[0].shape[1]],
+                       name='x')
     tf.add_to_collection('x', x)
+
+    y = tf.placeholder(tf.float32, shape=[None, Data_train[1].shape[1]],
+                       name='y')
     tf.add_to_collection('y', y)
 
     y_pred = forward_prop(x, layers, activations)
@@ -247,14 +241,6 @@ def model(Data_train, Data_valid,
 
     # Add ops to save and restore all the variables.
     saver = tf.train.Saver()
-
-    # find number of steps (iterations)
-    steps = X_train.shape[0] // batch_size
-    if steps % batch_size != 0:
-        steps = steps + 1
-        extra = True
-    else:
-        extra = False
 
     with tf.Session() as sess:
         sess.run(init)
