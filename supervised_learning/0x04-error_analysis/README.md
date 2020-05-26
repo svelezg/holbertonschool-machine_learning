@@ -237,7 +237,7 @@ Write the function `def f1_score(confusion):` that calculates the F1 score of a 
     alexa@ubuntu-xenial:0x04-error_analysis$ ./4-main.py 
     [0.94161242 0.93802288 0.8580209  0.85856574 0.88884336 0.81917654
      0.91526771 0.90560928 0.8447821  0.84613074]
-    alexa@ubuntu-xenial:0x04-error_analysis$
+    alexa@ubuntu-xenial:0x04-error_analysis$ 
  ```   
 
 **Repo:**
