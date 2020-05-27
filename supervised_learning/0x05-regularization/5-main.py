@@ -2,8 +2,10 @@
 
 import numpy as np
 
-dropout_forward_prop = __import__('4-dropout_forward_prop').dropout_forward_prop
-dropout_gradient_descent = __import__('5-dropout_gradient_descent').dropout_gradient_descent
+dropout_forward_prop = \
+    __import__('4-dropout_forward_prop').dropout_forward_prop
+dropout_gradient_descent = \
+    __import__('5-dropout_gradient_descent').dropout_gradient_descent
 
 
 def one_hot(Y, classes):

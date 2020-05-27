@@ -15,3 +15,10 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
     :param m: number of data points used
     :return: cost of the network accounting for L2 regularization
     """
+    Frobenius = 0
+    for i in range(0, L):
+        key = "W" + str(i + 1)
+        W = weights[key]
+        Frobenius += np.linalg.norm(W)
+
+    return cost + (lambtha/(2*m)) * Frobenius

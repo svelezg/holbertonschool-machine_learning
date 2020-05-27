@@ -14,3 +14,15 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     :param lambtha: L2 regularization parameter
     :return: output of the new layer
     """
+    initializer = \
+        tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
+
+    regularizer = tf.contrib.layers.l2_regularizer(lambtha)
+
+    model = tf.layers.Dense(units=n,
+                            activation=activation,
+                            kernel_initializer=initializer,
+                            kernel_regularizer=regularizer,
+                            name='layer')
+
+    return model(prev)
