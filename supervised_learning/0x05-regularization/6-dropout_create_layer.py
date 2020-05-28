@@ -14,13 +14,9 @@ def dropout_create_layer(prev, n, activation, keep_prob):
     :param keep_prob: probability that a node will be kept
     :return: output of the new layer
     """
-    initializer = \
-        tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-
+    init = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
     model = tf.layers.Dense(units=n,
                             activation=activation,
-                            kernel_initializer=initializer,
-                            name='layer')
+                            kernel_initializer=init)
     dropout = tf.layers.Dropout(keep_prob)
-
     return dropout(model(prev))
