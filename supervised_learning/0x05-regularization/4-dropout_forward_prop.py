@@ -2,7 +2,6 @@
 """Contains the dropout_forward_prop function"""
 
 import numpy as np
-import tensorflow as tf
 
 
 def dropout_forward_prop(X, weights, L, keep_prob):
@@ -30,16 +29,14 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
         Z = np.matmul(weights[W_key], cache[A_key_prev]) \
             + weights[b_key]
-        if i != L - 1:
-            A = np.tanh(Z)
-        else:
-            t = np.exp(Z)
-            A = (t / np.sum(t, axis=0, keepdims=True))
+        drop = np.random.binomial(1, keep_prob, size=Z.shape)
 
-        if i != L-1:
-            cache[D_key] = np.random.binomial(1, keep_prob, size=A.shape)
-            cache[A_key_forw] = (A * cache[D_key]) / keep_prob
+        if i == L - 1:
+            t = np.exp(Z)
+            cache[A_key_forw] = (t / np.sum(t, axis=0, keepdims=True))
         else:
-            cache[A_key_forw] = A
+            cache[A_key_forw] = np.tanh(Z)
+            cache[D_key] = drop
+            cache[A_key_forw] = (cache[A_key_forw] * cache[D_key]) / keep_prob
 
     return cache
