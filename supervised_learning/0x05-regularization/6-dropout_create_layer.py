@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Contains the dropout_create_layer"""
 
-import numpy as np
 import tensorflow as tf
 
 
