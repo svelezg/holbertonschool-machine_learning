@@ -19,7 +19,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     :param L: number of layers of the network
     The weights and biases of the network should be updated in place
     """
-
+    # weights_t = weights.copy()
     m = Y.shape[1]
 
     for i in reversed(range(L)):
@@ -28,7 +28,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
             dW = np.matmul(dZ, cache['A{}'.format(i)].T) / m + \
                 (lambtha / m) * weights['W{}'.format(i + 1)]
         else:
-            dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ)
+            dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ_t)
             dZb = (cache['A{}'.format(i + 1)]
                    * (1 - cache['A{}'.format(i + 1)]))
             dZ = dZa * dZb
@@ -39,9 +39,8 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         db = np.sum(dZ, axis=1, keepdims=True) / m
 
         if i == L - 1:
-            weights['W{}'.format(i + 1)] = \
-                (weights['W{}'.format(i + 1)]
-                 - (alpha * dW))
+            weights['W{}'.format(i + 1)] = weights['W{}'.format(i + 1)] -\
+                                           (alpha * dW)
 
         else:
             weights['W{}'.format(i + 1)] = \
@@ -51,3 +50,4 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         weights['b{}'.format(i + 1)] = \
             weights['b{}'.format(i + 1)] \
             - (alpha * db)
+        dZ_t = dZ
