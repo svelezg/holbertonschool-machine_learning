@@ -17,6 +17,8 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     :param alpha: learning rate
     :param lambtha: L2 regularization parameter
     :param L: number of layers of the network
+    The neural network uses tanh activations on each layer except the last,
+    which uses a softmax activation
     The weights and biases of the network should be updated in place
     """
     weights_t = weights.copy()
