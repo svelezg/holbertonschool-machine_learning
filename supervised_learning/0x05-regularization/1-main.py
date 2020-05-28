@@ -3,7 +3,7 @@
 import numpy as np
 
 l2_reg_gradient_descent =\
-    __import__('1-l2_reg_gradient_descent').l2_reg_gradient_descent
+    __import__('1b-l2_reg_gradient_descent').l2_reg_gradient_descent
 
 
 def one_hot(Y, classes):
