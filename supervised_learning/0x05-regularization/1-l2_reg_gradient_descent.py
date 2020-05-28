@@ -25,17 +25,16 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     for i in reversed(range(L)):
         if i == L - 1:
             dZ = cache['A{}'.format(i + 1)] - Y
-            dW = np.matmul(dZ, cache['A{}'.format(i)].T) / m + \
-                (lambtha / m) * weights['W{}'.format(i + 1)]
+            dW = np.matmul(dZ, cache['A{}'.format(i)].T) / m
         else:
-            dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ_t)
+            dZa = np.matmul(weights['W{}'.format(i + 2)].T, dZ)
             dZb = (cache['A{}'.format(i + 1)]
                    * (1 - cache['A{}'.format(i + 1)]))
             dZ = dZa * dZb
 
-            dW = (np.matmul(dZ, cache['A{}'.format(i)].T)) / m + \
-                 (lambtha / m) * weights['W{}'.format(i + 1)]
+            dW = (np.matmul(dZ, cache['A{}'.format(i)].T)) / m
 
+        dW_reg = dW + (lambtha / m) * weights['W{}'.format(i + 1)]
         db = np.sum(dZ, axis=1, keepdims=True) / m
 
         if i == L - 1:
@@ -45,9 +44,8 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         else:
             weights['W{}'.format(i + 1)] = \
                 weights['W{}'.format(i + 1)] \
-                - (alpha * dW)
+                - (alpha * dW_reg)
 
         weights['b{}'.format(i + 1)] = \
             weights['b{}'.format(i + 1)] \
             - (alpha * db)
-        dZ_t = dZ
