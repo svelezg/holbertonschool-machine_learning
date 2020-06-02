@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Contains the train_model function"""
 
+import tensorflow.keras as keras
+
 
 def train_model(network, data, labels, batch_size, epochs,
                 verbose=True, shuffle=False):
