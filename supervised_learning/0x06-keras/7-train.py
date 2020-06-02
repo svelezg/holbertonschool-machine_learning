@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Contains the train_model function"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
+import tensorflow.keras as K
 
 
 def train_model(network, data, labels,
@@ -33,23 +32,27 @@ def train_model(network, data, labels,
             the batches every epoch.
         :return: History object generated after training the model
         """
+
     def learning_rate(epoch):
         """ updates the learning rate using inverse time decay """
         return alpha / (1 + decay_rate * epoch)
-        # return alpha * tf.math.exp(decay_rate * (1 - epoch))
 
-    cb_list = []
+    callback_list = []
 
+    # learning rate decay callback
     if validation_data and learning_rate_decay:
-        lrd = tf.keras.callbacks.LearningRateScheduler(learning_rate,
-                                                       verbose=1)
-        cb_list.append(lrd)
+        lrd = K.callbacks.LearningRateScheduler(learning_rate,
+                                                verbose=1)
+        callback_list.append(lrd)
 
+    # early stopping callback
     if validation_data and early_stopping:
-        es = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
-                                              mode='min',
-                                              patience=patience)
-        cb_list.append(es)
+        es = K.callbacks.EarlyStopping(monitor='val_loss',
+                                       mode='min',
+                                       patience=patience)
+        callback_list.append(es)
+
+    # training
     history = network.fit(data,
                           labels,
                           batch_size=batch_size,
@@ -57,26 +60,6 @@ def train_model(network, data, labels,
                           validation_data=validation_data,
                           verbose=verbose,
                           shuffle=shuffle,
-                          callbacks=cb_list
-                          )
-
-    # list all data in history
-    print(history.history.keys())
-    # summarize history for accuracy
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-    plt.title('model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
-    # summarize history for loss
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
+                          callbacks=callback_list)
 
     return history

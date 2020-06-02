@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Contains the train_model function"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
+import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, epochs,
@@ -27,12 +26,16 @@ def train_model(network, data, labels, batch_size, epochs,
         the batches every epoch.
     :return: History object generated after training the model
     """
-    cb_list = []
-    if validation_data is not None and early_stopping:
-        es = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
-                                              mode='min',
-                                              patience=patience)
-        cb_list.append(es)
+    callback_list = []
+
+    # early stopping callback
+    if validation_data and early_stopping:
+        es = K.callbacks.EarlyStopping(monitor='val_loss',
+                                       mode='min',
+                                       patience=patience)
+        callback_list.append(es)
+
+    # training
     history = network.fit(data,
                           labels,
                           batch_size=batch_size,
@@ -40,26 +43,6 @@ def train_model(network, data, labels, batch_size, epochs,
                           validation_data=validation_data,
                           verbose=verbose,
                           shuffle=shuffle,
-                          callbacks=cb_list
-                          )
-
-    # list all data in history
-    print(history.history.keys())
-    # summarize history for accuracy
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-    plt.title('model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
-    # summarize history for loss
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
+                          callbacks=callback_list)
 
     return history

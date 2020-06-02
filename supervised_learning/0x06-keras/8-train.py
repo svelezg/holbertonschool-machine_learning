@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Contains the train_model function"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
+import tensorflow.keras as K
 
 
 def train_model(network, data, labels, batch_size, epochs,
@@ -38,30 +37,35 @@ def train_model(network, data, labels, batch_size, epochs,
             but for reproducibility, we have chosen to set the default to False
         :return: History object generated after training the model
         """
+
     def learning_rate(epoch):
         """ updates the learning rate using inverse time decay """
         return alpha / (1 + decay_rate * epoch)
 
-    cb_list = []
+    callback_list = []
 
+    # models save callback
     if save_best:
-        # Save weights to a TensorFlow Checkpoint file
-        mcp_save = tf.keras.callbacks.ModelCheckpoint(filepath,
-                                                      save_best_only=True,
-                                                      monitor='val_loss',
-                                                      mode='min')
-        cb_list.append(mcp_save)
+        mcp_save = K.callbacks.ModelCheckpoint(filepath,
+                                               save_best_only=True,
+                                               monitor='val_loss',
+                                               mode='min')
+        callback_list.append(mcp_save)
 
+    # learning rate decay callback
     if validation_data and learning_rate_decay:
-        lrd = tf.keras.callbacks.LearningRateScheduler(learning_rate,
-                                                       verbose=1)
-        cb_list.append(lrd)
+        lrd = K.callbacks.LearningRateScheduler(learning_rate,
+                                                verbose=1)
+        callback_list.append(lrd)
 
+    # early stopping callback
     if validation_data and early_stopping:
-        es = tf.keras.callbacks.EarlyStopping(monitor='val_loss',
-                                              mode='min',
-                                              patience=patience)
-        cb_list.append(es)
+        es = K.callbacks.EarlyStopping(monitor='val_loss',
+                                       mode='min',
+                                       patience=patience)
+        callback_list.append(es)
+
+    # training
     history = network.fit(data,
                           labels,
                           batch_size=batch_size,
@@ -69,26 +73,6 @@ def train_model(network, data, labels, batch_size, epochs,
                           validation_data=validation_data,
                           verbose=verbose,
                           shuffle=shuffle,
-                          callbacks=cb_list
-                          )
-
-    # list all data in history
-    print(history.history.keys())
-    # summarize history for accuracy
-    plt.plot(history.history['acc'])
-    plt.plot(history.history['val_acc'])
-    plt.title('model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
-    # summarize history for loss
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    plt.show()
+                          callbacks=callback_list)
 
     return history
