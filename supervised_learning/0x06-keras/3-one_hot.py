@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Contains the one_hot function"""
 
-import tensorflow as tf
+import tensorflow.keras as keras
 
 
 def one_hot(labels, classes=None):
@@ -11,6 +11,5 @@ def one_hot(labels, classes=None):
     :param classes:
     :return: the one-hot matrix
     """
-    return tf.keras.utils.to_categorical(
-        labels, classes
-    )
+    return keras.utils.to_categorical(
+        labels, classes)

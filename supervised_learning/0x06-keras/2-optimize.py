@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Contains the optimize_model function"""
 
-import tensorflow as tf
+import tensorflow.keras as keras
 
 
 def optimize_model(network, alpha, beta1, beta2):
@@ -14,7 +14,7 @@ def optimize_model(network, alpha, beta1, beta2):
     :param beta2: second Adam optimization parameter
     :return: None
     """
-    network.compile(optimizer=tf.keras.optimizers.Adam(alpha, beta1, beta2),
+    network.compile(optimizer=keras.optimizers.Adam(alpha, beta1, beta2),
                     loss='categorical_crossentropy',
                     metrics=['accuracy'])
 
