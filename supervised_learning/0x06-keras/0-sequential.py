@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Contains the build_model function"""
 
-import tensorflow as tf
+import tensorflow.keras as keras
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
@@ -16,23 +16,25 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     :param keep_prob: probability that a node will be kept for dropout
     :return: keras model
     """
-    reg = tf.keras.regularizers.L1L2(l2=lambtha)
+    # model is a stack of layers
+    network = keras.Sequential()
 
-    model = tf.keras.Sequential()
+    # regularization scheme
+    reg = keras.regularizers.L1L2(l2=lambtha)
 
-    # Adds first densely-connected layer to the model:
-    model.add(tf.keras.layers.Dense(units=layers[0],
-                                    activation=activations[0],
-                                    kernel_regularizer=reg,
-                                    input_shape=(nx,),
-                                    ))
+    # first densely-connected layer
+    network.add(keras.layers.Dense(units=layers[0],
+                                   activation=activations[0],
+                                   kernel_regularizer=reg,
+                                   input_shape=(nx,),
+                                   ))
 
-    # Add subsequent densely-connected layers:
+    # subsequent densely-connected layers:
     for i in range(1, len(layers)):
-        model.add(tf.keras.layers.Dropout(1 - keep_prob))
-        model.add(tf.keras.layers.Dense(units=layers[i],
-                                        activation=activations[i],
-                                        kernel_regularizer=reg,
-                                        ))
+        network.add(keras.layers.Dropout(1 - keep_prob))
+        network.add(keras.layers.Dense(units=layers[i],
+                                       activation=activations[i],
+                                       kernel_regularizer=reg,
+                                       ))
 
-    return model
+    return network
