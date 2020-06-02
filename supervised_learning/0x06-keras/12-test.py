@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """Contains the test_model function"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
-import json
+import tensorflow.keras as K
 
 
 def test_model(network, data, labels, verbose=True):
@@ -16,4 +14,5 @@ def test_model(network, data, labels, verbose=True):
         be printed during the testing process
     :return: loss and accuracy of the model with the testing data, respectively
     """
-    return network.evaluate(data, labels, verbose=verbose)
+    test = network.evaluate(data, labels, verbose=verbose)
+    return test

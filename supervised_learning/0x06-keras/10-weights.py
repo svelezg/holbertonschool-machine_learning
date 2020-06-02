@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Contains the save_weights and the load_weights functions"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
+import tensorflow.keras as K
 
 
 def save_weights(network, filename, save_format='h5'):

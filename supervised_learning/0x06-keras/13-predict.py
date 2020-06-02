@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Contains the test_model function"""
 
-import tensorflow as tf
+import tensorflow.keras as K
 
 
 def predict(network, data, verbose=False):
@@ -13,5 +13,5 @@ def predict(network, data, verbose=False):
         should be printed during the prediction process
     :return:  prediction for the data
     """
-    result = network.predict(data, verbose=verbose)
-    return result
+    prediction = network.predict(data, verbose=verbose)
+    return prediction

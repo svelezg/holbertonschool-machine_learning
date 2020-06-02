@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Contains the save_model and the load_model function"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
+import tensorflow.keras as K
 
 
 def save_model(network, filename):
@@ -22,5 +21,5 @@ def load_model(filename):
     :param filename:  path of the file that the model should be loaded from
     :return: loaded model
     """
-    network = tf.keras.models.load_model(filename)
+    network = K.models.load_model(filename)
     return network

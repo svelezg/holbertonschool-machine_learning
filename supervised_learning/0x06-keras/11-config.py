@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """Contains the save_config and the load_config functions"""
 
-import tensorflow as tf
-import matplotlib.pyplot as plt
-import json
+import tensorflow.keras as K
 
 
 def save_config(network, filename):
@@ -28,5 +26,5 @@ def load_config(filename):
     """
     with open(filename, "r") as f:
         network_string = f.read()
-    network = tf.keras.models.model_from_json(network_string)
+    network = K.models.model_from_json(network_string)
     return network
