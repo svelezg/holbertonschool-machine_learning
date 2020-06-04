@@ -47,13 +47,12 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
         pw = padding[1]
 
     # pad images
-    if padding == 'same' or type(padding) == tuple:
-        images = np.pad(images,
-                        pad_width=((0, 0),
-                                   (ph, ph),
-                                   (pw, pw),
-                                   (0, 0)),
-                        mode='constant', constant_values=0)
+    images = np.pad(images,
+                    pad_width=((0, 0),
+                               (ph, ph),
+                               (pw, pw),
+                               (0, 0)),
+                    mode='constant', constant_values=0)
 
     new_h = int(((h + 2 * ph - kh) / sh) + 1)
     new_w = int(((w + 2 * pw - kw) / sw) + 1)
