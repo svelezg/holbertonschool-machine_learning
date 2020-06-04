@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-build_model = __import__('0b-sequential').build_model
+build_model = __import__('0-sequential').build_model
 
 if __name__ == '__main__':
     network = build_model(784, [256, 256, 10],
