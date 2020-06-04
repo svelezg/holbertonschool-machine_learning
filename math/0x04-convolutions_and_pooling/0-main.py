@@ -19,3 +19,8 @@ if __name__ == '__main__':
     plt.show()
     plt.imshow(images_conv[0], cmap='gray')
     plt.show()
+
+    plt.imshow(images[300], cmap='gray')
+    plt.show()
+    plt.imshow(images_conv[300], cmap='gray')
+    plt.show()
