@@ -39,19 +39,22 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         and the biases (db), respectively
     """
     # Retrieving dimensions from dZ
-    (m, h_new, w_new, c_new) = dZ.shape
+    m, h_new, w_new, c_new = dZ.shape
 
     # Retrieving dimensions from A_prev shape
-    (_, h_prev, w_prev, c_prev) = A_prev.shape
+    _, h_prev, w_prev, c_prev = A_prev.shape
 
     # Retrieving dimensions from W's shape
-    (kh, kw, _, _) = W.shape
+    kh, kw, _, _ = W.shape
 
     # Retrieving stride
-    (sh, sw) = stride
+    sh, sw = stride
 
     # Setting padding for valid
     pw, ph = 0, 0
+
+    # bias calculation
+    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
 
     # Setting padding for same
     if padding == 'same':
@@ -67,9 +70,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     mode='constant', constant_values=0)
 
     # Initializing dX, dW with the correct shapes
-    dA_prev = np.zeros(A_prev.shape)
-    dW = np.zeros(W.shape)
-    db = np.sum(dZ, axis=(0, 1, 2), keepdims=True)
+    dW = np.zeros_like(W)
+    dA_prev = np.zeros_like(A_prev)
 
     # Looping over vertical(h) and horizontal(w) axis of the output
     for z in range(m):
@@ -88,5 +90,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                                         x * sw: x * sw + kw,
                                         :]
                     dW[:, :, :, v] += tmp_A_prev * tmp_dz
+
+    # subtracting padding
+    dA_prev = dA_prev[:, ph:-ph, pw:-pw, :]
 
     return dA_prev, dW, db
