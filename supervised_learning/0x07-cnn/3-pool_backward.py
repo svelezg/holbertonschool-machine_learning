@@ -33,41 +33,35 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     :return: partial derivatives with respect to the previous layer (dA_prev)
     """
     # Retrieving dimensions from dA
-    (m, h_new, w_new, c) = dA.shape
+    m, h_new, w_new, c = dA.shape
 
     # Retrieving dimensions from A_prev shape
-    (m, h_prev, w_prev, c_prev) = A_prev.shape
+    m, h_prev, w_prev, c_prev = A_prev.shape
 
     # Retrieving dimensions from kernel_shape
-    (kh, kw) = kernel_shape
+    kh, kw = kernel_shape
 
     # Retrieving stride
-    (sh, sw) = stride
+    sh, sw = stride
 
     # Initialize the output with zeros
-    dA_prev = np.zeros_like(A_prev, dtype=dA.dtype)
+    dA_prev = np.zeros(A_prev.shape)
 
     for z in range(m):
         for y in range(h_new):
             for x in range(w_new):
                 for v in range(c):
                     tmp_dA = dA[z, y, x, v]
-                    pool = A_prev[z, y * sh: y * sh + kh,
-                                  x * sw: x * sw + kw, v]
+                    pool = A_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v]
 
                     if mode == 'max':
-                        mask = np.zeros(kernel_shape)
-                        max_ = np.amax(pool)
-                        np.place(mask, pool == max_, 1)
-                        dA_prev[z, y * sh: y * sh + kh,
-                                x * sw: x * sw + kw, v] += \
+                        mask = np.where(pool == np.max(pool), 1, 0)
+                        dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v] += \
                             mask * tmp_dA
                     if mode == 'avg':
                         mask = np.ones(kernel_shape)
-                        avg_ = tmp_dA / kh / kw
-                        dA_prev[z,
-                                y * sh: y * sh + kh,
-                                x * sw: x * sw + kw: v] += \
+                        avg_ = tmp_dA/(kh*kw)
+                        dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw: v] += \
                             mask * avg_
 
     return dA_prev
