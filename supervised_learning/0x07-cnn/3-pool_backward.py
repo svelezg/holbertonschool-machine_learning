@@ -45,11 +45,11 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     (sh, sw) = stride
 
     # Initialize the output with zeros
-    dA_prev = np.zeros(A_prev.shape)
+    dA_prev = np.zeros_like(A_prev, dtype=dA.dtype)
 
     for z in range(m):
-        for x in range(w_new):
-            for y in range(h_new):
+        for y in range(h_new):
+            for x in range(w_new):
                 for v in range(c):
                     tmp_dA = dA[z, y, x, v]
                     pool = A_prev[z, y * sh: y * sh + kh,
