@@ -32,38 +32,27 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
         indicating whether to perform maximum or average pooling, respectively
     :return: partial derivatives with respect to the previous layer (dA_prev)
     """
-    # Retrieving dimensions from dA
-    m, h_new, w_new, c_new = dA.shape
-
-    # Retrieving dimensions from A_prev shape
-    m, h_prev, w_prev, c_prev = A_prev.shape
-
-    # Retrieving dimensions from kernel_shape
+    m, h_new, w_new, c = dA.shape
+    _, h_prev, w_prev, _ = A_prev.shape
     kh, kw = kernel_shape
-
-    # Retrieving stride
     sh, sw = stride
 
-    # Initialize the output with zeros
     dA_prev = np.zeros_like(A_prev, dtype=dA.dtype)
-
-    for z in range(m):
-        for y in range(h_new):
-            for x in range(w_new):
-                for v in range(c_new):
-                    pool = A_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v]
-                    aux_dA = dA[z, y, x, v]
+    for m_i in range(m):
+        for h in range(h_new):
+            for w in range(w_new):
+                for c_i in range(c):
+                    pool = A_prev[m_i, h * sh:(kh + h * sh), w * sw:(kw + w * sw), c_i]
+                    dA_val = dA[m_i, h, w, c_i]
                     if mode == 'max':
-                        z_mask = np.zeros(kernel_shape)
+                        zero_mask = np.zeros(kernel_shape)
                         _max = np.amax(pool)
-                        np.place(z_mask, pool == _max, 1)
-                        dA_prev[z, y*sh: y*sh+kh,
-                                x*sw: x*sw+kw, v] += z_mask * aux_dA
-
+                        np.place(zero_mask, pool == _max, 1)
+                        dA_prev[m_i, h * sh:(kh + h * sh),
+                        w * sw:(kw + w * sw), c_i] += zero_mask * dA_val
                     if mode == 'avg':
-                        avg = aux_dA/kh/kw
-                        o_mask = np.ones(kernel_shape)
-                        dA_prev[z, y*sh: y*sh+kh,
-                                x*sw: x*sw+kw: v] += o_mask * avg
-
+                        avg = dA_val / kh / kw
+                        one_mask = np.ones(kernel_shape)
+                        dA_prev[m_i, h * sh:(kh + h * sh),
+                        w * sw:(kw + w * sw), c_i] += one_mask * avg
     return dA_prev
