@@ -59,7 +59,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                         dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v] += \
                             mask * tmp_dA
                     if mode == 'avg':
-                        mask = np.ones(kernel_shape)
+                        mask = np.ones(pool.shape)
                         avg_ = tmp_dA/(kh*kw)
                         dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw: v] += \
                             mask * avg_
