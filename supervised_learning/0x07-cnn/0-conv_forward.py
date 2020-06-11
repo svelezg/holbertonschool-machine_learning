@@ -41,10 +41,25 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     # Setting padding for valid
     pw, ph = 0, 0
 
+    # Compute the output dimensions
+    n_h = int(((h_prev + 2 * ph - kh) / sh) + 1)
+    n_w = int(((w_prev + 2 * pw - kw) / sw) + 1)
+
     # Setting padding for same
     if padding == 'same':
-        ph = int(((h_prev - 1) * sh + kh - h_prev) / 2) + 1
-        pw = int(((w_prev - 1) * sw + kw - w_prev) / 2) + 1
+        if kh % 2 == 0:
+            ph = int((h_prev * sh + kh - h_prev) / 2)
+            n_h = int(((h_prev + 2 * ph - kh) / sh))
+        else:
+            ph = int(((h_prev - 1) * sh + kh - h_prev) / 2)
+            n_h = int(((h_prev + 2 * ph - kh) / sh) + 1)
+
+        if kw % 2 == 0:
+            pw = int((w_prev * sw + kw - w_prev) / 2)
+            n_w = int(((w_prev + 2 * pw - kw) / sw))
+        else:
+            pw = int(((w_prev - 1) * sw + kw - w_prev) / 2)
+            n_w = int(((w_prev + 2 * pw - kw) / sw) + 1)
 
     # pad images
     images = np.pad(A_prev,
@@ -54,9 +69,7 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
                                (0, 0)),
                     mode='constant', constant_values=0)
 
-    # Compute the output dimensions
-    n_h = int(((h_prev + 2 * ph - kh) / sh) + 1)
-    n_w = int(((w_prev + 2 * pw - kw) / sw) + 1)
+
 
     # Initialize the output with zeros
     output = np.zeros((m, n_h, n_w, c_new))
