@@ -58,8 +58,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     # Setting padding for same
     if padding == 'same':
-        ph = int(np.ceil(((h_prev - 1) * sh + kh - h_prev) / 2))
-        pw = int(np.ceil(((w_prev - 1) * sw + kw - w_prev) / 2))
+        ph = int(np.ceil(((h_prev-1)*sh+kh-h_prev)/2))
+        pw = int(np.ceil(((w_prev-1)*sw+kw-w_prev)/2))
 
     # pad images
     A_prev = np.pad(A_prev,
@@ -71,7 +71,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     # Initializing dX, dW with the correct shapes
     dW = np.zeros_like(W)
-    dA_prev = np.zeros_like(A_prev)
+    dA = np.zeros_like(A_prev)
 
     # Looping over vertical(h) and horizontal(w) axis of the output
     for z in range(m):
@@ -79,19 +79,14 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
             for x in range(w_new):
                 # over every channel
                 for v in range(c_new):
-                    tmp_W = W[:, :, :, v]
-                    tmp_dz = dZ[z, y, x, v]
+                    aux_W = W[:, :, :, v]
+                    aux_dz = dZ[z, y, x, v]
+                    aux_A_prev = A_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, :]
 
-                    dA_prev[z, y * sh: y * sh + kh,
-                            x * sw: x * sw + kw,
-                            :] += tmp_dz * tmp_W
-
-                    tmp_A_prev = A_prev[z, y * sh: y * sh + kh,
-                                        x * sw: x * sw + kw,
-                                        :]
-                    dW[:, :, :, v] += tmp_A_prev * tmp_dz
+                    dA[z, y*sh: y*sh+kh, x*sw: x*sw+kw, :] += aux_dz * aux_W
+                    dW[:, :, :, v] += aux_A_prev * aux_dz
 
     # subtracting padding
-    dA_prev = dA_prev[:, ph:-ph, pw:-pw, :]
+    dA = dA[:, ph:h_prev-ph, pw:w_prev-pw, :]
 
-    return dA_prev, dW, db
+    return dA, dW, db
