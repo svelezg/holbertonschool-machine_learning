@@ -42,10 +42,10 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     (m, h_new, w_new, c_new) = dZ.shape
 
     # Retrieving dimensions from A_prev shape
-    (m, h_prev, w_prev, c_prev) = A_prev.shape
+    (_, h_prev, w_prev, c_prev) = A_prev.shape
 
     # Retrieving dimensions from W's shape
-    (kh, kw, c_prev, c_new) = W.shape
+    (kh, kw, _, _) = W.shape
 
     # Retrieving stride
     (sh, sw) = stride
@@ -55,8 +55,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     # Setting padding for same
     if padding == 'same':
-        ph = int(((h_prev - 1) * sh + kh - h_prev) / 2) + 1
-        pw = int(((w_prev - 1) * sw + kw - w_prev) / 2) + 1
+        ph = int(np.ceil(((h_prev - 1) * sh + kh - h_prev) / 2))
+        pw = int(np.ceil(((w_prev - 1) * sw + kw - w_prev) / 2))
 
     # pad images
     A_prev = np.pad(A_prev,
