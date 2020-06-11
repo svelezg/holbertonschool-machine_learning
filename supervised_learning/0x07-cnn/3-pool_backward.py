@@ -13,7 +13,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
         m is the number of examples
         h_new is the height of the output
         w_new is the width of the output
-        c is the number of channels
+        c_new is the number of channels
     :param A_prev: numpy.ndarray of shape (m, h_prev, w_prev, c_prev)
         containing the output of the previous layer
         m is the number of examples
@@ -33,7 +33,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     :return: partial derivatives with respect to the previous layer (dA_prev)
     """
     # Retrieving dimensions from dA
-    m, h_new, w_new, c = dA.shape
+    m, h_new, w_new, c_new = dA.shape
 
     # Retrieving dimensions from A_prev shape
     m, h_prev, w_prev, c_prev = A_prev.shape
@@ -50,18 +50,21 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     for z in range(m):
         for y in range(h_new):
             for x in range(w_new):
-                for v in range(c):
+                for v in range(c_new):
                     tmp_dA = dA[z, y, x, v]
                     pool = A_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v]
 
                     if mode == 'max':
-                        mask = np.where(pool == np.max(pool), 1, 0)
-                        dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v] += \
-                            mask * tmp_dA
+                        mask = np.zeros(kernel_shape)
+                        _max = np.amax(pool)
+                        np.place(mask, pool == _max, 1)
+                        res = mask * tmp_dA
+                        dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw, v] += res
+
                     if mode == 'avg':
-                        mask = np.ones(pool.shape)
-                        avg_ = tmp_dA/(kh*kw)
-                        dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw: v] += \
-                            mask * avg_
+                        avg_ = tmp_dA / (kh * kw)
+                        mask = np.ones(kernel_shape)
+                        res = mask * avg_
+                        dA_prev[z, y*sh: y*sh+kh, x*sw: x*sw+kw: v] += res
 
     return dA_prev
