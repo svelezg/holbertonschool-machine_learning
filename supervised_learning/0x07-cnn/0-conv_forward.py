@@ -69,8 +69,6 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
                                (0, 0)),
                     mode='constant', constant_values=0)
 
-
-
     # Initialize the output with zeros
     output = np.zeros((m, n_h, n_w, c_new))
 
