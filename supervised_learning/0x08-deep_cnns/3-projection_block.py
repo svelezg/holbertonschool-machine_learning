@@ -52,7 +52,7 @@ def projection_block(A_prev, filters, s=2):
 
     # shotcut path
     # Conv 1x1
-    short = K.layers.Conv2D(filters=256,
+    short = K.layers.Conv2D(filters=F12,
                             kernel_size=(1, 1),
                             strides=(s, s),
                             padding='same',
