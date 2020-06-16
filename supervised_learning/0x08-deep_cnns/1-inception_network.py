@@ -75,7 +75,7 @@ def inception_network():
     my_layer = inception_block(my_layer, [256, 160, 320, 32, 128, 128])
     my_layer = inception_block(my_layer, [384, 192, 384, 48, 128, 128])
 
-    # Max pooling layer with kernels of shape 3x3 with 2x2 strides
+    # Avg pooling layer with kernels of shape 7x7
     my_layer = K.layers.AveragePooling2D(pool_size=(7, 7),
                                          padding='same')(my_layer)
 
