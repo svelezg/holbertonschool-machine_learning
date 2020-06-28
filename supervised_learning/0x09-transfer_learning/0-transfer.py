@@ -19,6 +19,13 @@ if __name__ == '__main__':
     x_train = K.applications.densenet.preprocess_input(x_train)
     y_train = K.utils.to_categorical(y_train, 10)
 
+    train_datagen = K.preprocessing.image.ImageDataGenerator(
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True)
+
+    train_gen = train_datagen.flow(x_train, y_train, batch_size=30)
+
     x_test = K.applications.densenet.preprocess_input(x_test)
     y_test = K.utils.to_categorical(y_test, 10)
 
@@ -76,7 +83,7 @@ if __name__ == '__main__':
                                                save_best_only=True)
     callbacks.append(mc__callback)
 
-    history = model.fit(x_train, y_train,
+    history = model.fit(train_gen,
                         validation_data=(x_test, y_test),
                         batch_size=128,
                         callbacks=callbacks,

@@ -103,8 +103,7 @@ In the same file, write a function `def preprocess_data(X, Y):` that pre-process
 Write a blog post explaining your experimental process in completing the task above written as a journal-style scientific paper.
 
 
+*   [Transfer learning ride](https://medium.com/@svelez.velezgarcia/transfer-learning-ride-fa9f2a5d69eb?sk=e2b06d0d9199b63d7f6704ad0e21f948 "Transfer learning")
 
 
-
-#### Add URLs here:
 
