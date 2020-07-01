@@ -189,7 +189,8 @@ class Yolo:
 
         return filtered_boxes, box_classes, box_scores
 
-    def iou(self, box1, box2):
+    @staticmethod
+    def iou(box1, box2):
         xi1 = max(box1[0], box2[0])
         yi1 = max(box1[1], box2[1])
         xi2 = min(box1[2], box2[2])
