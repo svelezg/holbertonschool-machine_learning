@@ -17,6 +17,7 @@ if __name__ == '__main__':
     boxes, box_confidences, box_class_probs = \
         yolo.process_outputs([output1, output2, output3],
                              np.array([500, 700]))
+
     print('Boxes:', boxes)
     print('Box confidences:', box_confidences)
     print('Box class probabilities:', box_class_probs)
