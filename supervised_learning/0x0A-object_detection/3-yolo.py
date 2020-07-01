@@ -189,6 +189,7 @@ class Yolo:
 
     @staticmethod
     def iou(box1, box2):
+        """calculates intersection over union"""
         xi1 = max(box1[0], box2[0])
         yi1 = max(box1[1], box2[1])
         xi2 = min(box1[2], box2[2])
@@ -238,7 +239,7 @@ class Yolo:
                 j = i + 1
                 while j < accumulated_count + class_count:
                     if self.iou(box_predictions[i],
-                                box_predictions[j]) >= self.nms_t:
+                                box_predictions[j]) > self.nms_t:
                         box_predictions = np.delete(box_predictions, j,
                                                     axis=0)
                         predicted_box_scores = np.delete(predicted_box_scores,
