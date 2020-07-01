@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+import cv2
 
 if __name__ == '__main__':
     import numpy as np
+
     Yolo = __import__('6-yolo').Yolo
 
     np.random.seed(0)
@@ -22,4 +24,5 @@ if __name__ == '__main__':
         if "dog.jpg" in name:
             ind = i
             break
+
     yolo.show_boxes(images[i], boxes, box_classes, box_scores, "dog.jpg")
