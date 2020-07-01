@@ -13,6 +13,7 @@ if __name__ == '__main__':
                 '../data/coco_classes.txt',
                 0.6, 0.5, anchors)
     images, image_paths = yolo.load_images('../data/yolo')
+
     i = np.random.randint(0, len(images))
     cv2.imshow(image_paths[i], images[i])
     cv2.waitKey(0)
