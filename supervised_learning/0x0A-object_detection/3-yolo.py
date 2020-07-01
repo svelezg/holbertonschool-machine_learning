@@ -238,8 +238,9 @@ class Yolo:
             while i < accumulated_count + class_count:
                 j = i + 1
                 while j < accumulated_count + class_count:
-                    if self.iou(box_predictions[i],
-                                box_predictions[j]) > self.nms_t:
+                    tmp = self.iou(box_predictions[i],
+                                   box_predictions[j])
+                    if tmp > self.nms_t:
                         box_predictions = np.delete(box_predictions, j,
                                                     axis=0)
                         predicted_box_scores = np.delete(predicted_box_scores,
