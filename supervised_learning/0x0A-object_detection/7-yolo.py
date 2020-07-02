@@ -380,8 +380,10 @@ class Yolo:
         :param folder_path: string representing the path
             to the folder holding all the images to predict
         :return: (predictions, image_paths):
-            predictions: a list of tuples for each image of (boxes, box_classes, box_scores)
-            image_paths: a list of image paths corresponding to each prediction in predictions
+            predictions: a list of tuples for each image of
+            (boxes, box_classes, box_scores)
+            image_paths: a list of image paths corresponding to each
+            prediction in predictions
         """
         predictions = []
 
@@ -392,15 +394,26 @@ class Yolo:
 
         for i in range(pimages.shape[0]):
             current_out = [out[i] for out in outputs]
-            boxes, box_confidences, box_class_probs = self.process_outputs(current_out, image_shapes[i])
-            filtered_boxes, box_classes, box_scores = self.filter_boxes(boxes, box_confidences, box_class_probs)
-            box_predictions, predicted_box_classes, predicted_box_scores = self.non_max_suppression(filtered_boxes,
-                                                                                                    box_classes,
-                                                                                                    box_scores)
+
+            boxes, box_confidences, box_class_probs = \
+                self.process_outputs(current_out, image_shapes[i])
+
+            filtered_boxes, box_classes, box_scores = \
+                self.filter_boxes(boxes, box_confidences, box_class_probs)
+
+            box_predictions, predicted_box_classes, predicted_box_scores = \
+                self.non_max_suppression(filtered_boxes,
+                                         box_classes,
+                                         box_scores)
 
             file_name = image_paths[i].split('/')[-1]
-            self.show_boxes(images[i], box_predictions, predicted_box_classes, predicted_box_scores, file_name)
+            self.show_boxes(images[i], box_predictions,
+                            predicted_box_classes,
+                            predicted_box_scores,
+                            file_name)
 
-            predictions.append((box_predictions, predicted_box_classes, predicted_box_scores))
+            predictions.append((box_predictions,
+                                predicted_box_classes,
+                                predicted_box_scores))
 
         return predictions, image_paths
