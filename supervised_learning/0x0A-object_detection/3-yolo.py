@@ -189,15 +189,18 @@ class Yolo:
 
     @staticmethod
     def iou(box1, box2):
-        """calculates intersection over union"""
+        """calculates intersection over union
+        (x1, y1, x2, y2)"""
         xi1 = max(box1[0], box2[0])
         yi1 = max(box1[1], box2[1])
         xi2 = min(box1[2], box2[2])
         yi2 = min(box1[3], box2[3])
-        inter_area = (yi2 - yi1) * (xi2 - xi1)
+        inter_area = max(yi2 - yi1, 0) * max(xi2 - xi1, 0)
+
         box1_area = (box1[3] - box1[1]) * (box1[2] - box1[0])
         box2_area = (box2[3] - box2[1]) * (box2[2] - box2[0])
         union_area = box1_area + box2_area - inter_area
+
         iou = inter_area / union_area
 
         return iou
@@ -235,24 +238,23 @@ class Yolo:
         accumulated_count = 0
 
         for class_count in class_counts:
-            j = 1
             while i < accumulated_count + class_count:
-                while j < accumulated_count + class_count - i:
+                j = i + 1
+                while j < accumulated_count + class_count:
                     tmp = self.iou(box_predictions[i],
-                                   box_predictions[i + j])
-                    if tmp >= self.nms_t:
-                        box_predictions = np.delete(box_predictions, i + j,
+                                   box_predictions[j])
+                    if tmp > self.nms_t:
+                        box_predictions = np.delete(box_predictions, j,
                                                     axis=0)
                         predicted_box_scores = np.delete(predicted_box_scores,
-                                                         i + j, axis=0)
+                                                         j, axis=0)
                         predicted_box_classes = (np.delete
                                                  (predicted_box_classes,
-                                                  i + j, axis=0))
+                                                  j, axis=0))
                         class_count -= 1
                     else:
                         j += 1
                 i += 1
-                j = 1
             accumulated_count += class_count
 
         return box_predictions, predicted_box_classes, predicted_box_scores

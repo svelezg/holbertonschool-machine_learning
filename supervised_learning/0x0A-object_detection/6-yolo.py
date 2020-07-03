@@ -196,10 +196,12 @@ class Yolo:
         yi1 = max(box1[1], box2[1])
         xi2 = min(box1[2], box2[2])
         yi2 = min(box1[3], box2[3])
-        inter_area = (yi2 - yi1) * (xi2 - xi1)
+        inter_area = max(yi2 - yi1, 0) * max(xi2 - xi1, 0)
+
         box1_area = (box1[3] - box1[1]) * (box1[2] - box1[0])
         box2_area = (box2[3] - box2[1]) * (box2[2] - box2[0])
         union_area = box1_area + box2_area - inter_area
+
         iou = inter_area / union_area
 
         return iou
