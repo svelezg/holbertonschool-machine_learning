@@ -7,7 +7,7 @@ from matplotlib.patches import Circle
 import numpy as np
 
 fa = FaceAlign('models/landmarks.dat')
-test_img = mpimg.imread('HBTN/KirenSrinivasan.jpg')
+test_img = mpimg.imread('HBTN/DavidKwan.jpg')
 anchors = np.array([[0.194157, 0.16926692],
                     [0.7888591, 0.15817115],
                     [0.4949509, 0.5144414]],
