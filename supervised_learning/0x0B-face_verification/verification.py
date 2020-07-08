@@ -37,7 +37,7 @@ class FaceVerification:
         embedded = np.zeros((images.shape[0], 128))
 
         for i, img in enumerate(images):
-            embedded[i] = self.base_model.predict(np.expand_dims(img, axis=0))[0]
+            embedded[i] = self.model.predict(np.expand_dims(img, axis=0))[0]
 
         return np.array(embedded)
 
