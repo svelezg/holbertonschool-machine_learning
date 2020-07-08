@@ -31,7 +31,6 @@ class TrainModel:
         network1 = self.base_model(P)
         network2 = self.base_model(N)
 
-        #
         tl = TripletLoss(alpha)
 
         # combine the output of the two branches
@@ -40,7 +39,7 @@ class TrainModel:
 
         my_model = tf.keras.models.Model([A, P, N], output)
 
-        my_model.compile()
+        my_model.compile(optimizer='adam')
 
         self.training_model = my_model
 
