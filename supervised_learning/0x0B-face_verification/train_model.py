@@ -32,8 +32,8 @@ class TrainModel:
         N = tf.keras.Input(shape=(None, 96, 96, 3))
         inputs = [A, P, N]
 
-        output = self.base_model(inputs)
-
+        network = self.base_model(inputs)
+        output = network.layers[-1].output
         output = tl(output)
 
         self.training_model = tf.keras.models.Model(inputs, output)
