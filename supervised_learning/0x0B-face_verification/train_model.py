@@ -23,37 +23,23 @@ class TrainModel:
         with tf.keras.utils.CustomObjectScope({'tf': tf}):
             self.base_model = tf.keras.models.load_model(model_path)
 
-        self.base_model.save('base_model')
-        self.base_model.summary()
-
-
         A = tf.keras.Input(shape=(96, 96, 3))
         P = tf.keras.Input(shape=(96, 96, 3))
         N = tf.keras.Input(shape=(96, 96, 3))
-
 
         network0 = self.base_model(A)
         network1 = self.base_model(P)
         network2 = self.base_model(N)
 
-        # combine the output of the two branches
-        #combined = tf.keras.layers.Concatenate([network0, network1, network2])
-
-
-        #**********
         tl = TripletLoss(alpha)
 
-        #combined = [tf.keras.Input((128,)), tf.keras.Input((128,)), tf.keras.Input((128,))]
+        # combine the output of the two branches
         combined = [network0, network1, network2]
-
         output = tl(combined)
 
         my_model = tf.keras.models.Model([A, P, N], output)
-        my_model.summary()
 
-        #*************
-
-        my_model.compile(optimizer='adam')
+        my_model.compile()
 
         self.training_model = my_model
 
