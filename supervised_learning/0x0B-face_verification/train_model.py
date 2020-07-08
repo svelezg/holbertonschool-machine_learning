@@ -56,6 +56,6 @@ class TrainModel:
                                           batch_size=batch_size,
                                           epochs=epochs,
                                           verbose=verbose,
-                                          validation=validation_split)
+                                          validation_split=validation_split)
 
         return history
