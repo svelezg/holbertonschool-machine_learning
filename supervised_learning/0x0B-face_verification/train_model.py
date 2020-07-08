@@ -59,3 +59,37 @@ class TrainModel:
                                           validation_split=validation_split)
 
         return history
+
+    def save(self, save_path):
+        """
+        :param save_path: path to save the model
+        :return: saved model
+        """
+        self.training_model.save(save_path)
+
+    @staticmethod
+    def f1_score(y_true, y_pred):
+        """
+
+        :param y_true:
+        :param y_pred:
+        :return: the f1 score
+        """
+
+    @staticmethod
+    def accuracy(y_true, y_pred):
+        """
+
+        :param y_true:
+        :param y_pred:
+        :return: the accuracy
+        """
+
+    def best_tau(self, images, identities, thresholds):
+        """
+
+        :param images:
+        :param identities:
+        :param thresholds:
+        :return: (tau, f1, acc)
+        """
