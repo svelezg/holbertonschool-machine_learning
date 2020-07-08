@@ -12,8 +12,6 @@ triplets = generate_triplets(images, filenames, triplet_names)
 
 tm = TrainModel('models/face_verification.h5', 0.2)
 tm.training_model.summary()
-"""
 losses = tm.training_model.predict(triplets, batch_size=1)
 print(losses.shape)
 print(np.mean(losses))
-"""
