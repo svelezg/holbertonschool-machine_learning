@@ -27,7 +27,5 @@ fv = FaceVerification('models/trained_fv.h5', database, identities)
 
 my_image = images[15]
 
-embs = fv.embedding(my_image)
-print(embs.shape)
 
 fv.verify(my_image, 0.06090909090909092)
