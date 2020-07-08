@@ -66,9 +66,7 @@ class FaceVerification:
 
         idx = np.argmin(distances)
 
-        t = 0.06090909090909092
-
-        if distances[idx] < t:
+        if distances[idx] < tau:
             return self.identities[idx], distances[idx]
         else:
             return None, None
