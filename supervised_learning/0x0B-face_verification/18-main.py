@@ -29,3 +29,4 @@ my_image = images[15]
 
 
 print(fv.verify(my_image, 0.06090909090909092))
+print(identities[15])
