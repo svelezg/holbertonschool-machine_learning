@@ -31,6 +31,7 @@ class TrainModel:
         network1 = self.base_model(P)
         network2 = self.base_model(N)
 
+        #
         tl = TripletLoss(alpha)
 
         # combine the output of the two branches
