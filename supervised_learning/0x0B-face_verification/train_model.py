@@ -4,6 +4,8 @@
 from triplet_loss import TripletLoss
 import tensorflow as tf
 
+tf.enable_eager_execution()
+
 
 class TrainModel:
     """
