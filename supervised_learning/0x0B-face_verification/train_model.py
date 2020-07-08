@@ -27,7 +27,7 @@ class TrainModel:
         self.base_model.summary()
 
 
-        A = tf.keras.Input(shape=(None, 96, 96, 3))
+        A = tf.keras.Input(shape=(96, 96, 3))
         P = tf.keras.Input(shape=(None, 96, 96, 3))
         N = tf.keras.Input(shape=(None, 96, 96, 3))
 
