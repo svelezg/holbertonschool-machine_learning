@@ -84,8 +84,15 @@ class TrainModel:
         FP = np.count_nonzero(predicted * (actual - 1))
         FN = np.count_nonzero((predicted - 1) * actual)
 
-        precision = TP / (TP + FP)
-        recall = TP / (TP + FN)
+        if TP + FP == 0:
+            precision = 0
+        else:
+            precision = TP / (TP + FP)
+
+        if (TP + FN) == 0:
+            recall = 0
+        else:
+            recall = TP / (TP + FN)
         f1 = 2 * precision * recall / (precision + recall)
 
         return f1
