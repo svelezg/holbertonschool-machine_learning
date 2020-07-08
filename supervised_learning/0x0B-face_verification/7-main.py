@@ -6,7 +6,13 @@ import matplotlib.pyplot as plt
 
 images, filenames = load_images('HBTNaligned', as_array=True)
 triplet_names = load_csv('FVTriplets.csv')
+print("triplet_names", len(triplet_names))
+
 A, P, N = generate_triplets(images, filenames, triplet_names)
+print("A ", A.shape)
+print("P ", P.shape)
+print("N ", N.shape)
+
 plt.subplot(1, 3, 1)
 plt.title('Anchor:' + triplet_names[0][0])
 plt.imshow(A[0])

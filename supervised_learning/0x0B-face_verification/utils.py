@@ -68,12 +68,50 @@ def save_images(path, images, filenames):
         # Change the current directory
         os.chdir(path)
 
-        for i, image in enumerate(images):
+        for filename, image in zip(filenames, images):
             # Using cv2.imwrite() method to save the image
-            cv2.imwrite(filenames[i], cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(filename, cv2.cvtColor(image, cv2.COLOR_RGB2BGR))
 
         # Change back to working directory
         os.chdir('../')
         return True
     except FileNotFoundError:
         return False
+
+
+def generate_triplets(images, filenames, triplet_names):
+    """
+    generates triplets
+    :param images: numpy.ndarray of shape (n, h, w, 3)
+        containing the various images in the dataset
+    :param filenames: list of length n
+        containing the corresponding filenames for images
+    :param triplet_names: list of lists where each sublist contains
+        the filenames of an anchor, positive, and negative image, respectively
+    :return: [A, P, N]
+        A is a numpy.ndarray of shape (m, h, w, 3)
+            containing the anchor images for all m triplets
+        P is a numpy.ndarray of shape (m, h, w, 3)
+            containing the positive images for all m triplets
+        N is a numpy.ndarray of shape (m, h, w, 3)
+            containing the negative images for all m triplets
+    """
+    A = []
+    P = []
+    N = []
+
+    stript_filenames = [filename.split('.')[0] for filename in filenames]
+
+    for triplet in triplet_names:
+        try:
+            idx_A = stript_filenames.index(triplet[0])
+            idx_P = stript_filenames.index(triplet[1])
+            idx_N = stript_filenames.index(triplet[2])
+
+            A.append(images[idx_A])
+            P.append(images[idx_P])
+            N.append(images[idx_N])
+        except ValueError:
+            pass
+
+    return [np.array(A), np.array(P), np.array(N)]
