@@ -54,7 +54,7 @@ class TrainModel:
 
         #*************
 
-        self.training_model.compile(optimizer=tf.train.AdamOptimizer)
+        self.training_model.compile(optimizer="adam")
 
         self.training_model.save('training_model')
 
