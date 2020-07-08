@@ -27,9 +27,9 @@ class TrainModel:
 
         tl = TripletLoss(alpha)
 
-        A = tf.placeholder(tf.float32, (None, 96, 96, 3))
-        P = tf.placeholder(tf.float32, (None, 96, 96, 3))
-        N = tf.placeholder(tf.float32, (None, 96, 96, 3))
+        A = tf.keras.Input(shape=(None, 96, 96, 3))
+        P = tf.keras.Input(shape=(None, 96, 96, 3))
+        N = tf.keras.Input(shape=(None, 96, 96, 3))
         inputs = [A, P, N]
 
         output = self.base_model(inputs)
