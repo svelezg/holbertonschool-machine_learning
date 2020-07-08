@@ -3,6 +3,7 @@
 
 from triplet_loss import TripletLoss
 import tensorflow as tf
+import numpy as np
 
 
 class TrainModel:
@@ -65,7 +66,7 @@ class TrainModel:
         :param save_path: path to save the model
         :return: saved model
         """
-        self.training_model.save(save_path)
+        return self.base_model.save(save_path)
 
     @staticmethod
     def f1_score(y_true, y_pred):
@@ -77,10 +78,10 @@ class TrainModel:
         """
         predicted = y_pred
         actual = y_true
-        TP = tf.count_nonzero(predicted * actual)
-        TN = tf.count_nonzero((predicted - 1) * (actual - 1))
-        FP = tf.count_nonzero(predicted * (actual - 1))
-        FN = tf.count_nonzero((predicted - 1) * actual)
+        TP = np.count_nonzero(predicted * actual)
+        TN = np.count_nonzero((predicted - 1) * (actual - 1))
+        FP = np.count_nonzero(predicted * (actual - 1))
+        FN = np.count_nonzero((predicted - 1) * actual)
 
         precision = TP / (TP + FP)
         recall = TP / (TP + FN)
@@ -98,14 +99,12 @@ class TrainModel:
         """
         predicted = y_pred
         actual = y_true
-        TP = tf.count_nonzero(predicted * actual)
-        TN = tf.count_nonzero((predicted - 1) * (actual - 1))
-        FP = tf.count_nonzero(predicted * (actual - 1))
-        FN = tf.count_nonzero((predicted - 1) * actual)
+        TP = np.count_nonzero(predicted * actual)
+        TN = np.count_nonzero((predicted - 1) * (actual - 1))
+        FP = np.count_nonzero(predicted * (actual - 1))
+        FN = np.count_nonzero((predicted - 1) * actual)
 
         accuracy = (TP + TN) / (TP + FN + TN + FP)
-
-
 
         return accuracy
 
