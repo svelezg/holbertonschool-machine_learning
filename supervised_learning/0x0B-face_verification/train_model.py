@@ -40,3 +40,22 @@ class TrainModel:
         my_model.compile(optimizer='adam')
 
         self.training_model = my_model
+
+    def train(self, triplets, epochs=5, batch_size=32, validation_split=0.3, verbose=True):
+        """
+
+        :param triplets: list containing the inputs to self.training_model
+        :param epochs: number of epochs to train for
+        :param batch_size: batch size for training
+        :param validation_split: validation split for training
+        :param verbose: boolean that sets the verbosity mode
+        :return: History output from the training
+        """
+        # training
+        history = self.training_model.fit(triplets,
+                                          batch_size=batch_size,
+                                          epochs=epochs,
+                                          verbose=verbose,
+                                          validation=validation_split)
+
+        return history
