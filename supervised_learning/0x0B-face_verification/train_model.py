@@ -22,7 +22,7 @@ class TrainModel:
             self.base_model = tf.keras.models.load_model(model_path)
 
         self.base_model.save('base_model')
-
+        """
         A = tf.placeholder(tf.float32, (None, 96, 96, 3))
         P = tf.placeholder(tf.float32, (None, 96, 96, 3))
         N = tf.placeholder(tf.float32, (None, 96, 96, 3))
@@ -37,7 +37,7 @@ class TrainModel:
         self.training_model.compile(optimizer='Adam')
 
         self.training_model.save('training_model')
-
+        """
     def train(self, triplets, epochs=5, batch_size=32, validation_split=0.3, verbose=True):
         """
 
