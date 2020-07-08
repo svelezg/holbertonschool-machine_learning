@@ -24,6 +24,7 @@ class TrainModel:
             self.base_model = tf.keras.models.load_model(model_path)
 
         self.base_model.save('base_model')
+        self.base_model.summary()
 
         tl = TripletLoss(alpha)
 
