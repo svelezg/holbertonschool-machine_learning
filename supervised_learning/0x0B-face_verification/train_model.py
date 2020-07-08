@@ -33,11 +33,17 @@ class TrainModel:
         N = tf.keras.Input(shape=(None, 96, 96, 3))
         inputs = [A, P, N]
 
-        network = self.base_model(inputs)
-        new_input = network.layers[-1].output
-        output = tl(new_input)
+        network0 = self.base_model(inputs[0])
+        network1 = self.base_model(inputs[1])
+        network2 = self.base_model(inputs[2])
 
-        self.training_model = tf.keras.models.Model(new_input, output)
+        # combine the output of the two branches
+        combined = tf.concatenate([network0.output, network1.output, network2.output])
+
+
+        output = tl(combined)
+
+        self.training_model = tf.keras.models.Model(inputs, output)
 
         self.training_model.compile(optimizer='Adam')
 
