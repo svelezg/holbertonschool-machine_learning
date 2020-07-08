@@ -50,7 +50,7 @@ class FaceVerification:
             distance is the euclidean distance between the verified face embedding and the identified database embedding
         """
 
-        my_embedding = self.embedding(image)
+        my_embedding = self.model.predict(np.expand_dims(image, axis=0))[0]
 
         def distance(emb1, emb2):
             return np.sum(np.square(emb1 - emb2))
