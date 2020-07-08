@@ -30,7 +30,7 @@ class TrainModel:
         N = tf.placeholder(tf.float32, (None, 96, 96, 3))
         inputs = [A, P, N]
 
-        output = self.base_model()(inputs)
+        output = self.base_model(inputs)
 
         output = tl(output)
 
