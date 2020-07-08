@@ -37,7 +37,7 @@ class TrainModel:
         network2 = self.base_model(N)
 
         # combine the output of the two branches
-        combined = tf.keras.layers.Concatenate([network0.layers[-1].output, network1.layers[-1].output, network2.layers[-1].output])
+        combined = tf.keras.layers.Concatenate([network0, network1, network2])
 
 
         #**********
