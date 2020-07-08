@@ -30,7 +30,6 @@ class TrainModel:
         A = tf.keras.Input(shape=(96, 96, 3))
         P = tf.keras.Input(shape=(96, 96, 3))
         N = tf.keras.Input(shape=(96, 96, 3))
-        inputs = [A, P, N]
 
 
         network0 = self.base_model(A)
@@ -49,14 +48,14 @@ class TrainModel:
 
         output = tl(combined)
 
-        self.training_model = tf.keras.models.Model(inputs, output)
-        self.training_model.summary()
+        my_model = tf.keras.models.Model([A, P, N], output)
+        my_model.summary()
 
         #*************
 
-        self.training_model.compile(optimizer="adam")
+        my_model.compile(optimizer='adam')
 
-        self.training_model.save('training_model')
+        self.training_model = my_model
 
     def train(self, triplets, epochs=5, batch_size=32, validation_split=0.3, verbose=True):
         """
