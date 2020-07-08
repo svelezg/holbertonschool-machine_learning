@@ -138,7 +138,7 @@ class TrainModel:
         for i in range(num - 1):
             for j in range(i + 1, num):
                 distances.append(distance(embedded[i], embedded[j]))
-                identical.append(1 if identities[i].name == identities[j].name else 0)
+                identical.append(1 if identities[i] == identities[j] else 0)
 
         distances = np.array(distances)
         identical = np.array(identical)
