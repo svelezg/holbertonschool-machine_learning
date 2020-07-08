@@ -66,7 +66,8 @@ class TrainModel:
         :param save_path: path to save the model
         :return: saved model
         """
-        return self.base_model.save(save_path)
+        tf.keras.models.save_model(self.base_model, save_path)
+        return self.base_model
 
     @staticmethod
     def f1_score(y_true, y_pred):
@@ -110,9 +111,49 @@ class TrainModel:
 
     def best_tau(self, images, identities, thresholds):
         """
-
-        :param images:
-        :param identities:
-        :param thresholds:
+        calculates the best tau to use for a maximal F1 score
+        :param images: numpy.ndarray of shape (m, n, n, 3) containing the aligned images for testing
+            m is the number of images
+            n is the size of the images
+        :param identities: list containing the identities of each image in images
+        :param thresholds: 1D numpy.ndarray of distance thresholds (tau) to test
         :return: (tau, f1, acc)
+            tau- the optimal threshold to maximize F1 score
+            f1 - the maximal F1 score
+            acc - the accuracy associated with the maximal F1 score
         """
+        embedded = np.zeros((images.shape[0], 128))
+
+        for i, img in enumerate(images):
+            embedded[i] = self.base_model.predict(np.expand_dims(img, axis=0))[0]
+
+        def distance(emb1, emb2):
+            return np.sum(np.square(emb1 - emb2))
+
+        distances = []  # squared L2 distance between pairs
+        identical = []  # 1 if same identity, 0 otherwise
+
+        num = len(identities)
+
+        for i in range(num - 1):
+            for j in range(i + 1, num):
+                distances.append(distance(embedded[i], embedded[j]))
+                identical.append(1 if identities[i].name == identities[j].name else 0)
+
+        distances = np.array(distances)
+        identical = np.array(identical)
+
+        f1_scores = [self.f1_score(identical, distances < t) for t in thresholds]
+        acc_scores = [self.accuracy(identical, distances < t) for t in thresholds]
+
+        opt_idx = np.argmax(f1_scores)
+
+        # Threshold at maximal F1 score
+        opt_tau = thresholds[opt_idx]
+
+        opt_f1 = f1_scores[opt_idx]
+
+        # Accuracy at maximal F1 score
+        opt_acc = acc_scores[opt_idx]
+
+        return opt_tau, opt_f1, opt_acc
