@@ -28,27 +28,23 @@ class TrainModel:
 
 
         A = tf.keras.Input(shape=(96, 96, 3))
-        P = tf.keras.Input(shape=(None, 96, 96, 3))
-        N = tf.keras.Input(shape=(None, 96, 96, 3))
+        P = tf.keras.Input(shape=(96, 96, 3))
+        N = tf.keras.Input(shape=(96, 96, 3))
 
 
         network0 = self.base_model(A)
-        network0.summary()
-        #network1 = self.base_model(inputs[1])
-        #network2 = self.base_model(inputs[2])
+        network1 = self.base_model(P)
+        network2 = self.base_model(N)
 
         # combine the output of the two branches
-        #combined = tf.concatenate([network0.output, network1.output, network2.output])
-
-
-
+        combined = tf.keras.layers.Concatenate([network0.output, network1.output, network2.output])
 
 
         #**********
         tl = TripletLoss(alpha)
 
         inputs = [tf.keras.Input((128,)), tf.keras.Input((128,)), tf.keras.Input((128,))]
-        output = tl(inputs)
+        output = tl(combined)
 
         self.training_model = tf.keras.models.Model(inputs, output)
         self.training_model.summary()
