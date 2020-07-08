@@ -65,7 +65,7 @@ class TrainModel:
         :param save_path: path to save the model
         :return: saved model
         """
-        self.save(save_path)
+        self.training_model.save(save_path)
 
     @staticmethod
     def f1_score(y_true, y_pred):
@@ -75,7 +75,7 @@ class TrainModel:
         :param y_pred:
         :return: the f1 score
         """
-        return tf.keras.metrics.F1Score(y_true, y_pred)
+        return tf.metrics.F1Score(y_true, y_pred)
 
     @staticmethod
     def accuracy(y_true, y_pred):
@@ -85,7 +85,7 @@ class TrainModel:
         :param y_pred:
         :return: the accuracy
         """
-        return tf.keras.metrics.accuracy(y_true, y_pred)
+        return tf.metrics.accuracy(y_true, y_pred)
 
     def best_tau(self, images, identities, thresholds):
         """
