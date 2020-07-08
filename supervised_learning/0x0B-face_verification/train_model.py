@@ -75,7 +75,18 @@ class TrainModel:
         :param y_pred:
         :return: the f1 score
         """
-        return tf.metrics.F1Score(y_true, y_pred)
+        predicted = y_pred
+        actual = y_true
+        TP = tf.count_nonzero(predicted * actual)
+        TN = tf.count_nonzero((predicted - 1) * (actual - 1))
+        FP = tf.count_nonzero(predicted * (actual - 1))
+        FN = tf.count_nonzero((predicted - 1) * actual)
+
+        precision = TP / (TP + FP)
+        recall = TP / (TP + FN)
+        f1 = 2 * precision * recall / (precision + recall)
+
+        return f1
 
     @staticmethod
     def accuracy(y_true, y_pred):
@@ -85,7 +96,18 @@ class TrainModel:
         :param y_pred:
         :return: the accuracy
         """
-        return tf.metrics.accuracy(y_true, y_pred)
+        predicted = y_pred
+        actual = y_true
+        TP = tf.count_nonzero(predicted * actual)
+        TN = tf.count_nonzero((predicted - 1) * (actual - 1))
+        FP = tf.count_nonzero(predicted * (actual - 1))
+        FN = tf.count_nonzero((predicted - 1) * actual)
+
+        accuracy = (TP + TN) / (TP + FN + TN + FP)
+
+
+
+        return accuracy
 
     def best_tau(self, images, identities, thresholds):
         """
