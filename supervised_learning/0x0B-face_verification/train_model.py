@@ -30,9 +30,10 @@ class TrainModel:
         A = tf.keras.Input(shape=(None, 96, 96, 3))
         P = tf.keras.Input(shape=(None, 96, 96, 3))
         N = tf.keras.Input(shape=(None, 96, 96, 3))
-        inputs = [A, P, N]
 
-        #network0 = self.base_model(A)
+
+        network0 = self.base_model(A)
+        network0.summary()
         #network1 = self.base_model(inputs[1])
         #network2 = self.base_model(inputs[2])
 
@@ -54,7 +55,7 @@ class TrainModel:
 
         #*************
 
-        self.training_model.compile(optimizer='Adam')
+        self.training_model.compile(optimizer=tf.train.AdamOptimizer)
 
         self.training_model.save('training_model')
 
