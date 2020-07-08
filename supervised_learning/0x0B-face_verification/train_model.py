@@ -33,10 +33,10 @@ class TrainModel:
         inputs = [A, P, N]
 
         network = self.base_model(inputs)
-        output = network.layers[-1].output
-        output = tl(output)
+        new_input = network.layers[-1].output
+        output = tl(new_input)
 
-        self.training_model = tf.keras.models.Model(inputs, output)
+        self.training_model = tf.keras.models.Model(new_input, output)
 
         self.training_model.compile(optimizer='Adam')
 
