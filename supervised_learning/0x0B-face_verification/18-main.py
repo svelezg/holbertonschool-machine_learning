@@ -29,7 +29,7 @@ fv = FaceVerification('models/trained_fv.h5', database, identities)
 test_images, filenames = load_images('TESTaligned', as_array=True)
 my_image = test_images[0]
 
-identity, distance = fv.verify(my_image, 0.06090909090909092)
+identity, distance = fv.verify(my_image)
 print(identity, distance)
 
 if identity is None:
