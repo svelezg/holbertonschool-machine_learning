@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
-"""contians the FaceAlign class"""
+"""contains the FaceAlign class"""
 
 import numpy as np
-import glob
 import cv2
-import os
-import matplotlib.pyplot as plt
 import dlib
 
 

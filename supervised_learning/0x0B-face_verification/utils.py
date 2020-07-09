@@ -5,7 +5,6 @@ import numpy as np
 import glob
 import cv2
 import os
-import matplotlib.pyplot as plt
 
 
 def load_images(images_path, as_array=True):

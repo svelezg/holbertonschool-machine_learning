@@ -15,8 +15,6 @@ class TrainModel:
         """
         constructor
         :param model_path: path to the base face verification embedding model
-            loads the model using with tf.keras.utils.CustomObjectScope({'tf': tf}):
-            saves this model as the public instance method base_model
         :param alpha: alpha to use for the triplet loss calculation
         """
         with tf.keras.utils.CustomObjectScope({'tf': tf}):
@@ -42,9 +40,9 @@ class TrainModel:
 
         self.training_model = my_model
 
-    def train(self, triplets, epochs=5, batch_size=32, validation_split=0.3, verbose=True):
+    def train(self, triplets, epochs=5, batch_size=32,
+              validation_split=0.3, verbose=True):
         """
-
         :param triplets: list containing the inputs to self.training_model
         :param epochs: number of epochs to train for
         :param batch_size: batch size for training
@@ -72,9 +70,12 @@ class TrainModel:
     @staticmethod
     def f1_score(y_true, y_pred):
         """
-
-        :param y_true:
-        :param y_pred:
+        calculates the F1 score of predictions
+        :param y_true: numpy.ndarray of shape (m,)
+            containing the correct labels
+            m is the number of examples
+        :param y_pred: numpy.ndarray of shape (m,)
+            containing the predicted labels
         :return: the f1 score
         """
         predicted = y_pred
@@ -100,9 +101,12 @@ class TrainModel:
     @staticmethod
     def accuracy(y_true, y_pred):
         """
-
-        :param y_true:
-        :param y_pred:
+        calculates the accuracy of predictions
+        :param y_true: numpy.ndarray of shape (m,)
+            containing the correct labels
+            m is the number of examples
+        :param y_pred: numpy.ndarray of shape (m,)
+            containing the predicted labels
         :return: the accuracy
         """
         predicted = y_pred
@@ -119,11 +123,14 @@ class TrainModel:
     def best_tau(self, images, identities, thresholds):
         """
         calculates the best tau to use for a maximal F1 score
-        :param images: numpy.ndarray of shape (m, n, n, 3) containing the aligned images for testing
+        :param images: numpy.ndarray of shape (m, n, n, 3)
+            containing the aligned images for testing
             m is the number of images
             n is the size of the images
-        :param identities: list containing the identities of each image in images
-        :param thresholds: 1D numpy.ndarray of distance thresholds (tau) to test
+        :param identities: list containing the identities of
+            each image in images
+        :param thresholds: 1D numpy.ndarray of distance thresholds
+            (tau) to test
         :return: (tau, f1, acc)
             tau- the optimal threshold to maximize F1 score
             f1 - the maximal F1 score
@@ -132,7 +139,8 @@ class TrainModel:
         embedded = np.zeros((images.shape[0], 128))
 
         for i, img in enumerate(images):
-            embedded[i] = self.base_model.predict(np.expand_dims(img, axis=0))[0]
+            embedded[i] =\
+                self.base_model.predict(np.expand_dims(img, axis=0))[0]
 
         def distance(emb1, emb2):
             return np.sum(np.square(emb1 - emb2))
@@ -150,8 +158,10 @@ class TrainModel:
         distances = np.array(distances)
         identical = np.array(identical)
 
-        f1_scores = [self.f1_score(identical, distances < t) for t in thresholds]
-        acc_scores = [self.accuracy(identical, distances < t) for t in thresholds]
+        f1_scores = \
+            [self.f1_score(identical, distances < t) for t in thresholds]
+        acc_scores = \
+            [self.accuracy(identical, distances < t) for t in thresholds]
 
         opt_idx = np.argmax(f1_scores)
 

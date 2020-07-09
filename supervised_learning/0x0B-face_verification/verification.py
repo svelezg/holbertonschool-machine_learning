@@ -2,12 +2,7 @@
 """contains the FaceVerification class"""
 
 import numpy as np
-import glob
-import cv2
-import os
-import matplotlib.pyplot as plt
 import tensorflow as tf
-import tensorflow.keras as K
 
 
 class FaceVerification:
@@ -17,10 +12,13 @@ class FaceVerification:
 
     def __init__(self, model, database, identities):
         """
-
-        :param model: either the face verification embedding model or the path to where the model is stored
-        :param database: numpy.ndarray of all the face embeddings in the database
-        :param identities: list of identities corresponding to the embeddings in the database
+        constructor
+        :param model: either the face verification embedding model
+            or the path to where the model is stored
+        :param database: numpy.ndarray of all the face embeddings
+            in the database
+        :param identities: list of identities corresponding
+            to the embeddings in the database
         """
         with tf.keras.utils.CustomObjectScope({'tf': tf}):
             self.model = tf.keras.models.load_model(model)
@@ -30,9 +28,13 @@ class FaceVerification:
 
     def embedding(self, images):
         """
-
-        :param images: the images to retrieve the embeddings of
-        :return: numpy.ndarray of embeddings
+        calculates the face embedding of images
+        :param images: numpy.ndarray of shape (i, n, n, 3)
+            containing the aligned images
+            i is the number of images
+            n is the size of the aligned images
+        :return: numpy.ndarray of shape (i, e) containing
+            the embeddings where e is the dimensionality of the embeddings
         """
         embedded = np.zeros((images.shape[0], 128))
 
@@ -43,11 +45,13 @@ class FaceVerification:
 
     def verify(self, image, tau=0.5):
         """
-        :param image: the aligned image of the face to be verify
+        :param image: numpy.ndarray of shape (n, n, 3)
+            containing the aligned image of the face to be verify
         :param tau: the maximum euclidean distance used for verification
         :return: (identity, distance), or (None, None) on failure
             identity is the identity of the verified face
-            distance is the euclidean distance between the verified face embedding and the identified database embedding
+            distance is the euclidean distance between the verified
+            face embedding and the identified database embedding
         """
 
         my_embedding = self.model.predict(np.expand_dims(image, axis=0))[0]

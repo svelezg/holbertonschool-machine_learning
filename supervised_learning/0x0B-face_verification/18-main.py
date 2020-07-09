@@ -6,12 +6,11 @@ from verification import FaceVerification
 from utils import load_images
 import tensorflow as tf
 
-
-#15
+# 15
 images, filenames = load_images('HBTNaligned', as_array=True)
 identities = [re.sub('[0-9]', '', f[:-4]) for f in filenames]
 
-#16
+# 16
 with tf.keras.utils.CustomObjectScope({'tf': tf}):
     my_model = tf.keras.models.load_model('models/trained_fv.h5')
 
@@ -23,10 +22,9 @@ database = np.array(embedded)
 
 fv = FaceVerification('models/trained_fv.h5', database, identities)
 
-#17
+# 17
 
 my_image = images[15]
-
 
 print(fv.verify(my_image, 0.06090909090909092))
 print(identities[15])
