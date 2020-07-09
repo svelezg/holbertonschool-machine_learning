@@ -5,6 +5,7 @@ import numpy as np
 from verification import FaceVerification
 from utils import load_images
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 # 15
 images, filenames = load_images('HBTNaligned', as_array=True)
@@ -26,5 +27,10 @@ fv = FaceVerification('models/trained_fv.h5', database, identities)
 
 my_image = images[15]
 
-print(fv.verify(my_image, 0.06090909090909092))
+identity, distance = fv.verify(my_image, 0.06090909090909092)
+print(identity, distance)
 print(identities[15])
+
+plt.imshow(my_image)
+plt.title('Recognized as ' + identity)
+plt.show()
