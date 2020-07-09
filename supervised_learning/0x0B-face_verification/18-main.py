@@ -32,6 +32,9 @@ my_image = test_images[0]
 identity, distance = fv.verify(my_image, 0.06090909090909092)
 print(identity, distance)
 
+if identity is None:
+    identity = 'Not recognized'
+
 plt.imshow(my_image)
 plt.title('Recognized as ' + identity)
 plt.show()
