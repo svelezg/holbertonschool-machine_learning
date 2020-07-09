@@ -26,7 +26,7 @@ database = np.array(embedded)
 fv = FaceVerification('models/trained_fv.h5', database, identities)
 
 # image selection
-test_images, filenames = load_images('HBTNaligned', as_array=True)
+test_images, filenames = load_images('TESTaligned', as_array=True)
 my_image = test_images[0]
 
 identity, distance = fv.verify(my_image, 0.06090909090909092)
