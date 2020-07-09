@@ -6,15 +6,17 @@ from verification import FaceVerification
 from utils import load_images
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import random
 
-# 15
+# image loading (15)
 images, filenames = load_images('HBTNaligned', as_array=True)
 identities = [re.sub('[0-9]', '', f[:-4]) for f in filenames]
 
-# 16
+# model loading
 with tf.keras.utils.CustomObjectScope({'tf': tf}):
     my_model = tf.keras.models.load_model('models/trained_fv.h5')
 
+# create embeddings
 embedded = np.zeros((images.shape[0], 128))
 
 for i, img in enumerate(images):
@@ -23,13 +25,11 @@ database = np.array(embedded)
 
 fv = FaceVerification('models/trained_fv.h5', database, identities)
 
-# 17
-
-my_image = images[15]
+# image selection
+my_image = random.choice(images)
 
 identity, distance = fv.verify(my_image, 0.06090909090909092)
 print(identity, distance)
-print(identities[15])
 
 plt.imshow(my_image)
 plt.title('Recognized as ' + identity)
