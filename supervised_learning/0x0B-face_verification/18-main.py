@@ -16,7 +16,7 @@ identities = [re.sub('[0-9]', '', f[:-4]) for f in filenames]
 with tf.keras.utils.CustomObjectScope({'tf': tf}):
     my_model = tf.keras.models.load_model('models/trained_fv.h5')
 
-# create embeddings
+
 embedded = np.zeros((images.shape[0], 128))
 
 for i, img in enumerate(images):
@@ -26,7 +26,8 @@ database = np.array(embedded)
 fv = FaceVerification('models/trained_fv.h5', database, identities)
 
 # image selection
-my_image = load_images('TESTaligned', as_array=True)[0]
+test_images, filenames = load_images('HBTNaligned', as_array=True)
+my_image = test_images[0]
 
 identity, distance = fv.verify(my_image, 0.06090909090909092)
 print(identity, distance)
