@@ -1,40 +1,34 @@
 #!/usr/bin/env python3
 
-import re
+from matplotlib.pyplot import imread, imsave
 import numpy as np
-from verification import FaceVerification
-from utils import load_images
 import tensorflow as tf
-import matplotlib.pyplot as plt
-import random
+from utils import load_images
+from verification import FaceVerification
 
-# image loading (15)
-images, filenames = load_images('HBTNaligned', as_array=True)
-identities = [re.sub('[0-9]', '', f[:-4]) for f in filenames]
+database_files = ['HBTNaligned/HeimerRojas.jpg',
+                  'HBTNaligned/MariaCoyUlloa.jpg',
+                  'HBTNaligned/MiaMorton.jpg',
+                  'HBTNaligned/RodrigoCruz.jpg',
+                  'HBTNaligned/XimenaCarolinaAndradeVargas.jpg']
+database_imgs = np.zeros((5, 96, 96, 3))
+for i, f in enumerate(database_files):
+    database_imgs[i] = imread(f)
 
-# model loading
+database_imgs = database_imgs.astype('float32') / 255
+
 with tf.keras.utils.CustomObjectScope({'tf': tf}):
-    my_model = tf.keras.models.load_model('models/trained_fv.h5')
+    base_model = tf.keras.models.load_model('models/face_verification.h5')
+    database_embs = base_model.predict(database_imgs)
 
+test_img_positive =\
+    imread('HBTNaligned/HeimerRojas0.jpg').astype('float32') / 255
+test_img_negative =\
+    imread('HBTNaligned/KirenSrinivasan.jpg').astype('float32') / 255
 
-embedded = np.zeros((images.shape[0], 128))
-
-for i, img in enumerate(images):
-    embedded[i] = my_model.predict(np.expand_dims(img, axis=0))[0]
-database = np.array(embedded)
-
-fv = FaceVerification('models/trained_fv.h5', database, identities)
-
-# image selection
-test_images, filenames = load_images('TESTaligned', as_array=True)
-my_image = test_images[0]
-
-identity, distance = fv.verify(my_image)
-print(identity, distance)
-
-if identity is None:
-    identity = 'Not recognized'
-
-plt.imshow(my_image)
-plt.title('Recognized as ' + identity)
-plt.show()
+identities = ['HeimerRojas', 'MariaCoyUlloa', 'MiaMorton',
+              'RodrigoCruz', 'XimenaCarolinaAndradeVargas']
+fv = FaceVerification('models/face_verification.h5',
+                      database_embs, identities)
+print(fv.verify(test_img_positive, tau=0.44))
+print(fv.verify(test_img_negative, tau=0.44))
