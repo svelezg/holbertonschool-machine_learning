@@ -115,3 +115,25 @@ class NST:
 
         # Build model
         return tf.keras.models.Model(vgg.input, model_outputs)
+
+    @staticmethod
+    def gram_matrix(input_layer):
+        """
+
+        :param input_layer: an instance of tf.Tensor or
+            tf.Variable of shape (1, h, w, c)containing the
+            layer output whose gram matrix should be calculated
+        :return:
+        """
+        e = 'input_layer must be a tensor of rank 4'
+        if not isinstance(input_layer, (tf.Tensor, tf.Variable)) \
+                or len(input_layer.shape) != 4:
+            raise TypeError(e)
+
+        # We make the image channels first
+        channels = int(input_layer.shape[-1])
+        a = tf.reshape(input_layer, [-1, channels])
+        n = tf.shape(a)[0]
+        gram = tf.matmul(a, a, transpose_a=True)
+        gram = tf.expand_dims(gram, axis=0)
+        return gram / tf.cast(n, tf.float32)
