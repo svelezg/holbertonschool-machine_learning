@@ -27,14 +27,17 @@ fv = FaceVerification('models/trained_fv.h5', database, identities)
 
 # image selection
 test_images, filenames = load_images('TESTaligned', as_array=True)
-my_image = test_images[0]
 
-identity, distance = fv.verify(my_image)
-print(identity, distance)
+for my_image in test_images:
 
-if identity is None:
-    identity = 'Not recognized'
+    identity, distance = fv.verify(my_image, 0.2)
+    print(identity, distance)
 
-plt.imshow(my_image)
-plt.title('Recognized as ' + identity)
-plt.show()
+    if identity is None:
+        message = 'Not recognized'
+    else:
+        message = 'Recognized as ' + identity
+
+    plt.imshow(my_image)
+    plt.title(message)
+    plt.show()
