@@ -36,11 +36,11 @@ class NST:
             msg = 'content_image must be a numpy.ndarray with shape (h, w, 3)'
             raise TypeError(msg)
 
-        if alpha < 0:
+        if not isinstance(alpha, (int, float)) or alpha < 0:
             msg = 'alpha must be a non-negative number'
             raise TypeError(msg)
 
-        if beta < 0:
+        if not isinstance(beta, (int, float)) or beta < 0:
             msg = 'beta must be a non-negative number'
             raise TypeError(msg)
 
