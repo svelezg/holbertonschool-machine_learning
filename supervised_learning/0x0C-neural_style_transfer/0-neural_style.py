@@ -27,28 +27,27 @@ class NST:
         if type(style_image) is not np.ndarray \
                 or len(style_image.shape) != 3 \
                 or style_image.shape[2] != 3:
-            raise TypeError('style_image must be a'
-                            'numpy.ndarray with shape (h, w, 3)')
-        else:
-            self.style_image = self.scale_image(style_image)
+            msg = 'style_image must be a numpy.ndarray with shape (h, w, 3)'
+            raise TypeError(msg)
 
         if type(content_image) is not np.ndarray \
                 or len(content_image.shape) != 3 \
                 or content_image.shape[2] != 3:
-            raise TypeError('content_image must be a'
-                            'numpy.ndarray with shape (h, w, 3)')
-        else:
-            self.content_image = self.scale_image(content_image)
+            msg = 'content_image must be a numpy.ndarray with shape (h, w, 3)'
+            raise TypeError(msg)
 
         if alpha < 0:
-            raise TypeError('alpha must be a non-negative number')
-        else:
-            self.alpha = alpha
+            msg = 'alpha must be a non-negative number'
+            raise TypeError(msg)
 
         if beta < 0:
-            raise TypeError('beta must be a non-negative number')
-        else:
-            self.beta = beta
+            msg = 'beta must be a non-negative number'
+            raise TypeError(msg)
+
+        self.style_image = self.scale_image(style_image)
+        self.content_image = self.scale_image(content_image)
+        self.alpha = alpha
+        self.beta = beta
 
     @staticmethod
     def scale_image(image):
@@ -61,8 +60,8 @@ class NST:
         if type(image) is not np.ndarray \
                 or len(image.shape) != 3 \
                 or image.shape[2] != 3:
-            raise TypeError('image must be a'
-                            'numpy.ndarray with shape (h, w, 3)')
+            msg = 'image must be a numpy.ndarray with shape (h, w, 3)'
+            raise TypeError(msg)
 
         h, w, c = image.shape
 
@@ -77,9 +76,10 @@ class NST:
         dim = (h_new, w_new)
 
         image = image[tf.newaxis, ...]
-        image = tf.image.resize_images(image, dim)
+        image = tf.image.resize_bicubic(image, dim, align_corners=False)
 
         # Rescale all images to have pixel values in the range [0, 1]
         image = tf.math.divide(image, 255)
+        image = tf.clip_by_value(image, clip_value_min=0, clip_value_max=1)
 
         return image
