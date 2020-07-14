@@ -92,8 +92,8 @@ class NST:
         :return:
         """
         # Load pretrained VGG, trained on imagenet data (weights=’imagenet’)
-        vgg_pre = tf.keras.applications.VGG19(include_top=False,
-                                              weights='imagenet')
+        vgg_pre = tf.keras.applications.vgg19.VGG19(include_top=False,
+                                                    weights='imagenet')
 
         # change MaxPoooling to AveragePooling
         custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
@@ -109,7 +109,7 @@ class NST:
             layer.trainable = False
 
         # Get output layers corresponding to style and content layers
-        style_outputs =\
+        style_outputs = \
             [vgg.get_layer(name).output for name in self.style_layers]
         content_outputs = vgg.get_layer(self.content_layer).output
         model_outputs = style_outputs + [content_outputs]
