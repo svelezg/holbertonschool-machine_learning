@@ -6,7 +6,7 @@
 
 
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/3/2eae23a3496ef96d228e.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200713%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200713T131939Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=9d494268ea2fc2d616f3d5bf9e40e3941df520db1bdca09383a942b18bfff292)
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/supervised_learning/0x0C-neural_style_transfer/result_imgs/NST%20(6).jpg)
 
 ## Resources
 
