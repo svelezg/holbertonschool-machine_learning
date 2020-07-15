@@ -51,8 +51,10 @@ class NST:
         self.alpha = alpha
         self.beta = beta
 
-        self.load_model()
-        self.generate_features()
+        self.model = self.load_model()
+
+        self.gram_style_features, self.content_feature = \
+            self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -115,7 +117,7 @@ class NST:
         model_outputs = style_outputs + [content_outputs]
 
         # Build model
-        self.model = tf.keras.models.Model(vgg.input, model_outputs)
+        return tf.keras.models.Model(vgg.input, model_outputs)
 
     @staticmethod
     def gram_matrix(input_layer):
@@ -154,12 +156,15 @@ class NST:
         for out in style_img_output[:-1]:
             list_gram = list_gram + [self.gram_matrix(out)]
 
-        self.gram_style_features = list_gram
-        self.content_feature = content_img_output[-1]
+        style_features = self.gram_style_features = list_gram
+
+        content_features = self.content_feature = content_img_output[-1]
+
+        return style_features, content_features
 
     def layer_style_cost(self, style_output, gram_target):
         """
-        Calculates the style cost for a single layer
+
         :param style_output: tf.Tensor of shape (1, h, w, c)
             containing the layer style output of the generated image
         :param gram_target: tf.Tensor of shape (1, c, c)
@@ -179,6 +184,102 @@ class NST:
 
         gram_style = self.gram_matrix(style_output)
 
-        layer_style_cost = tf.reduce_mean(tf.square(gram_style - gram_target))
+        return tf.reduce_mean(tf.square(gram_style - gram_target))
 
-        return layer_style_cost
+    def style_cost(self, style_outputs):
+        """
+
+        :param style_outputs: list of tf.Tensor style outputs
+            for the generated image
+        :return: style cost
+        """
+        my_length = len(self.style_layers)
+        err = \
+            'style_outputs must be a list with a length of {}'. \
+                format(my_length)
+        if (not type(style_outputs) is list
+                or len(self.style_layers) != len(style_outputs)):
+            raise TypeError(err)
+
+        weight_per_style_layer = 1.0 / float(my_length)
+
+        style_cost = 0
+
+        for target_style, comb_style in \
+                zip(self.gram_style_features, style_outputs):
+            style_cost += \
+                weight_per_style_layer * \
+                self.layer_style_cost(comb_style, target_style)
+
+        return style_cost
+
+    def content_cost(self, content_output):
+        """
+
+        :param content_output: tf.Tensor containing
+        the content output for the generated image
+        :return: content cost
+        """
+        s = self.content_feature.shape
+
+        err = 'content_output must be a tensor of shape {}'.format(s)
+        if not isinstance(content_output, (tf.Tensor, tf.Variable)):
+            raise TypeError(err)
+
+        if self.content_feature.shape != content_output.shape:
+            raise TypeError(err)
+
+        if len(content_output.shape) == 3:
+            content_output = tf.expand_dims(content_output, 0)
+
+        return tf.reduce_mean(tf.square(content_output - self.content_feature))
+
+    def total_cost(self, generated_image):
+        """
+
+        :param generated_image: tf.Tensor of shape (1, nh, nw, 3)
+        containing the generated image
+        :return: J, J_content, J_style)
+            J is the total cost
+            J_content is the content cost
+            J_style is the style cost
+        """
+        s = self.content_image.shape
+        m = "generated_image must be a tensor of shape {}".format(s)
+        if not isinstance(generated_image, (tf.Tensor, tf.Variable)):
+            raise TypeError(m)
+        if generated_image.shape != s:
+            raise TypeError(m)
+
+        vgg19 = tf.keras.applications.vgg19
+        generated_input = vgg19.preprocess_input(generated_image * 255)
+        generated_output = self.model(generated_input)
+
+        J_style = self.style_cost(generated_output[:-1])
+        J_content = self.content_cost(generated_output[-1])
+        J = self.alpha * J_content + self.beta * J_style
+
+        return J, J_content, J_style
+
+    def compute_grads(self, generated_image):
+        """
+
+        :param generated_image: tf.Tensor generated image of shape (1, nh, nw, 3)
+        :return: gradients, J_total, J_content, J_style
+            gradients is a tf.Tensor containing the gradients for the generated image
+            J_total is the total cost for the generated image
+            J_content is the content cost for the generated image
+            J_style is the style cost for the generated image
+        """
+        s = self.content_image.shape
+        err = "generated_image must be a tensor of shape {}".format(s)
+        if not isinstance(generated_image, (tf.Tensor, tf.Variable)):
+            raise TypeError(err)
+        if generated_image.shape != s:
+            raise TypeError(err)
+
+        with tf.GradientTape() as tape:
+            J_total, J_content, J_style = self.total_cost(generated_image)
+
+        grad = tape.gradient(J_total, generated_image)
+        return grad, J_total, J_content, J_style

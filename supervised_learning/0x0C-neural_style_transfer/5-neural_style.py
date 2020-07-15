@@ -52,6 +52,7 @@ class NST:
         self.beta = beta
 
         self.load_model()
+
         self.generate_features()
 
     @staticmethod
@@ -155,11 +156,12 @@ class NST:
             list_gram = list_gram + [self.gram_matrix(out)]
 
         self.gram_style_features = list_gram
+
         self.content_feature = content_img_output[-1]
 
     def layer_style_cost(self, style_output, gram_target):
         """
-        Calculates the style cost for a single layer
+
         :param style_output: tf.Tensor of shape (1, h, w, c)
             containing the layer style output of the generated image
         :param gram_target: tf.Tensor of shape (1, c, c)
@@ -179,6 +181,32 @@ class NST:
 
         gram_style = self.gram_matrix(style_output)
 
-        layer_style_cost = tf.reduce_mean(tf.square(gram_style - gram_target))
+        return tf.reduce_mean(tf.square(gram_style - gram_target))
 
-        return layer_style_cost
+    def style_cost(self, style_outputs):
+        """
+
+        :param style_outputs: list of tf.Tensor style outputs
+            for the generated image
+        :return: style cost
+        """
+        my_length = len(self.style_layers)
+        err = \
+            'style_outputs must be a list with a length of {}'. \
+            format(my_length)
+        if (not type(style_outputs) is list
+                or len(self.style_layers) != len(style_outputs)):
+            raise TypeError(err)
+
+        weight_per_style_layer = 1.0 / float(my_length)
+
+        style_cost = 0
+
+        # add over style layers
+        for target_style, comb_style in \
+                zip(self.gram_style_features, style_outputs):
+            style_cost += \
+                weight_per_style_layer * \
+                self.layer_style_cost(comb_style, target_style)
+
+        return style_cost
