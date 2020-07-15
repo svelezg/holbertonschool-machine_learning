@@ -51,7 +51,7 @@ class NST:
         self.alpha = alpha
         self.beta = beta
 
-        self.model = self.load_model()
+        self.load_model()
 
         self.gram_style_features, self.content_feature = \
             self.generate_features()
@@ -117,7 +117,7 @@ class NST:
         model_outputs = style_outputs + [content_outputs]
 
         # Build model
-        return tf.keras.models.Model(vgg.input, model_outputs)
+        self.model = tf.keras.models.Model(vgg.input, model_outputs)
 
     @staticmethod
     def gram_matrix(input_layer):
