@@ -185,7 +185,7 @@ class NST:
 
     def style_cost(self, style_outputs):
         """
-
+        calculate the style cost:
         :param style_outputs: list of tf.Tensor style outputs
             for the generated image
         :return: style cost

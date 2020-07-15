@@ -51,10 +51,9 @@ class NST:
         self.alpha = alpha
         self.beta = beta
 
-        self.model = self.load_model()
+        self.load_model()
 
-        self.gram_style_features, self.content_feature = \
-            self.generate_features()
+        self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -117,7 +116,7 @@ class NST:
         model_outputs = style_outputs + [content_outputs]
 
         # Build model
-        return tf.keras.models.Model(vgg.input, model_outputs)
+        self.model = tf.keras.models.Model(vgg.input, model_outputs)
 
     @staticmethod
     def gram_matrix(input_layer):
@@ -156,11 +155,9 @@ class NST:
         for out in style_img_output[:-1]:
             list_gram = list_gram + [self.gram_matrix(out)]
 
-        style_features = self.gram_style_features = list_gram
+        self.gram_style_features = list_gram
 
-        content_features = self.content_feature = content_img_output[-1]
-
-        return style_features, content_features
+        self.content_feature = content_img_output[-1]
 
     def layer_style_cost(self, style_output, gram_target):
         """
@@ -188,7 +185,7 @@ class NST:
 
     def style_cost(self, style_outputs):
         """
-
+        calculate the style cost:
         :param style_outputs: list of tf.Tensor style outputs
             for the generated image
         :return: style cost
@@ -201,21 +198,24 @@ class NST:
                 or len(self.style_layers) != len(style_outputs)):
             raise TypeError(err)
 
-        weight_per_style_layer = 1.0 / float(my_length)
+        # each layer should be weighted evenly with
+        # all weights summing to 1
+        weight = 1.0 / float(my_length)
 
-        style_cost = 0
+        # initialize style cost
+        style_cost = 0.0
 
-        for target_style, comb_style in \
-                zip(self.gram_style_features, style_outputs):
-            style_cost += \
-                weight_per_style_layer * \
-                self.layer_style_cost(comb_style, target_style)
+        # add over style layers
+        for img_style, target_style in \
+                zip(style_outputs, self.gram_style_features):
+            layer_cost = self.layer_style_cost(img_style, target_style)
+            style_cost = style_cost + weight * layer_cost
 
         return style_cost
 
     def content_cost(self, content_output):
         """
-
+        calculate content cost
         :param content_output: tf.Tensor containing
         the content output for the generated image
         :return: content cost
@@ -225,11 +225,13 @@ class NST:
         if not isinstance(content_output, (tf.Tensor, tf.Variable)):
             raise TypeError(err)
 
-        err = 'content_output must be a tensor of shape {}'.format(s)
         if self.content_feature.shape[1:] != content_output.shape:
             raise TypeError(err)
 
         if len(content_output.shape) == 3:
             content_output = tf.expand_dims(content_output, 0)
 
-        return tf.reduce_mean(tf.square(content_output - self.content_feature))
+        content_cost = \
+            tf.reduce_mean(tf.square(content_output - self.content_feature))
+
+        return content_cost
