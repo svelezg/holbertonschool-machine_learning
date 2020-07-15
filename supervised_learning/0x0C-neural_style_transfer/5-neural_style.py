@@ -198,15 +198,17 @@ class NST:
                 or len(self.style_layers) != len(style_outputs)):
             raise TypeError(err)
 
-        weight_per_style_layer = 1.0 / float(my_length)
+        # each layer should be weighted evenly with
+        # all weights summing to 1
+        weight = 1.0 / float(my_length)
 
-        style_cost = 0
+        # initialize style cost
+        style_cost = 0.0
 
         # add over style layers
-        for target_style, comb_style in \
-                zip(self.gram_style_features, style_outputs):
-            style_cost += \
-                weight_per_style_layer * \
-                self.layer_style_cost(comb_style, target_style)
+        for img_style, target_style in \
+                zip(style_outputs, self.gram_style_features):
+            layer_cost = self.layer_style_cost(img_style, target_style)
+            style_cost = style_cost + weight * layer_cost
 
         return style_cost
