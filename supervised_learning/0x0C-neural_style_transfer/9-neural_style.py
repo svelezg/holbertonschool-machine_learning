@@ -52,10 +52,9 @@ class NST:
         self.alpha = alpha
         self.beta = beta
 
-        self.model = self.load_model()
+        self.load_model()
 
-        self.gram_style_features, self.content_feature = \
-            self.generate_features()
+        self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -112,7 +111,6 @@ class NST:
         vgg = tf.keras.models.load_model("base_model",
                                          custom_objects=custom_objects)
 
-        # freeze model
         for layer in vgg.layers:
             layer.trainable = False
 
@@ -120,14 +118,10 @@ class NST:
         style_outputs = \
             [vgg.get_layer(name).output for name in self.style_layers]
         content_outputs = vgg.get_layer(self.content_layer).output
-
-        # added output
         model_outputs = style_outputs + [content_outputs]
 
         # Build model
-        model = tf.keras.models.Model(vgg.input, model_outputs)
-
-        return model
+        self.model = tf.keras.models.Model(vgg.input, model_outputs)
 
     @staticmethod
     def gram_matrix(input_layer):
@@ -165,24 +159,26 @@ class NST:
 
     def generate_features(self):
         """ extracts the features used to calculate neural style cost"""
-
         vgg19 = tf.keras.applications.vgg19
 
+        # load preprocessed image according to vgg19
         content_image_input = vgg19.preprocess_input(self.content_image * 255)
         style_image_input = vgg19.preprocess_input(self.style_image * 255)
 
+        # apply model
         content_img_output = self.model(content_image_input)
         style_img_output = self.model(style_image_input)
 
-        list_gram = []
-        for out in style_img_output[:-1]:
-            list_gram = list_gram + [self.gram_matrix(out)]
+        # only content layer (last)
+        content_features = content_img_output[-1]
 
-        style_features = self.gram_style_features = list_gram
+        # style layers (all but last)
+        style_features = []
+        for output in style_img_output[:-1]:
+            style_features = style_features + [self.gram_matrix(output)]
 
-        content_features = self.content_feature = content_img_output[-1]
-
-        return style_features, content_features
+        self.gram_style_features = style_features
+        self.content_feature = content_features
 
     def layer_style_cost(self, style_output, gram_target):
         """
@@ -210,7 +206,7 @@ class NST:
 
     def style_cost(self, style_outputs):
         """
-
+        calculate the style cost:
         :param style_outputs: list of tf.Tensor style outputs
             for the generated image
         :return: style cost
@@ -218,20 +214,23 @@ class NST:
         my_length = len(self.style_layers)
         err = \
             'style_outputs must be a list with a length of {}'. \
-                format(my_length)
+            format(my_length)
         if (not type(style_outputs) is list
                 or len(self.style_layers) != len(style_outputs)):
             raise TypeError(err)
 
-        weight_per_style_layer = 1.0 / float(my_length)
+        # each layer should be weighted evenly with
+        # all weights summing to 1
+        weight = 1.0 / float(my_length)
 
-        style_cost = 0
+        # initialize style cost
+        style_cost = 0.0
 
-        for target_style, comb_style in \
-                zip(self.gram_style_features, style_outputs):
-            style_cost += \
-                weight_per_style_layer * \
-                self.layer_style_cost(comb_style, target_style)
+        # add over style layers
+        for img_style, target_style in \
+                zip(style_outputs, self.gram_style_features):
+            layer_cost = self.layer_style_cost(img_style, target_style)
+            style_cost = style_cost + weight * layer_cost
 
         return style_cost
 
@@ -286,9 +285,11 @@ class NST:
     def compute_grads(self, generated_image):
         """
 
-        :param generated_image: tf.Tensor generated image of shape (1, nh, nw, 3)
+        :param generated_image: tf.Tensor generated image of
+            shape (1, nh, nw, 3)
         :return: gradients, J_total, J_content, J_style
-            gradients is a tf.Tensor containing the gradients for the generated image
+            gradients is a tf.Tensor containing the gradients for
+                the generated image
             J_total is the total cost for the generated image
             J_content is the content cost for the generated image
             J_style is the style cost for the generated image
@@ -306,72 +307,84 @@ class NST:
         grad = tape.gradient(J_total, generated_image)
         return grad, J_total, J_content, J_style
 
-    def generate_image(self, iterations=1000, step=None, lr=0.01, beta1=0.9, beta2=0.99):
+    def generate_image(self, iterations=1000, step=None,
+                       lr=0.01, beta1=0.9, beta2=0.99):
         """
-        
-        :param iterations: 
-        :param step: 
-        :param lr: 
-        :param beta1: 
-        :param beta2: 
-        :return: 
+        generate the neural style transferred image
+        :param iterations: number of iterations to perform gradient descent
+        :param step: step to print information about the training
+        :param lr: learning rate for gradient descent
+        :param beta1:  beta1 parameter for gradient descent
+        :param beta2: beta2 parameter for gradient descent
+        :return: generated_image, cost
+            generated_image is the best generated image
+            cost is the best cost
         """
         if not type(iterations) == int:
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
             raise ValueError("iterations must be positive")
+
         if step is not None:
             if not type(step) == int:
                 raise TypeError("step must be an integer")
             if step <= 0 or step >= iterations:
                 m = "step must be positive and less than iterations"
                 raise ValueError(m)
+
         if not isinstance(lr, (int, float)):
             raise TypeError("lr must be a number")
         if lr <= 0:
             raise ValueError("lr must be positive")
+
         if type(beta1) != float:
             raise TypeError("beta1 must be a float")
         if beta1 < 0 or beta1 > 1:
             raise ValueError("beta1 must be in the range [0, 1]")
+
         if type(beta2) != float:
             raise TypeError("beta2 must be a float")
         if beta2 < 0 or beta2 > 1:
             raise ValueError("beta2 must be in the range [0, 1]")
 
-        # Get the style and content feature representations (from our specified intermediate layers)
+        # Get the style and content feature representations
+        # (from the specified intermediate layers)
         generated_image = self.content_image
         generated_image = tf.Variable(generated_image, dtype=tf.float32)
 
-        # Create our optimizer
+        # Create optimizer
         opt = tf.train.AdamOptimizer(learning_rate=lr,
                                      beta1=beta1,
                                      beta2=beta2)
 
-        # Store our best result
+        # initialization
         best_loss, best_img = float('inf'), None
 
+        # Store the best result
         for i in range(iterations):
-            grad, J_total, J_content, J_style = (self.compute_grads
-                                                 (generated_image))
+            # compute gradient
+            grad, J_total, J_content, J_style = \
+                self.compute_grads(generated_image)
+
+            # apply gradients to the generated image
             opt.apply_gradients([(grad, generated_image)])
+
+            # clip to range
             clipped = tf.clip_by_value(generated_image, 0, 1)
             generated_image.assign(clipped)
 
-            # Update best loss and best image from total loss.
+            # Update best loss and best image from total loss
             if J_total < best_loss:
                 best_loss = J_total.numpy()
                 best_img = generated_image.numpy()
 
             if step is not None:
                 if step == 0 or i % step == 0 or i == iterations - 1:
-                    m = ("Cost at iteration {}: {}, content {}, style {}"
+                    m = ("Iteration {}: Total cost: {}, "
+                         "Content cost: {}, Style cost: {}"
                          .format(i, J_total, J_content, J_style))
                     print(m)
                     plt.imshow(best_img[-1, :, :])
                     plt.show()
-
-
-
 
         return best_img[-1, :, :], best_loss

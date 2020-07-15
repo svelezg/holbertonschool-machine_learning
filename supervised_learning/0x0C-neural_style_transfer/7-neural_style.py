@@ -51,10 +51,9 @@ class NST:
         self.alpha = alpha
         self.beta = beta
 
-        self.model = self.load_model()
+        self.load_model()
 
-        self.gram_style_features, self.content_feature = \
-            self.generate_features()
+        self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -117,7 +116,7 @@ class NST:
         model_outputs = style_outputs + [content_outputs]
 
         # Build model
-        return tf.keras.models.Model(vgg.input, model_outputs)
+        self.model = tf.keras.models.Model(vgg.input, model_outputs)
 
     @staticmethod
     def gram_matrix(input_layer):
@@ -156,11 +155,9 @@ class NST:
         for out in style_img_output[:-1]:
             list_gram = list_gram + [self.gram_matrix(out)]
 
-        style_features = self.gram_style_features = list_gram
+        self.gram_style_features = list_gram
 
-        content_features = self.content_feature = content_img_output[-1]
-
-        return style_features, content_features
+        self.content_feature = content_img_output[-1]
 
     def layer_style_cost(self, style_output, gram_target):
         """
@@ -196,7 +193,7 @@ class NST:
         my_length = len(self.style_layers)
         err = \
             'style_outputs must be a list with a length of {}'. \
-                format(my_length)
+            format(my_length)
         if (not type(style_outputs) is list
                 or len(self.style_layers) != len(style_outputs)):
             raise TypeError(err)
@@ -237,7 +234,7 @@ class NST:
 
     def total_cost(self, generated_image):
         """
-
+        calculate the total cost
         :param generated_image: tf.Tensor of shape (1, nh, nw, 3)
         containing the generated image
         :return: J, J_content, J_style)
