@@ -2,9 +2,9 @@
 
 # 0x09\. Transfer Learning
 
-Specializations - Machine Learning ― Supervised Learning
-
-_by Alexa Orrico, Software Engineer at Holberton School_
+## Authors
+* **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
+* **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
 
 
 

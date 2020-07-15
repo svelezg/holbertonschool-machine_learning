@@ -1,9 +1,9 @@
 
 # 0x0B. Face Verification
 
-Specializations - Machine Learning ― Supervised Learning
-
-by Alexa Orrico, Software Engineer at Holberton School_
+## Authors
+* **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
+* **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
 
 
 ## Resources

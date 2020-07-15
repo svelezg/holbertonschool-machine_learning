@@ -1,5 +1,7 @@
 # 0x0A. Object Detection
-by Alexa Orrico, Software Engineer at Holberton School
+## Authors
+* **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
+* **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
 
 ![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/2/b506b13859c2a0eec498.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200629%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200629T125202Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=45e95fb0b16087852eeb8696e156df27949da92fbd7c3e180525c9e9612c8dd0)
 

@@ -1,8 +1,8 @@
 # 0x0C. Neural Style Transfer
 
-Specializations - Machine Learning ― Supervised Learning
-
-by Alexa Orrico, Software Engineer at Holberton School_
+## Authors
+* **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
+* **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
 
 
 
@@ -66,21 +66,7 @@ At the end of this project, you are expected to be able to [explain to anyone](/
 *   Unless otherwise noted, you are not allowed to import any module except `import numpy as np` and `import tensorflow as tf`
 *   All your files must be executable
 
-## Data
 
-For the following main files, please use these images:
-
-`golden_gate.jpg`:
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/9/d714b5d5b0e34b796e79.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200713%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200713T131939Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c7d3bd92f4a1d2b529bedcb1da0faeba291302edf5c29593b145c8da188bca49)
-
-`starry_night.jpg`:
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/9/f752f0326ffe1f8af36e.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200713%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200713T131939Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=5612d019d00d913c00884e47aabc8a02617b062b78add550b59b31e09cb6f943)
-
-</article>
-
-* * *
 
 ## Tasks
 
