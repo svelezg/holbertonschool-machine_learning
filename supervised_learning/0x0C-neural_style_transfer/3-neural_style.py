@@ -53,8 +53,7 @@ class NST:
 
         self.load_model()
 
-        self.gram_style_features, self.content_feature = \
-            self.generate_features()
+        self.generate_features()
 
     @staticmethod
     def scale_image(image):
@@ -173,4 +172,5 @@ class NST:
         for output in style_img_output[:-1]:
             style_features = style_features + [self.gram_matrix(output)]
 
-        return style_features, content_features
+        self.gram_style_features = style_features
+        self.content_feature = content_features
