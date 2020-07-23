@@ -132,6 +132,23 @@ def inverse(matrix):
     :param matrix: list of lists whose cofactor matrix should be calculated
     :return: the inverse matrix of matrix
     """
+    err = 'matrix must be a list of lists'
+    if not isinstance(matrix, list) or len(matrix) == 0:
+        raise TypeError(err)
+
+    for element in matrix:
+        if not isinstance(element, list):
+            raise TypeError(err)
+
+    err = 'matrix must be a non-empty square matrix'
+    my_len = len(matrix)
+    if my_len == 1 and len(matrix[0]) == 0:
+        raise ValueError(err)
+
+    for element in matrix:
+        if len(element) != my_len:
+            raise ValueError(err)
+
     my_determinat = determinant(matrix)
     if my_determinat == 0:
         return None
