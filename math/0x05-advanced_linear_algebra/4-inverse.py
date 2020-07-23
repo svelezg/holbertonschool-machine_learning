@@ -107,6 +107,25 @@ def cofactor(matrix):
     return my_cofactor
 
 
+def adjugate(matrix):
+    """
+    calculates the adjugate matrix of a matrix
+    :param matrix: list of lists whose cofactor matrix should be calculated
+    :return: the adjugate matrix of matrix
+    """
+    my_len = len(matrix)
+
+    my_cofactor = cofactor(matrix)
+
+    my_adjugate = []
+    for i in range(my_len):
+        my_adjugate.append([])
+        for j in range(my_len):
+            my_adjugate[i].append(my_cofactor[j][i])
+
+    return my_adjugate
+
+
 def inverse(matrix):
     """
     calculates the inverse matrix of a matrix
@@ -117,15 +136,6 @@ def inverse(matrix):
     if my_determinat == 0:
         return None
 
-    my_len = len(matrix)
+    my_adjugate = adjugate(matrix)
 
-    my_cofactor = cofactor(matrix)
-
-    my_inverse = []
-    my_adjugate = []
-    for i in range(my_len):
-        my_adjugate.append([])
-        for j in range(my_len):
-            my_adjugate[i].append(my_cofactor[j][i] / my_determinat)
-
-    return my_inverse
+    return [[n / my_determinat for n in row] for row in my_adjugate]
