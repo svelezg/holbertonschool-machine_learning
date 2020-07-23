@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""contain the definiteness method"""
 
 import numpy as np
 
@@ -25,19 +26,16 @@ def definiteness(matrix):
     if not np.array_equal(transpose, matrix):
         return None
 
-    # list of sub matrices (up-left to down-right)
-    sub_matrices = [matrix[:i, :i] for i in range(1, my_len + 1)]
-
     # eigenvalues
     w, v = np.linalg.eig(matrix)
 
     if all(w > 0):
-        return '(Positive definite) all eigenvalues positive'
+        return 'Positive definite'
     elif all(w >= 0):
-        return '(Positive semi-definite) all eigenvalues non-negative'
+        return 'Positive semi-definite'
     elif all(w < 0):
-        return '(Negative definite) all eigenvalues negative'
+        return 'Negative definite'
     elif all(w <= 0):
-        return '(Negative semi-definite) all eigenvalues non-positive'
+        return 'Negative semi-definite'
     else:
-        return '(Indefinite) both positive and negative eigenvalues'
+        return 'Indefinite'
