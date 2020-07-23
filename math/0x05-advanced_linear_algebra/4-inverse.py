@@ -107,52 +107,25 @@ def cofactor(matrix):
     return my_cofactor
 
 
-def adjugate(matrix):
-    """
-    calculates the adjugate matrix of a matrix
-    :param matrix: list of lists whose cofactor matrix should be calculated
-    :return: the adjugate matrix of matrix
-    """
-    my_len = len(matrix)
-
-    my_cofactor = cofactor(matrix)
-
-    my_adjugate = []
-    for i in range(my_len):
-        my_adjugate.append([])
-        for j in range(my_len):
-            my_adjugate[i].append(my_cofactor[j][i])
-
-    return my_adjugate
-
-
 def inverse(matrix):
     """
     calculates the inverse matrix of a matrix
     :param matrix: list of lists whose cofactor matrix should be calculated
     :return: the inverse matrix of matrix
     """
-    if (type(matrix) != list or len(matrix) == 0 or
-            not all([type(m) == list for m in matrix])):
-        raise TypeError("matrix must be a list of lists")
-    my_len = len(matrix)
-    if my_len == 1 and len(matrix[0]) == 0:
-        return 1
-    if not all([len(n) == my_len for n in matrix]):
-        raise ValueError("matrix must be a square matrix")
-    if my_len == 1 and len(matrix[0]) == 1:
-        return matrix[0][0]
-
-    my_adjugate = adjugate(matrix)
     my_determinat = determinant(matrix)
-
     if my_determinat == 0:
         return None
 
+    my_len = len(matrix)
+
+    my_cofactor = cofactor(matrix)
+
     my_inverse = []
+    my_adjugate = []
     for i in range(my_len):
-        my_inverse.append([])
+        my_adjugate.append([])
         for j in range(my_len):
-            my_inverse[i].append((1 / my_determinat) * my_adjugate[i][j])
+            my_adjugate[i].append(my_cofactor[j][i] / my_determinat)
 
     return my_inverse
