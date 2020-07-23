@@ -132,7 +132,16 @@ def inverse(matrix):
     :param matrix: list of lists whose cofactor matrix should be calculated
     :return: the inverse matrix of matrix
     """
+    if (type(matrix) != list or len(matrix) == 0 or
+            not all([type(m) == list for m in matrix])):
+        raise TypeError("matrix must be a list of lists")
     my_len = len(matrix)
+    if my_len == 1 and len(matrix[0]) == 0:
+        return 1
+    if not all([len(n) == my_len for n in matrix]):
+        raise ValueError("matrix must be a square matrix")
+    if my_len == 1 and len(matrix[0]) == 1:
+        return matrix[0][0]
 
     my_adjugate = adjugate(matrix)
     my_determinat = determinant(matrix)
