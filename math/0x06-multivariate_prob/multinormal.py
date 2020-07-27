@@ -40,11 +40,11 @@ class MultiNormal:
         if not isinstance(x, np.ndarray):
             err = 'x must by a numpy.ndarray'
             raise TypeError(err)
-        d, n = x.shape
 
-        if n != 1:
-            err = 'x must have the shape ({d}, 1)'.format(d)
-            raise ValueError(err)
+        d = self.cov.shape[0]
+
+        if len(x.shape) != 2 or x.shape[1] != 1 or x.shape[0] != d:
+            raise ValueError('x must have the shape ({d}, 1)'.format(d))
 
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
