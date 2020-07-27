@@ -31,3 +31,32 @@ class MultiNormal:
         deviaton = data - self.mean
 
         self.cov = np.matmul(deviaton, deviaton.T) / (n - 1)
+
+    def pdf(self, x):
+        """
+        calculates the PDF at a data point
+        :param x: numpy.ndarray of shape (d, 1)
+            containing the data point whose PDF should be calculated
+        :return:  value of the PDF
+        """
+        if not isinstance(x, np.ndarray):
+            err = 'x must by a numpy.ndarray'
+            raise TypeError(err)
+        d, n = x.shape
+
+        if n != 1:
+            err = 'x must have the shape ({d}, 1)'.format(d)
+            raise ValueError(err)
+
+        det = np.linalg.det(self.cov)
+        den = np.sqrt(((2 * np.pi) ** d) * det)
+
+        dev = (x - self.mean).T
+        inv = np.linalg.inv(self.cov)
+
+        inner = np.matmul(dev, inv)
+        outer = np.matmul(inner, dev.T)
+
+        pdf = np.exp((-1/2) * outer) / den
+
+        return pdf[0, 0]
