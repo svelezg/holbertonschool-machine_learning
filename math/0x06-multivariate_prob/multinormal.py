@@ -57,6 +57,6 @@ class MultiNormal:
         inner = np.matmul(dev, inv)
         outer = np.matmul(inner, dev.T)
 
-        pdf = np.exp((-1/2) * outer) / den
+        pdf = np.exp(-outer / 2) / den
 
         return pdf[0, 0]
