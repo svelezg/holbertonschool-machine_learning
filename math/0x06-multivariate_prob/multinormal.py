@@ -38,21 +38,23 @@ class MultiNormal:
         :return:  value of the PDF
         """
         if not isinstance(x, np.ndarray):
-            raise TypeError("x must be a numpy.ndarray")
-        d = self.cov.shape[0]
-        if len(x.shape) != 2 or x.shape[1] != 1 or x.shape[0] != d:
-            raise ValueError("x must have the shape ({}, 1)".format(d))
+            err = 'x must be a numpy.ndarray'
+            raise TypeError(err)
 
-        # pdf formula -- multivar
+        d = self.cov.shape[0]
+
+        if len(x.shape) != 2 or x.shape[1] != 1 or x.shape[0] != d:
+            raise ValueError('x must have the shape ({}, 1)'.format(d))
 
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
-        f1 = 1 / np.sqrt(((2 * np.pi) ** d) * det)
-        f21 = -(x - self.mean).T
-        f22 = np.matmul(f21, inv)
-        f23 = (x - self.mean) / 2
-        f24 = np.matmul(f22, f23)
-        f2 = np.exp(f24)
-        pdf = f1 * f2
+        constant = 1 / np.sqrt(((2 * np.pi) ** d) * det)
+        neg_dev = -(x - self.mean).T
+
+        inner = np.matmul(neg_dev, inv)
+        half_dev = (x - self.mean) / 2
+        outer = np.matmul(inner, half_dev)
+        f = np.exp(outer)
+        pdf = constant * f
 
         return pdf.reshape(-1)[0]
