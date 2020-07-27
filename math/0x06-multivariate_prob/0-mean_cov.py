@@ -26,11 +26,9 @@ def mean_cov(X):
         raise ValueError(err)
 
     mean = np.sum(X, axis=0) / n
+    mean = np.expand_dims(mean, axis=0)
 
-    cov = np.zeros((d, d))
+    deviaton = X - mean
 
-    for i in range(d):
-        for j in range(d):
-            cov[i, j] = np.matmul(X[:, i], X[:, j]) / (n - 1) - mean[i] * mean[j]
-
+    cov = np.matmul(deviaton.T, deviaton) / (n - 1)
     return mean, cov
