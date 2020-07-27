@@ -16,7 +16,7 @@ def correlation(C):
         raise TypeError(err)
 
     C_shape = C.shape
-    if len(C_shape) != 2 or C_shape[0] != C_shape[0]:
+    if len(C_shape) != 2 or C_shape[0] != C_shape[1]:
         err = 'C must be a 2D square matrix'
         raise ValueError(err)
 
