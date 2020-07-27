@@ -25,11 +25,9 @@ class MultiNormal:
             err = 'data must contain multiple data points'
             raise ValueError(err)
 
-        mean = np.sum(data, axis=1) / n
-        self.mean = np.expand_dims(mean, axis=1)
+        self.mean = np.mean(data, axis=1).reshape(d, 1)
 
         deviaton = data - self.mean
-
         self.cov = np.matmul(deviaton, deviaton.T) / (n - 1)
 
     def pdf(self, x):
@@ -50,12 +48,13 @@ class MultiNormal:
 
         det = np.linalg.det(self.cov)
         inv = np.linalg.inv(self.cov)
-        f1 = 1 / np.sqrt(((2 * np.pi) ** d) * det)
-        f21 = -(x - self.mean).T
-        f22 = np.matmul(f21, inv)
-        f23 = (x - self.mean) / 2
-        f24 = np.matmul(f22, f23)
-        f2 = np.exp(f24)
-        pdf = f1 * f2
+        constant = 1 / np.sqrt(((2 * np.pi) ** d) * det)
+        neg_dev = -(x - self.mean).T
+
+        inner = np.matmul(neg_dev, inv)
+        half_dev = (x - self.mean) / 2
+        outer = np.matmul(inner, half_dev)
+        f = np.exp(outer)
+        pdf = constant * f
 
         return pdf.reshape(-1)[0]
