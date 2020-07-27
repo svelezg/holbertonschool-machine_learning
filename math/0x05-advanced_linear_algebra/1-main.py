@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 if __name__ == '__main__':
-    minor = __import__('1-minor').minor
+    minor = __import__('1b-minor').minor
 
     mat1 = [[5]]
     mat2 = [[1, 2], [3, 4]]
@@ -9,6 +9,7 @@ if __name__ == '__main__':
     mat4 = [[5, 7, 9], [3, 1, 8], [6, 2, 4]]
     mat5 = []
     mat6 = [[1, 2, 3], [4, 5, 6]]
+    mat7 = [[5, 7, 9, 1], [3, 1, 2, 2], [6, 2, 4, 6], [1, 1, 4, 6]]
 
     print(minor(mat1))
     print(minor(mat2))
@@ -22,3 +23,4 @@ if __name__ == '__main__':
         minor(mat6)
     except Exception as e:
         print(e)
+    print(minor(mat7))
