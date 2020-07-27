@@ -49,14 +49,13 @@ class MultiNormal:
             raise ValueError(err)
 
         det = np.linalg.det(self.cov)
-        den = np.sqrt(((2 * np.pi) ** d) * det)
-
-        dev = (x - self.mean).T
         inv = np.linalg.inv(self.cov)
+        f1 = 1 / np.sqrt(((2 * np.pi) ** d) * det)
+        f21 = -(x - self.mean).T
+        f22 = np.matmul(f21, inv)
+        f23 = (x - self.mean) / 2
+        f24 = np.matmul(f22, f23)
+        f2 = np.exp(f24)
+        pdf = f1 * f2
 
-        inner = np.matmul(dev, inv)
-        outer = np.matmul(inner, dev.T)
-
-        pdf = np.exp(-outer / 2) / den
-
-        return pdf[0, 0]
+        return pdf.reshape(-1)[0]
