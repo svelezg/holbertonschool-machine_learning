@@ -16,7 +16,7 @@ def mean_cov(X):
         cov is a numpy.ndarray of shape (d, d)
             containing the covariance matrix of the data set
     """
-    if not isinstance(X, np.ndarray):
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         err = 'X must be a 2D numpy.ndarray'
         raise TypeError(err)
     n, d = X.shape
@@ -31,8 +31,6 @@ def mean_cov(X):
 
     for i in range(d):
         for j in range(d):
-            cov[i, j] = np.matmul(X[:, i], X[:, j]) / n - mean[i] * mean[j]
-
-    print(np.matmul(X.T, X) / n)
+            cov[i, j] = np.matmul(X[:, i], X[:, j]) / (n - 1) - mean[i] * mean[j]
 
     return mean, cov
