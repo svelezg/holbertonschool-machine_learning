@@ -28,6 +28,8 @@ def P_init(X, perplexity):
     ab = np.matmul(X, X.T)
     D = a2 - 2 * ab + b2
 
+    np.fill_diagonal(D, 0.)
+
     P = np.zeros((n, n))
 
     betas = np.ones((n, 1))
