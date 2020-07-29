@@ -17,7 +17,7 @@ def HP(Di, beta):
             containing the P affinities of the points
     """
     num = np.exp(-Di * beta)
-    den = np.sum(np.exp(-Di * beta))
+    den = np.sum(num)
 
     Pi = num / den
 

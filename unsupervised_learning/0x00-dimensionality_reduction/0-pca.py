@@ -16,11 +16,11 @@ def pca(X, var=0.95):
         W is a numpy.ndarray of shape (d, nd)
             where nd is the new dimensionality of the transformed X
     """
-    u, s, vh = np.linalg.svd(X.T)
+    u, s, vh = np.linalg.svd(X)
 
     cumsum = np.cumsum(s)
 
     dim = [i for i in range(len(s)) if cumsum[i] / cumsum[-1] >= var]
     ndim = dim[0] + 1
 
-    return u[:, :ndim]
+    return vh.T[:, :ndim]

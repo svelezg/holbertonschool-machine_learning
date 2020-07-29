@@ -14,9 +14,9 @@ def pca(X, ndim):
         containing the transformed version of X
     """
     X_m = X - np.mean(X, axis=0)
-    u, s, vh = np.linalg.svd(X_m.T)
+    u, s, vh = np.linalg.svd(X_m)
 
-    W = u[:, :ndim]
+    W = vh[:, :ndim]
     T = np.matmul(X_m, W)
 
     return T
