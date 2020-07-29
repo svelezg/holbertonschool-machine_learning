@@ -1,5 +1,8 @@
 # 0x00\. Dimensionality Reduction
 
+## Authors
+* **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
+* **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
 
 ## Learning Objectives
 
