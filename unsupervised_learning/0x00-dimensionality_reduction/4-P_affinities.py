@@ -31,7 +31,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
         mask[i] = 0
 
         # inital row's H and P
-        Hi, P[i][mask] = HP(D[i][mask], betas[i, 0])
+        Hi, P[i][mask] = HP(D[i][mask], betas[i])
 
         # initialize limits for binary search
         high = None
@@ -50,7 +50,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                     betas[i, 0] = (high + low) / 2
 
             # recalculate rows H and P with updated beta
-            Hi, P[i][mask] = HP(D[i][mask], betas[i, 0])
+            Hi, P[i][mask] = HP(D[i][mask], betas[i])
 
     # make symmetric and normal
     P = (P + P.T) / (2 * n)
