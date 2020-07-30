@@ -34,6 +34,10 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
     Yprev = Y
 
     for i in range(0, iterations):
+        if i != 0 and i % 100 == 0:
+            C = cost(P, Q)
+            print("Cost at iteration {}: {}".format(i, C))
+
         dY, Q = grads(Y, P)
 
         # momentum
@@ -48,10 +52,6 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
         Y = Y - lr * dY + momentum * (Y - Yprev)
         Yprev = tmp
         Y = Y - np.mean(Y, axis=0)
-
-        if i != 0 and i % 100 == 0:
-            C = cost(P, Q)
-            print("Cost at iteration {}: {}".format(i, C))
 
         if i == 100:
             P = P / 4.
