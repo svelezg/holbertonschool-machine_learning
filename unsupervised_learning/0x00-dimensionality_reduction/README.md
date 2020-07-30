@@ -1,6 +1,7 @@
 # 0x00\. Dimensionality Reduction
 
-![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x00-dimensionality_reduction/pca.png)             |  ![](https://github.com/svelezg/holbertonschool-machine_learning/tree/master/unsupervised_learning/0x00-dimensionality_reduction/t-SNE.png)
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x00-dimensionality_reduction/pca.png)
+![](https://github.com/svelezg/holbertonschool-machine_learning/tree/master/unsupervised_learning/0x00-dimensionality_reduction/t-SNE.png)
 
 ## Authors
 * **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
