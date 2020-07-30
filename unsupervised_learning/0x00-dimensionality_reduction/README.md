@@ -1,5 +1,7 @@
 # 0x00\. Dimensionality Reduction
 
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/tree/master/unsupervised_learning/0x00-dimensionality_reduction/pca.png" width="250" height="250"/>             |  <img src="https://github.com/svelezg/holbertonschool-machine_learning/tree/master/unsupervised_learning/0x00-dimensionality_reduction/t-SNE.png" width="250" height="250"/>
+
 ## Authors
 * **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
 * **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
@@ -32,26 +34,6 @@
 *   All your functions (inside and outside a class) should have documentation (`python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'`)
 *   Unless otherwise noted, you are not allowed to import any module except `import numpy as np`
 *   All your files must be executable
-
-## Data
-
-Please test your main files with the following data:
-
-*   [mnist2500_X.txt](/rltoken/XXWPBYuEFBplwpcJRJ2LaQ "mnist2500_X.txt")
-*   [mnist2500_labels.txt](/rltoken/Xp4jTT6YjHKXbmMw5NkBOA "mnist2500_labels.txt")
-
-## Watch Out!
-
-Just like lists, `np.ndarray`s are mutable objects:
-
-    >>> vector = np.ones((100, 1))
-    >>> m1 = vector[55]
-    >>> m2 = vector[55, 0]
-    >>> vector[55] = 2
-    >>> m1
-    array([2.])
-    >>> m2
-    1.0
 
 
 
