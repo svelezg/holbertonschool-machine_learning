@@ -33,7 +33,7 @@ def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
     Y = np.random.randn(n, ndims)
     Yprev = Y
 
-    for i in range(1, iterations + 1):
+    for i in range(0, iterations):
         dY, Q = grads(Y, P)
 
         # momentum
