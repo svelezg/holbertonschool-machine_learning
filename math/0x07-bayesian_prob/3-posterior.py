@@ -23,6 +23,10 @@ def posterior(x, n, P, Pr):
         err = 'x must be an integer that is greater than or equal to 0'
         raise ValueError(err)
 
+    if x > n:
+        err = 'x cannot be greater than n'
+        raise ValueError(err)
+
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:
         err = 'P must be a 1D numpy.ndarray'
         raise TypeError(err)
@@ -31,9 +35,16 @@ def posterior(x, n, P, Pr):
         err = 'Pr must be a numpy.ndarray with the same shape as P'
         raise TypeError(err)
 
-    if np.any(P < 0) or np.any(P > 1) or np.any(Pr < 0) or np.any(P > 1):
-        err = 'All values in {P} must be in the range [0, 1] ' \
-              'where {P} is the incorrect variable'
+    if np.any(P < 0) or np.any(P > 1):
+        err = 'All values in {} must be in the range [0, 1]'.format(P)
+        raise ValueError(err)
+
+    if np.any(Pr < 0) or np.any(P > 1):
+        err = 'All values in {} must be in the range [0, 1]'.format(Pr)
+        raise ValueError(err)
+
+    if not np.isclose([np.sum(Pr)], [1.])[0]:
+        err = 'Pr must sum to 1'
         raise ValueError(err)
 
     test = np.isclose([np.sum(Pr)], [1.])
