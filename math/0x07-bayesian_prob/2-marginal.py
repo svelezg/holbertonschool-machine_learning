@@ -14,11 +14,11 @@ def marginal(x, n, P, Pr):
     :return: D numpy.ndarray containing the intersection of obtaining x
         and n with each probability in P
     """
-    if not isinstance(n, int) or n <= 0:
+    if not isinstance(n, int) or n < 1:
         err = 'n must be a positive integer'
         raise ValueError(err)
 
-    if not isinstance(x, int) or n < 0:
+    if not isinstance(x, int) or x < 0:
         err = 'x must be an integer that is greater than or equal to 0'
         raise ValueError(err)
 
@@ -35,20 +35,14 @@ def marginal(x, n, P, Pr):
         raise TypeError(err)
 
     if np.any(P < 0) or np.any(P > 1):
-        err = 'All values in {} must be in the range [0, 1]'.format(P)
+        err = 'All values in P must be in the range [0, 1]'
         raise ValueError(err)
 
     if np.any(Pr < 0) or np.any(P > 1):
-        err = 'All values in {} must be in the range [0, 1]'.format(Pr)
+        err = 'All values in Pr must be in the range [0, 1]'
         raise ValueError(err)
 
     if not np.isclose([np.sum(Pr)], [1.])[0]:
-        err = 'Pr must sum to 1'
-        raise ValueError(err)
-
-    test = np.isclose([np.sum(Pr)], [1.])
-
-    if not test[0]:
         err = 'Pr must sum to 1'
         raise ValueError(err)
 
