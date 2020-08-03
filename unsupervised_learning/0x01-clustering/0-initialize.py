@@ -16,6 +16,11 @@ def initialize(X, k):
         containing the initialized centroids for each cluster,
         or None on failure
     """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if type(k) != int or k <= 0 or k >= X.shape[0]:
+        return None
+
     n, d = X.shape
 
     min_val = np.amin(X, axis=0)
