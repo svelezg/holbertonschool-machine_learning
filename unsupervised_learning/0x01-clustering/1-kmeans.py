@@ -37,7 +37,23 @@ def kmeans(X, k, iterations=1000):
     C = np.random.uniform(min_val, max_val, (k, d))
     C_prev = np.copy(C)
 
+    X_ = X[:, :, np.newaxis]
+    C_ = C.T[np.newaxis, :, :]
+    diff = X_ - C_
+    D = np.linalg.norm(diff, axis=1)
+
+    clss = np.argmin(D, axis=1)
+
     for i in range(iterations):
+
+        for j in range(k):
+            # recalculate centroids
+            index = np.where(clss == j)
+            if len(index[0]) == 0:
+                C[j] = np.random.uniform(min_val, max_val, (1, d))
+            else:
+                C[j] = np.mean(X[index], axis=0)
+
         X_ = X[:, :, np.newaxis]
         C_ = C.T[np.newaxis, :, :]
         diff = X_ - C_
@@ -53,14 +69,6 @@ def kmeans(X, k, iterations=1000):
         """
 
         clss = np.argmin(D, axis=1)
-
-        for j in range(k):
-            # recalculate centroids
-            index = np.where(clss == j)
-            if len(index[0]) == 0:
-                C[j] = np.random.uniform(min_val, max_val, (1, d))
-            else:
-                C[j] = np.mean(X[index], axis=0)
 
         if (C == C_prev).all():
             return C, clss
