@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""contains the marginal function"""
+"""contains the posterior function"""
 import numpy as np
 
 
