@@ -12,15 +12,19 @@ def variance(X, C):
         containing the centroid means for each cluster
     :return: var, or None on failure
     """
-    k, d = C.shape
+    try:
+        k, d = C.shape
 
-    # Eucledean norm
-    # (a - b)**2 = a^2 - 2ab + b^2 expansion
-    a2 = np.sum(C ** 2, axis=1)[:, np.newaxis]
-    b2 = np.sum(X ** 2, axis=1)
-    ab = np.matmul(C, X.T)
-    D = a2 - 2 * ab + b2
+        # Eucledean norm
+        # (a - b)**2 = a^2 - 2ab + b^2 expansion
+        a2 = np.sum(C ** 2, axis=1)[:, np.newaxis]
+        b2 = np.sum(X ** 2, axis=1)
+        ab = np.matmul(C, X.T)
+        D = a2 - 2 * ab + b2
 
-    var = np.sum(np.amin(D, axis=0))
+        var = np.sum(np.amin(D, axis=0))
 
-    return var
+        return var
+
+    except Exception:
+        return None
