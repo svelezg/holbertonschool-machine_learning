@@ -5,46 +5,6 @@
 * **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
 
 
-## Resources
-
-**Read or watch**:
-
-*   [Understanding K-means Clustering in Machine Learning](/rltoken/fNSFU2wN9tmppz2sfoX__Q "Understanding K-means Clustering in Machine Learning")
-*   [K-means clustering: how it works](/rltoken/jyj5XChYSaGnpPWXbP5BvA "K-means clustering: how it works")
-*   [How many clusters?](/rltoken/K4yFQK_ypP-sIhRqs5GgpA "How many clusters?")
-*   [Bimodal distribution](/rltoken/xdRR6EPcgs39Ekch4Yo0Eg "Bimodal distribution")
-*   [Gaussian Mixture Model](/rltoken/6PHL-IDoNIDPvo5OPxwdAQ "Gaussian Mixture Model")
-*   [EM algorithm: how it works](/rltoken/0vAaXc2cqpeiEohhptefrw "EM algorithm: how it works")
-*   [Expectation Maximization: how it works](/rltoken/Q-sYG4SabtPPa-t2FhsBmA "Expectation Maximization: how it works")
-*   [Mixture Models 4: multivariate Gaussians](/rltoken/BjYF8O7PJQfT-QrDiE8PZQ "Mixture Models 4: multivariate Gaussians")
-*   [Mixture Models 5: how many Gaussians?](/rltoken/gUI99dIjWP_5hf9uyvSw0w "Mixture Models 5: how many Gaussians?")
-*   [Gaussian Mixture Model (GMM) using Expectation Maximization (EM) Technique](/rltoken/nx7FAR2K2MXOTnGGW-lJ2A "Gaussian Mixture Model (GMM) using Expectation Maximization (EM) Technique")
-*   [What is Hierarchical Clustering?](/rltoken/9T90WM5Gc4sq-ErNbu1sjg "What is Hierarchical Clustering?")
-*   [Hierarchical Clustering](/rltoken/Zs1Z97A0uhD1CKfhBh9wQA "Hierarchical Clustering")
-
-**Definitions to skim:**
-
-*   [Cluster analysis](/rltoken/mTaW-fNJ_29vUKkuqZ46wA "Cluster analysis")
-*   [K-means clustering](/rltoken/5rpDvP0rKywYYOyjhf0-PA "K-means clustering")
-*   [Multimodal distribution](/rltoken/Lawvy3gfmJ8RRHknqhqI5Q "Multimodal distribution")
-*   [Mixture_model](/rltoken/2xERMdNc6_-H0-TynZkQ7Q "Mixture_model")
-*   [Expectation–maximization algorithm](/rltoken/ichNFPaox23Xz8EFfZXWzg "Expectation–maximization algorithm")
-*   [Hierarchical clustering](/rltoken/V-8rn6xfs67kL_R1MfvQaw "Hierarchical clustering")
-*   [Ward’s method](/rltoken/v5CG2hergIjJ97iuaNVX6g "Ward's method")
-*   [Cophenetic](/rltoken/od6qj7xAClnWWsMiZub19w "Cophenetic")
-
-**References**:
-
-*   [scikit-learn](/rltoken/88VAucl8IXIyYdIk-psXKA "scikit-learn")
-*   [Clustering](/rltoken/TM5FYs3qAl8ViiETtjC7YQ "Clustering")
-*   [sklearn.cluster.KMeans](/rltoken/rECZ6rptvFW-U__JgpoakA "sklearn.cluster.KMeans")
-*   [Gaussian mixture models](/rltoken/4brz1eVtcrQZKtxfzPKVZQ "Gaussian mixture models")
-*   [sklearn.mixture.GaussianMixture](/rltoken/DveAQEvSczCnnaNjEKbvYQ "sklearn.mixture.GaussianMixture")
-*   [scipy](/rltoken/sfWn9cPHo-FCa2BFiDrQCg "scipy")
-*   [scipy.cluster.hierarchy](/rltoken/Zb5HMNMEjr6KECmo6i5c9A "scipy.cluster.hierarchy")
-    *   [scipy.cluster.hierarchy.linkage](/rltoken/YGW7CBw9KlevcH2bgRWI0A "scipy.cluster.hierarchy.linkage")
-    *   [scipy.cluster.hierarchy.fcluster](/rltoken/pFiJk3VzJblLB8Zfa7nyjA "scipy.cluster.hierarchy.fcluster")
-    *   [scipy.cluster.hierarchy.dendrogram](/rltoken/Jrq95Kg2nFKiIWN7oR6Bzw "scipy.cluster.hierarchy.dendrogram")
 
 ## Learning Objectives
 
@@ -117,9 +77,6 @@ Write a function `def initialize(X, k):` that initializes cluster centroids for 
 *   Returns: a `numpy.ndarray` of shape `(k, d)` containing the initialized centroids for each cluster, or `None` on failure
 ```
     alexa@ubuntu-xenial:0x01-clustering$ ./0-main.py 
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/a5311b6ad0410a678aab.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=a834b2b09ea0aa41c51e4c173281a9f1b06db811bb6e8b66c8aa74050dee0f16)
-
     [[14.54730144 13.46780434]
      [20.57098466 33.55245039]
      [ 9.55556506 51.51143281]
@@ -133,7 +90,7 @@ Write a function `def initialize(X, k):` that initializes cluster centroids for 
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `0-initialize.py`
 
-#### Correction of "0\. Initialize K-means"
+
 
 
 #### 1\. K-means 
@@ -162,17 +119,17 @@ Write a function `def kmeans(X, k, iterations=1000):` that performs K-means on a
      [39.62770705 19.89843487]
      [59.22766628 29.19796006]
      [20.0835633  69.81592298]]
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/74c9c16e29333b39f7db.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=60dede58101cb25e7e7a5183b111fa17e231537ef7223c44d7ddda045cc1a9f7)
-
 ```
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/1-kmeans.jpg)
+
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `1-kmeans.py`
 
-#### Correction of "1\. K-means"
+
 
 
 #### 2\. Variance 
@@ -207,7 +164,7 @@ Write a function `def variance(X, C):` that calculates the total intra-cluster v
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `2-variance.py`
 
-#### Correction of "2\. Variance"
+
 
 
 #### 3\. Optimize k 
@@ -386,17 +343,17 @@ Write a function`def optimum_k(X, kmin=1, kmax=None, iterations=1000):` that tes
            4, 3, 3, 7, 4, 3, 5, 3, 5, 2, 4, 3, 3, 5, 3, 5, 3, 1, 7, 5, 5, 5,
            7, 2, 3, 9, 7, 3, 7, 3]))]
     [0.0, 75832.02222732759, 123143.46796989653, 134769.3042432301, 150059.18396536604, 150520.77442558392, 150997.04158567425, 151765.54635597183, 152083.78064823075, 152200.29395325758]
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/4cd46d5d9463dad96a37.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=206208b821f2832f5774e20bf1f90007418e141f667c4c1a0d6ac65f96179018)
-
 ```
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/3-optimum.jpg)
+
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `3-optimum.py`
 
-#### Correction of "3\. Optimize k"
+
 
 
 #### 4\. Initialize GMM 
@@ -440,7 +397,7 @@ Write a function `def initialize(X, k):` that initializes variables for a Gaussi
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `4-initialize.py`
 
-#### Correction of "4\. Initialize GMM"
+
 
 
 #### 5\. PDF 
@@ -469,7 +426,7 @@ Write a function `def pdf(X, m, S):` that calculates the probability density fun
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `5-pdf.py`
 
-#### Correction of "5\. PDF"
+
 
 
 #### 6\. Expectation 
@@ -508,7 +465,7 @@ Write a function `def expectation(X, pi, m, S):` that calculates the expectation
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `6-expectation.py`
 
-#### Correction of "6\. Expectation"
+
 
 
 #### 7\. Maximization 
@@ -551,7 +508,7 @@ Write a function `def maximization(X, g):` that calculates the maximization step
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `7-maximization.py`
 
-#### Correction of "7\. Maximization"
+
 
 
 #### 8\. EM 
@@ -617,7 +574,7 @@ Write a function `def expectation_maximization(X, k, iterations=1000, tol=1e-5, 
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `8-EM.py`
 
-#### Correction of "8\. EM"
+
 
 
 #### 9\. BIC 
@@ -681,7 +638,7 @@ Write a function `def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbo
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `9-BIC.py`
 
-#### Correction of "9\. BIC"
+
 
 
 #### 10\. Hello, sklearn! 
@@ -713,7 +670,7 @@ Write a function `def kmeans(X, k):` that performs K-means on a dataset:
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `10-kmeans.py`
 
-#### Correction of "10\. Hello, sklearn!"
+
 
 
 #### 11\. GMM 
@@ -760,7 +717,7 @@ Write a function `def gmm(X, k):` that calculates a GMM from a dataset:
 *   Directory: `unsupervised_learning/0x01-clustering`
 *   File: `11-gmm.py`
 
-#### Correction of "11\. GMM"
+
 
 
 #### 12\. Agglomerative 
