@@ -38,7 +38,9 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         return None, None, None, None, None
     if type(iterations) != int or iterations <= 0:
         return None, None, None, None, None
-    if type(tol) != float or tol <= 0:
+    if type(tol) != float or tol < 0:
+        return None, None, None, None, None
+    if type(verbose) != bool:
         return None, None, None, None, None
 
     # initialization
@@ -60,6 +62,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         l_prev = l_
 
     g, l_ = expectation(X, pi, m, S)
-    print('Log Likelihood after {} iterations: {}'.format(i, l_))
+    if verbose:
+        print('Log Likelihood after {} iterations: {}'.format(i, l_))
 
     return pi, m, S, g, l_,
