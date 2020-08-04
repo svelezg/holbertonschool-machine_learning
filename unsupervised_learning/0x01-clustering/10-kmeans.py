@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """contains the kmeans function"""
 
-from sklearn.cluster import KMeans
+import sklearn.cluster
 
 
 def kmeans(X, k):
@@ -16,7 +16,7 @@ def kmeans(X, k):
             containing the index of the cluster in C that
             each data point belongs to
     """
-    Kmean = KMeans(n_clusters=k)
+    Kmean = sklearn.cluster.KMeans(n_clusters=k)
     Kmean.fit(X)
     C = Kmean.cluster_centers_
     clss = Kmean.labels_
