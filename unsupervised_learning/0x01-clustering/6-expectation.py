@@ -42,6 +42,10 @@ def expectation(X, pi, m, S):
     if S.shape[0] != k:
         return None, None
 
+    # sum of pi equal to 1
+    if not np.isclose([np.sum(pi)], [1])[0]:
+        return None, None
+
     sum_i = 0
     num = np.zeros((k, n))
     for i in range(k):
