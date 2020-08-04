@@ -28,10 +28,15 @@ def maximization(X, g):
 
     if X.shape[0] != g.shape[1]:
         return None, None, None
-
     n, d = X.shape
 
     k = g.shape[0]
+
+    # sum of gi equal to 1
+    probs = np.sum(g, axis=0)
+    tester = np.ones((n,))
+    if not np.isclose(probs, tester).all():
+        return None, None, None
 
     # initialization
     pi = np.zeros((k,))
