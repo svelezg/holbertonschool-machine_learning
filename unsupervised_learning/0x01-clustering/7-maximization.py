@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""contains the maximization function"""
+
 import numpy as np
 
 
