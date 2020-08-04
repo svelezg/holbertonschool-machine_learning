@@ -26,7 +26,7 @@ def expectation(X, pi, m, S):
     # type and shape
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
-    if not isinstance(pi, np.ndarray):
+    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
         return None, None
     if not isinstance(m, np.ndarray) or len(m.shape) != 2:
         return None, None
@@ -34,9 +34,6 @@ def expectation(X, pi, m, S):
         return None, None
 
     n, d = X.shape
-
-    # pi = pi[:, np.newaxis]
-
     k = pi.shape[0]
 
     # adequate dimensions
