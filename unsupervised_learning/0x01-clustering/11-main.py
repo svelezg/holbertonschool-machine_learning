@@ -18,6 +18,9 @@ if __name__ == '__main__':
     print(m)
     print(S)
     print(bic)
+
+    fig = plt.figure()
     plt.scatter(X[:, 0], X[:, 1], s=10, c=clss)
     plt.scatter(m[:, 0], m[:, 1], s=50, marker='*', c=list(range(4)))
     plt.show()
+    fig.savefig('images/11-gmm.jpg')

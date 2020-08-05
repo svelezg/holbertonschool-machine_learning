@@ -15,6 +15,9 @@ if __name__ == "__main__":
 
     C, clss = kmeans(X, 5)
     print(C)
+
+    fig = plt.figure()
     plt.scatter(X[:, 0], X[:, 1], s=10, c=clss)
     plt.scatter(C[:, 0], C[:, 1], s=50, marker='*', c=list(range(5)))
     plt.show()
+    fig.savefig('images/10-kmeans.jpg')

@@ -660,10 +660,9 @@ Write a function `def kmeans(X, k):` that performs K-means on a dataset:
      [39.62770705 19.89843487]
      [59.22766628 29.19796006]
      [20.0835633  69.81592298]]
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/9ed61d0ec495095f80bf.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=306a6a30bb73d556bb66abeff65ac6c5ddd6a6b717949cc9059905d776c529b5)
-
 ```
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/10-kmeans.jpg)
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`
@@ -707,10 +706,9 @@ Write a function `def gmm(X, k):` that calculates a GMM from a dataset:
      [[ 3.54632094e+01  1.12791052e+01]
       [ 1.12791052e+01  3.21044161e+01]]]
     189727.91411998263
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/4d20ec068e424c587a98.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=14b72bd1460b285d221451393fe919cf0d4447f6a2e36ec0ef526612a47b75e0)
-
 ```
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/11-gmm.jpg)
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`
@@ -733,15 +731,15 @@ Write a function `def agglomerative(X, dist):` that performs agglomerative clust
     *   `import matplotlib.pyplot as plt`
 *   Returns: `clss`, a `numpy.ndarray` of shape `(n,)` containing the cluster indices for each data point
 
-```
+
     
     alexa@ubuntu-xenial:0x01-clustering$ ./12-main.py 
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/06cc78d5e161cc719bdd.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=ee715552e0b1505d8d6eb7f9c7abb7719acf75e298e57f6df0af9f9675660881)
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/12a-agglomerative.jpg)
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/a1dffaac9991e9518a8b.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=504207b218a57644644dc4acca1b1ccad270bbd18513f05644862dd9cd7229d9)
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/12b-agglomerative.jpg)
 
-```
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`
