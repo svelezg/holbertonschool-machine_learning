@@ -626,12 +626,12 @@ Write a function `def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbo
     [197659.40687086 193582.54646792 191785.47779893 189134.58184357
      189192.49345356 189244.01718438 189306.23042322 189370.01378997
      189427.71328887 189483.77820741]
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/3ce66d375c09b61bf6b4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=ca7d24ed5dd9dd14cfb2e160651f9ed8ad486c4638d67e4a4af6936d4c0377f7)
-
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2019/8/7434fa918f1cff45a2f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20200803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200803T134729Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=23c3f0a45ad7c4a8225029cebb0236af6011d37d67ffc5f1a8cab381d5ebc61a)
-
 ```
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/9a-BIC.jpg)
+
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/images/9b-BIC.jpg)
+
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`

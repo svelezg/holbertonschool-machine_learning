@@ -14,19 +14,28 @@ if __name__ == '__main__':
                                       size=1000)
     X = np.concatenate((a, b, c, d), axis=0)
     np.random.shuffle(X)
-    best_k, best_result, l_, b = BIC(X, kmin=1, kmax=10)
+    kmin = 1
+    kmax = 10
+
+    best_k, best_result, l_, b = BIC(X, kmin=kmin, kmax=kmax)
     print(best_k)
     print(best_result)
     print(l_)
     print(b)
-    x = np.arange(1, 11)
+    x = np.arange(kmin, kmax + 1)
+
+    fig = plt.figure()
     plt.plot(x, l_, 'r')
     plt.xlabel('Clusters')
     plt.ylabel('Log Likelihood')
     plt.tight_layout()
     plt.show()
+    fig.savefig('images/9a-BIC.jpg')
+
+    fig = plt.figure()
     plt.plot(x, b, 'b')
     plt.xlabel('Clusters')
     plt.ylabel('BIC')
     plt.tight_layout()
     plt.show()
+    fig.savefig('images/9b-BIC.jpg')
