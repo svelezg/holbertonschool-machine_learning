@@ -70,8 +70,19 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         results.append((pi, m, S))
 
         l_.append(l_k)
-        p = k - 1 + k * d + k * d * (d + 1) / 2
-        p += k
+        p = 2 * k - 1 + k * d + k * d * (d + 1) / 2
+
+        """
+        Df = (d*d -d)/2 + 2 * d + 1
+        M = k * Df - 1
+
+        Df = 2* d + 1
+        alt = k * Df - 1
+        print(p, M, alt)
+        """
+
+        if d > 2:
+            p += 2 * k * (d+1)
 
         bic = p * np.log(n) - 2 * l_k
         b.append(bic)
