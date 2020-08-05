@@ -48,9 +48,9 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if type(iterations) != int or iterations <= 0:
         return None, None, None, None
     if type(tol) != float or tol < 0:
-        return None, None, None, None, None
+        return None, None, None, None
     if type(verbose) != bool:
-        return None, None, None, None, None
+        return None, None, None, None
 
     n, d = X.shape
 
@@ -70,7 +70,8 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         results.append((pi, m, S))
 
         l_.append(l_k)
-        p = k * ((d * d - d) / 2 + 2 * d + 1) - 1
+        p = k + k * d + k * d * (d + 1) / 2
+        print(p, np.log(n), p * np.log(n), - 2 * l_k, p * np.log(n) - 2 * l_k)
 
         bic = p * np.log(n) - 2 * l_k
         b.append(bic)
