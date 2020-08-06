@@ -15,14 +15,15 @@ def variance(X, C):
     try:
         k, d = C.shape
 
-        # Eucledean norm
-        # (a - b)**2 = a^2 - 2ab + b^2 expansion
+        # squared euclidean distance (SED)
+        # (a - b)² = a^2 - 2ab + b^2 expansion
+        # (a - b)² = ||a||² + ||b||² - 2ab
         a2 = np.sum(C ** 2, axis=1)[:, np.newaxis]
         b2 = np.sum(X ** 2, axis=1)
         ab = np.matmul(C, X.T)
-        D = a2 - 2 * ab + b2
+        SED = a2 - 2 * ab + b2
 
-        var = np.sum(np.amin(D, axis=0))
+        var = np.sum(np.amin(SED, axis=0))
 
         return var
 
