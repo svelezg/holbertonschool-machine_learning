@@ -1,5 +1,9 @@
 # 0x01\. Clustering
 
+![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/animations/kmeans_animations.gif) | ![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/animations/gmm_animations.gif)
+:-------------------------:|:-------------------------:
+K-means | GMM
+
 ## Authors
 * **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
 * **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
