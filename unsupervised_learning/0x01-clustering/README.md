@@ -1,6 +1,6 @@
 # 0x01\. Clustering
 
-![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/animations/kmeans_animations.gif) | ![](https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/animations/gmm_animations.gif)
+<img src= "https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/animations/kmeans_animations.gif" width="250" height="250"/> | <img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/unsupervised_learning/0x01-clustering/animations/gmm_animations.gif" width="250" height="250"/> 
 :-------------------------:|:-------------------------:
 K-means | GMM
 
