@@ -54,6 +54,6 @@ def expectation(X, pi, m, S):
 
     g = num / sum_i
 
-    log_likelihood = np.sum(np.log(sum_i))
+    log_likelihood = np.sum(np.log(sum_i), keepdims=True)
 
     return g, log_likelihood
