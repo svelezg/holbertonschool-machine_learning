@@ -50,9 +50,8 @@ def expectation(X, pi, m, S):
     num = np.zeros((k, n))
     for i in range(k):
         num[i] = pi[i] * pdf(X, m[i], S[i])
-        sum_i += num[i]
 
-    g = num / sum_i
+    g = num / np.sum(num, axis=0, keepdims=True)
 
     log_likelihood = np.sum(np.log(sum_i))
 
