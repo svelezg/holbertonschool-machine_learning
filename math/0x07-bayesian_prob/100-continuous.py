@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """contains the posterior function"""
-from scipy import math, special
+from scipy import special
 
 
 def posterior(x, n, p1, p2):
@@ -28,15 +28,24 @@ def posterior(x, n, p1, p2):
         raise ValueError(err)
 
     if not isinstance(p1, float) or p1 < 0 or p1 > 1:
-        err = 'All values in p1 must be in the range [0, 1]'
+        err = 'p1 must be a float in the range [0, 1]'
         raise ValueError(err)
 
     if not isinstance(p2, float) or p2 < 0 or p2 > 1:
-        err = 'All values in p2 must be in the range [0, 1]'
+        err = 'p2 must be a float in the range [0, 1]'
         raise ValueError(err)
 
     if p2 <= p1:
         err = 'p2 must be greater than p1'
         raise ValueError(err)
 
-    return 0
+    a = x + 1
+    b = n - x + 1
+
+    # Cumulative distribution function
+    cum_beta1 = special.btdtr(a, b, p1)
+    cum_beta2 = special.btdtr(a, b, p2)
+
+    result = cum_beta2 - cum_beta1
+
+    return result
