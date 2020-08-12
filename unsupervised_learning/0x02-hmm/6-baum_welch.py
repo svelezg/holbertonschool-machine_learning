@@ -223,8 +223,6 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     if not np.sum(Initial) == 1:
         return None, None
 
-    print('0', '\n', Transition, '\n', Emission)
-
     for n in range(iterations):
         P, alpha = forward(Observations, Emission, Transition, Initial)
         _, beta = backward(Observations, Emission, Transition, Initial)
@@ -265,7 +263,5 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
             Emission[:, i] = np.sum(new_gamma, axis=1)
 
         Emission = np.divide(Emission, denominator.reshape((-1, 1)))
-
-        print(n + 1, '\n', Transition, '\n', Emission)
 
     return Transition, Emission
