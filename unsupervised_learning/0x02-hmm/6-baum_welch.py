@@ -206,7 +206,6 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
 
     # dim conditions
     T = Observations.shape[0]
-
     N, M = Emission.shape
 
     if Transition.shape[0] != N or Transition.shape[1] != N:
@@ -224,44 +223,44 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
         return None, None
 
     for n in range(iterations):
-        P, alpha = forward(Observations, Emission, Transition, Initial)
+        _, alpha = forward(Observations, Emission, Transition, Initial)
         _, beta = backward(Observations, Emission, Transition, Initial)
+
         xi = np.zeros((N, N, T - 1))
-
         for t in range(T - 1):
-            # denominator = alpha[:, t]
-            denominator = P
-            for i in range(N):
-                f = alpha[i, t]
-                g = Transition[i, :]
-                h = Emission[:, Observations[t + 1]]
-                j = beta[i, t + 1]
+            a = np.matmul(alpha[:, t].T, Transition)
+            b = Emission[:, Observations[t + 1]].T
+            c = beta[:, t + 1]
+            denominator = np.matmul(a * b, c)
 
-                numerator = \
-                    alpha[i, t] * \
-                    Transition[i, :] * \
-                    Emission[:, Observations[t + 1]] * \
-                    beta[i, t + 1]
+            for i in range(N):
+                a = alpha[i, t]
+                b = Transition[i]
+                c = Emission[:, Observations[t + 1]].T
+                d = beta[:, t + 1].T
+                numerator = a * b * c * d
                 xi[i, :, t] = numerator / denominator
 
         gamma = np.sum(xi, axis=1)
-        # gamma1 = alpha * beta / denominator.reshape(denominator.shape[0], 1)
-        # gamma = gamma1[:, :T-1]
 
-        Transition = np.sum(xi, 2) / np.sum(gamma, axis=1).reshape((-1, 1))
+        # TRANSITION CALCULATION
+        num = np.sum(xi, 2)
+        den = np.sum(gamma, axis=1).reshape((-1, 1))
+        Transition = num / den
 
+        # EMISSION CALCULATION
         # add additional T'th element in gamma
         xi_sum = np.sum(xi[:, :, T - 2], axis=0)
-        xi_sum = xi_sum.reshape((xi_sum.shape[0], 1))
+        xi_sum = xi_sum.reshape((-1, 1))
         gamma = np.hstack((gamma, xi_sum))
 
         denominator = np.sum(gamma, axis=1)
+        denominator = denominator.reshape((-1, 1))
 
         for i in range(M):
-            index = np.where(Observations.reshape(T, 1) == i)
-            new_gamma = gamma[:, index[0]]
-            Emission[:, i] = np.sum(new_gamma, axis=1)
+            gamma_i = gamma[:, Observations == i]
+            Emission[:, i] = np.sum(gamma_i, axis=1)
 
-        Emission = np.divide(Emission, denominator.reshape((-1, 1)))
+        Emission = Emission / denominator
 
     return Transition, Emission
