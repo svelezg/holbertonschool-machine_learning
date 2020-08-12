@@ -48,9 +48,6 @@ def regular(P):
     # sP = s ; s (P - I) = 0
     Q = P_initial - np.identity(n)
 
-    print(Q)
-    print(Q.T)
-
     # all probabilities add up to 1
     e = np.ones((1, n))
     b = np.zeros(n)
