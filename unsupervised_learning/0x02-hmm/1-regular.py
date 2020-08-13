@@ -18,46 +18,37 @@ def regular(P):
     # P conditions
     if not isinstance(P, np.ndarray) or len(P.shape) != 2:
         return None
-
     if P.shape[0] != P.shape[1]:
         return None
-
     if np.sum(P, axis=1).all() != 1:
         return None
 
     n = P.shape[0]
 
-    # initialization
-    i = 0
-    P_initial = np.copy(P)
-    P_list = [P_initial]
+    # s P = s ; P.T s.T = s.T
+    # eigenvalues, eigenvectors calculation
+    w, v = np.linalg.eig(P.T)
 
-    while True:
-        P = np.matmul(P_initial, P)
+    # index for eigenvalue equal to one
+    index = np.where(np.isclose(w, 1))
 
-        for p in P_list:
-            if (p == P).all() or i == 1000:
-                return None
-        if (P > 0).all():
-            break
+    # check if any found
+    if len(index[0]):
+        index = index[0][0]
+    else:
+        return None
 
-        P_list.append(P)
-        i += 1
+    # get corresponding eigenvector
+    s = v[:, index]
 
-    # steady state vector calculation
-    # sP = s ; s (P - I) = 0
-    Q = P_initial - np.identity(n)
+    # check for any zero element
+    if any(np.isclose(s, 0)):
+        return None
 
-    # all probabilities add up to 1
-    e = np.ones((1, n))
-    b = np.zeros(n)
-    b[-1] = 1
+    # normalize s
+    s = s / np.sum(s)
 
-    # (P - I).T s = 0
-    # replace last row by ones
-    Q = np.concatenate((Q.T[:-1], e))
+    # reshape s
+    s = s[np.newaxis, :]
 
-    # solve Qs = b for s
-    s = np.linalg.solve(Q, b)
-
-    return s.reshape((1, n))
+    return s
