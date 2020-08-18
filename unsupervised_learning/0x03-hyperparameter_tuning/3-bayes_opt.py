@@ -28,8 +28,9 @@ class BayesianOptimization:
         :param minimize: bool determining whether optimization
             should be performed for minimization (True) or maximization (False)
         """
-        self.f = 0
+        self.f = f
         self.gp = GP(X_init, Y_init, l, sigma_f)
-        self.X_s
+        _min, _max = bounds
+        self.X_s = np.linspace(_min, _max, ac_samples).reshape(-1, 1)
         self.xsi = xsi
         self.minimize = minimize
