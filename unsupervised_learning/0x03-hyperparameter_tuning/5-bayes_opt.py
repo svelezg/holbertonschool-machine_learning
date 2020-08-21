@@ -85,7 +85,6 @@ class BayesianOptimization:
             X_next, EI = self.acquisition()
 
             if X_next in self.gp.X:
-                print('X_next', X_next)
                 break
 
             # Obtain next noisy sample from the objective function
