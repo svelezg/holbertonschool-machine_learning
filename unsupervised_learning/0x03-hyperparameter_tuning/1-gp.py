@@ -40,27 +40,26 @@ class GaussianProcess:
 
     def predict(self, X_s):
         """
-        predicts the mean and standard deviation of points in
-        a Gaussian process
-        :param X_s: numpy.ndarray of shape (s, 1)
-            containing all of the points whose mean and
-            standard deviation should be calculated
-            s is the number of sample points
-        :return: mu, sigma
-            mu is a numpy.ndarray of shape (s,)
-                containing the mean for each point in X_s, respectively
-            sigma is a numpy.ndarray of shape (s,)
-                containing the standard deviation for each point in X_s
+        * X_s is a numpy.ndarray of shape (s, 1) containing all of
+          the points whose mean and standard deviation should be
+          calculated
+        * s is the number of sample points
+        Returns: mu, sigma
+        * mu is a numpy.ndarray of shape (s,) containing the mean
+          for each point in X_s, respectively
+        * sigma is a numpy.ndarray of shape (s,) containing the
+          variance for each point in X_s, respectively
         """
-        K = self.kernel(self.X, self.X)
+        K = self.K
         K_s = self.kernel(self.X, X_s)
         K_ss = self.kernel(X_s, X_s)
         K_inv = np.linalg.inv(K)
 
-        # Equation (4)
-        mu = K_s.T.dot(K_inv).dot(self.Y)[:,0]
+        # mean
+        mu_s = K_s.T.dot(K_inv).dot(self.Y)
+        mu_s = mu_s.reshape(-1)
 
-        # Equation (5)
-        sigma = np.diag(K_ss - K_s.T.dot(K_inv).dot(K_s))
-
-        return mu, sigma
+        # variance from covariance
+        cov_s = K_ss - K_s.T.dot(K_inv).dot(K_s)
+        var_s = np.diag(cov_s)
+        return mu_s, var_s
