@@ -63,7 +63,7 @@ class BayesianOptimization:
 
             Z = imp / sigma
             EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
-            EI[sigma == 0.0] = 0.0
+            EI[np.isclose(sigma, 0)] = 0.0
 
         X_next = self.X_s[np.argmax(EI)]
 
