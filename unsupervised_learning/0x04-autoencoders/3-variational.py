@@ -14,7 +14,7 @@ def sampling(args):
         distribution sample
     """
     # unpacking
-    mu, sigma = args
+    mu, z_log_sigma = args
 
     # dimension for normal distribution same as z_mean
     mu_shape = keras.backend.shape(mu)
@@ -24,7 +24,7 @@ def sampling(args):
     epsilon = keras.backend.random_normal(shape=mu_shape)
 
     # sampled vector
-    z = mu + keras.backend.exp(0.5 * sigma) * epsilon
+    z = mu + keras.backend.exp(z_log_sigma) * epsilon
 
     return z
 
@@ -61,12 +61,13 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # split into mean and sigma layers
     mu = keras.layers.Dense(units=latent_dims)(my_layer)
-    sigma = keras.layers.Dense(units=latent_dims)(my_layer)
+    z_log_sigma = keras.layers.Dense(units=latent_dims)(my_layer)
 
     # sampling layer
-    z = keras.layers.Lambda(sampling, output_shape=(latent_dims,))([mu, sigma])
+    z = keras.layers.Lambda(sampling,
+                            output_shape=(latent_dims,))([mu, z_log_sigma])
 
-    encoder = keras.Model(inputs=inputs, outputs=[z, mu, sigma])
+    encoder = keras.Model(inputs=inputs, outputs=[z, mu, z_log_sigma])
 
     # *************************************************************************
     # DECODER
@@ -106,12 +107,11 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         reconstruction_sum = keras.backend.sum(reconstruction_i, axis=1)
 
         # Kullback–Leibler divergence
-        kl_i = keras.backend.square(sigma) \
-            + keras.backend.square(mu) \
-            - keras.backend.log(1e-8 + keras.backend.square(sigma)) \
-            - 1
+        kl_i = 1 + z_log_sigma \
+            - keras.backend.square(mu) \
+            - keras.backend.exp(z_log_sigma)
 
-        kl_sum = 0.5 * keras.backend.sum(kl_i, axis=1)
+        kl_sum = - 0.5 * keras.backend.mean(kl_i, axis=-1)
 
         return reconstruction_sum + kl_sum
 
