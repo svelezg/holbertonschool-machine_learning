@@ -30,13 +30,11 @@ def sparse(input_dims, hidden_layers, latent_dims, lambtha):
     # first densely-connected layer
     my_layer = keras.layers.Dense(units=hidden_layers[0],
                                   activation='relu',
-                                  activity_regularizer=reg,
                                   input_shape=(input_dims,))(inputs)
 
     # subsequent densely-connected layers:
     for i in range(1, len(hidden_layers)):
         my_layer = keras.layers.Dense(units=hidden_layers[i],
-                                      activity_regularizer=reg,
                                       activation='relu'
                                       )(my_layer)
 
@@ -73,7 +71,7 @@ def sparse(input_dims, hidden_layers, latent_dims, lambtha):
 
     # ************************************************************
     # AUTOENCODER
-    auto_bottleneck = encoder.layers[-1].output
+    auto_bottleneck = encoder(inputs)
     auto_output = decoder(auto_bottleneck)
 
     auto = keras.Model(inputs=inputs, outputs=auto_output)
