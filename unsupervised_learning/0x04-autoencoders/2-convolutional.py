@@ -43,7 +43,6 @@ def autoencoder(input_dims, filters, latent_dims):
                                                 padding='same')(conv_layer)
 
     encoder = keras.Model(inputs=inputs, outputs=max_pool_2d)
-    encoder.summary()
 
     # ************************************************************
     # DECODER
@@ -63,7 +62,7 @@ def autoencoder(input_dims, filters, latent_dims):
         size=(2, 2))(my_conv_layer_dec)
 
     # subsequent conv layers:
-    for i in range(len(filters) - 2, -1, -1):
+    for i in range(len(filters) - 1, 1, -1):
         my_conv_layer_dec = keras.layers.Conv2D(filters=filters[i],
                                                 kernel_size=(3, 3),
                                                 padding="same",
@@ -80,24 +79,21 @@ def autoencoder(input_dims, filters, latent_dims):
                                             activation='relu'
                                             )(upsampling_lay)
 
-    """
     upsampling_lay = keras.layers.UpSampling2D(
         size=(2, 2))(my_conv_layer_dec)
-    """
 
     #  last conv layer in the decoder
     my_conv_layer_dec = keras.layers.Conv2D(filters=last_filter,
                                             kernel_size=(3, 3),
-                                            padding="valid",
+                                            padding="same",
                                             activation='sigmoid'
-                                            )(my_conv_layer_dec)
+                                            )(upsampling_lay)
 
     decoder = keras.Model(inputs=inputs_dec, outputs=my_conv_layer_dec)
-    decoder.summary()
 
     # ************************************************************
     # AUTOENCODER
-    auto_bottleneck = encoder.layers[-1].output
+    auto_bottleneck = encoder(inputs)
     auto_output = decoder(auto_bottleneck)
 
     auto = keras.Model(inputs=inputs, outputs=auto_output)
