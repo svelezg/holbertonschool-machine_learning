@@ -17,11 +17,11 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         decoder is the decoder model
         auto is the full autoencoder model
     """
-    # ************************************************************
-    # ENCODER
     # input placeholder
     inputs = keras.Input(shape=(input_dims,))
 
+    # ************************************************************
+    # ENCODER
     # first densely-connected layer
     my_layer = keras.layers.Dense(units=hidden_layers[0],
                                   activation='relu',
@@ -65,7 +65,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # ************************************************************
     # AUTOENCODER
-    auto_bottleneck = encoder.layers[-1].output
+    auto_bottleneck = encoder(inputs)
     auto_output = decoder(auto_bottleneck)
 
     auto = keras.Model(inputs=inputs, outputs=auto_output)
