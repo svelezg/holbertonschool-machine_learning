@@ -17,12 +17,11 @@ def sampling(args):
     mu, sigma = args
 
     # dimension for normal distribution same as z_mean
-    m = keras.backend.shape(mu)[0]
-    dims = keras.backend.int_shape(mu)[1]
+    mu_shape = keras.backend.shape(mu)
 
     # sampling from a normal distribution with mean=0 and standard deviation=1
     # epsilon ~ N(0,1)
-    epsilon = keras.backend.random_normal(shape=(m, dims))
+    epsilon = keras.backend.random_normal(shape=mu_shape)
 
     # sampled vector
     z = mu + keras.backend.exp(0.5 * sigma) * epsilon
@@ -68,7 +67,6 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     z = keras.layers.Lambda(sampling, output_shape=(latent_dims,))([mu, sigma])
 
     encoder = keras.Model(inputs=inputs, outputs=[z, mu, sigma])
-    encoder.summary()
 
     # *************************************************************************
     # DECODER
@@ -92,15 +90,13 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
                                       )(my_layer_dec)
 
     decoder = keras.Model(inputs=inputs_dec, outputs=my_layer_dec)
-    decoder.summary()
 
     # *************************************************************************
     # AUTOENCODER
-    auto_bottleneck = encoder.layers[-1].output
+    auto_bottleneck = encoder(inputs)
     auto_output = decoder(auto_bottleneck)
 
     auto = keras.Model(inputs=inputs, outputs=auto_output)
-    auto.summary()
 
     def custom_loss(loss_input, loss_output):
         """ custom loss function """
