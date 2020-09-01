@@ -2,7 +2,6 @@
 """contains the rnn function"""
 
 import numpy as np
-from wheel.signatures.djbec import H
 
 
 def rnn(rnn_cell, X, h_0):
