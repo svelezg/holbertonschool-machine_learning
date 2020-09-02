@@ -51,8 +51,7 @@ class GRUCell:
             h_next is the next hidden state
             y is the output of the cell
         """
-
-        # horizontal stacking of previous inner state and input
+        # horizontal stacking of previous hidden state and input
         h_x = np.concatenate((h_prev, x_t), axis=1)
 
         # 1. Update gate (z)
@@ -67,7 +66,7 @@ class GRUCell:
         # input for tanh activation
         Z_next = np.matmul(h_x, self.Wh) + self.bh
 
-        # tanh activation outputting inner activated state
+        # tanh activation outputting hidden activated state
         h_prime = np.tanh(Z_next)
 
         # 4. Final memory at current time step
@@ -76,7 +75,7 @@ class GRUCell:
         # input for softmax activation
         Z_y = np.matmul(h_next, self.Wy) + self.by
 
-        # softmax activation outputting RNNCell final output
+        # softmax activation outputting GRUCell final output
         y = softmax(Z_y)
 
         return h_next, y

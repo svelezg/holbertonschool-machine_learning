@@ -28,14 +28,9 @@ def rnn(rnn_cell, X, h_0):
     # initilization
     H.append(h_0)
 
-    # first calculation
-    h, y = rnn_cell.forward(h_0, X[0])
-    H.append(h)
-    Y.append(y)
-
-    # traverse inputs
-    for j in range(1, t):
-        h, y = rnn_cell.forward(h, X[j])
+    # traverse input steps
+    for step in range(t):
+        h, y = rnn_cell.forward(H[-1], X[step])
         H.append(h)
         Y.append(y)
 

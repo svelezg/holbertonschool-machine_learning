@@ -55,7 +55,6 @@ class LSTMCell:
             c_next is the next cell state
             y is the output of the cell
         """
-
         # horizontal stacking of previous inner state and input
         h_x = np.concatenate((h_prev, x_t), axis=1)
 

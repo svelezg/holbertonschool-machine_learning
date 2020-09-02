@@ -4,16 +4,6 @@
 import numpy as np
 
 
-def sigmoid(x):
-    """sigmoid function"""
-    return 1 / (1 + np.exp(-x))
-
-
-def softmax(x):
-    """softmax function"""
-    return np.exp(x) / np.sum(np.exp(x), axis=1, keepdims=True)
-
-
 class BidirectionalCell:
     """
     class BidirectionalCell represents a bidirectional cell of an RNN:

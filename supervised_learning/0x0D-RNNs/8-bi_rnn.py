@@ -6,7 +6,7 @@ import numpy as np
 
 def bi_rnn(bi_cell, X, h_0, h_t):
     """
-    performs forward propagation for a simple RNN
+    performs forward propagation for a bidirectional RNN
     :param bi_cell: an instance of BidirectinalCell
         that will be used for the forward propagation
     :param X: data to be used, given as a numpy.ndarray
@@ -26,9 +26,8 @@ def bi_rnn(bi_cell, X, h_0, h_t):
 
     H_f = []
     H_b = []
-    Y = []
 
-    # initilization
+    # initialization
     h_f = h_0
     h_b = h_t
 

@@ -18,8 +18,8 @@ class RNNCell:
         """
         # vertical stacking of W
         self.Wh = np.random.normal(size=(i + h, h))
-
         self.Wy = np.random.normal(size=(h, o))
+
         self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
 
@@ -41,7 +41,7 @@ class RNNCell:
         # input for tanh activation
         Z_next = np.matmul(h_x, self.Wh) + self.bh
 
-        # tanh activation outputting inner activated state
+        # tanh activation outputting hidden activated state
         h_next = np.tanh(Z_next)
 
         # input for softmax activation
