@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """contains the rnn function"""
 
 import numpy as np
