@@ -60,11 +60,12 @@ class WindowGenerator:
         Print
         :return: Window info,
         """
-        return '\n'.join([
+        output = '\n'.join([
             f'Total window size: {self.total_window_size}',
             f'Input indices: {self.input_indices}',
             f'Label indices: {self.label_indices}',
             f'Label column name(s): {self.label_columns}'])
+        return output
 
     def split_window(self, features):
         """
