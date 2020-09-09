@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """contains the pre-processing function"""
 
-import pandas as pd
+
+# import pandas as pd
 
 
 def preprocessing():
