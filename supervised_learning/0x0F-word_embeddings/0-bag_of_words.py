@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Contains the bag_of_words function"""
 
+from sklearn.feature_extraction.text import CountVectorizer
+
 
 def bag_of_words(sentences, vocab=None):
     """
@@ -13,5 +15,10 @@ def bag_of_words(sentences, vocab=None):
             f is the number of features analyzed
         features is a list of the features used for embeddings
     """
+    vectorizer = CountVectorizer(vocabulary=vocab)
+    X = vectorizer.fit_transform(sentences)
+
+    features = vectorizer.get_feature_names()
+    embeddings = X.toarray()
 
     return embeddings, features

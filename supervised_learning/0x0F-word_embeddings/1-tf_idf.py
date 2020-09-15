@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Contains the tf_idf function"""
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 def tf_idf(sentences, vocab=None):
     """
@@ -13,5 +15,9 @@ def tf_idf(sentences, vocab=None):
             f is the number of features analyzed
         features is a list of the features used for embeddings
     """
+    vectorizer = TfidfVectorizer(vocabulary=vocab)
+    X = vectorizer.fit_transform(sentences)
+    features = vectorizer.get_feature_names()
+    embeddings = X.toarray()
 
     return embeddings, features
