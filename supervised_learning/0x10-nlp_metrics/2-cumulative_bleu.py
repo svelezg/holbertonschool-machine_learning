@@ -101,7 +101,7 @@ def cumulative_bleu(references, sentence, n):
     for i in range(0, n):
         precisions[i] = calc_precision(references, sentence, i+1)
 
-    geo_mean = np.sum(precisions)/n
+    geo_mean = np.exp(np.sum((1/n) * np.log(precisions)))
 
     len_trans = len(sentence)
 
