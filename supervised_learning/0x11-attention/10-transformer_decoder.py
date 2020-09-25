@@ -2,12 +2,15 @@
 """contains the Decoder class"""
 
 import tensorflow as tf
+import numpy as np
 
 positional_encoding = __import__('4-positional_encoding').positional_encoding
 DecoderBlock = __import__('8-transformer_decoder_block').DecoderBlock
 
 
 class Decoder(tf.keras.layers.Layer):
+    """Decoder class for machine translation"""
+
     def __init__(self, N, dm, h, hidden, target_vocab,
                  max_seq_len, drop_rate=0.1):
         """
@@ -48,11 +51,13 @@ class Decoder(tf.keras.layers.Layer):
             containing the decoder output
         """
         seq_len = tf.shape(x)[1]
-        positional_encod = tf.cast(self.positional_encoding, dtype=tf.float32)
+
+        pos_encoding = self.positional_encoding[np.newaxis, ...]
+        pos_encoding = tf.cast(pos_encoding, dtype=tf.float32)
 
         x = self.embedding(x)  # (batch_size, target_seq_len, d_model)
         x *= tf.math.sqrt(tf.cast(self.dm, tf.float32))
-        x += positional_encod[:seq_len]
+        x += pos_encoding[:, :seq_len, :]
 
         x = self.dropout(x, training=training)
 
