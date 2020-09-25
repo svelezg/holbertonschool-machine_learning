@@ -2,7 +2,6 @@
 """contains the Decoder class"""
 
 import tensorflow as tf
-import numpy as np
 
 positional_encoding = __import__('4-positional_encoding').positional_encoding
 DecoderBlock = __import__('8-transformer_decoder_block').DecoderBlock
@@ -52,7 +51,7 @@ class Decoder(tf.keras.layers.Layer):
         """
         seq_len = tf.shape(x)[1]
 
-        pos_encoding = self.positional_encoding[np.newaxis, ...]
+        pos_encoding = tf.expand_dims(self.positional_encoding, 0)
         pos_encoding = tf.cast(pos_encoding, dtype=tf.float32)
 
         x = self.embedding(x)  # (batch_size, target_seq_len, d_model)

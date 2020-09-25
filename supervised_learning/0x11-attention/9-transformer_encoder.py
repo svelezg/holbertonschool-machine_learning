@@ -2,7 +2,6 @@
 """contains the Encoder class"""
 
 import tensorflow as tf
-import numpy as np
 
 positional_encoding = __import__('4-positional_encoding').positional_encoding
 EncoderBlock = __import__('7-transformer_encoder_block').EncoderBlock
@@ -48,7 +47,7 @@ class Encoder(tf.keras.layers.Layer):
         """
         seq_len = tf.shape(x)[1]
 
-        pos_encoding = self.positional_encoding[np.newaxis, ...]
+        pos_encoding = tf.expand_dims(self.positional_encoding, 0)
         pos_encoding = tf.cast(pos_encoding, dtype=tf.float32)
 
         # adding embedding and position encoding.
