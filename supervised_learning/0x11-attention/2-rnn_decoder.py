@@ -20,15 +20,13 @@ class RNNDecoder(tf.keras.layers.Layer):
         :param batch: integer representing the batch size
         """
         super(RNNDecoder, self).__init__()
-        self.embedding = tf.keras.layers.Embedding(input_dim=vocab,
-                                                   output_dim=embedding)
-
-        self.gru = tf.keras.layers.GRU(units=units,
+        self.embedding = tf.keras.layers.Embedding(vocab, embedding)
+        self.gru = tf.keras.layers.GRU(units,
                                        recurrent_initializer='glorot_uniform',
                                        return_sequences=True,
                                        return_state=True)
 
-        self.F = tf.keras.layers.Dense(units=vocab)
+        self.F = tf.keras.layers.Dense(vocab)
 
     def call(self, x, s_prev, hidden_states):
         """
@@ -46,33 +44,17 @@ class RNNDecoder(tf.keras.layers.Layer):
             s is a tensor of shape (batch, units)
                 containing the new decoder hidden state
         """
-        batch, units = s_prev.shape
-
-        # instantiate SelfAttention
-        attention = SelfAttention(units)
-
-        # calculate context and weights
+        attention = SelfAttention(s_prev.shape[1])
         context, weights = attention(s_prev, hidden_states)
 
-        # expand context dims to match embeddings
-        # (input_length)
-        exp_context = tf.expand_dims(context, 1)
+        x = self.embedding(x)
 
-        # calculate embeddings
-        embeddings = self.embedding(x)
+        x = tf.concat([tf.expand_dims(context, 1), x], axis=-1)
 
-        concat_input = tf.concat([exp_context,
-                                  embeddings],
-                                 axis=-1)
+        output, state = self.gru(x)
 
-        # GRU takes a 3D input
-        outputs, hidden = self.gru(concat_input)
+        output = tf.reshape(output, (-1, output.shape[2]))
 
-        # reshape output (suppress input_seq_len)
-        outputs = tf.reshape(outputs, (outputs.shape[0], outputs.shape[2]))
+        x = self.F(output)
 
-        # final layer output word as a one hot vector
-        # in the target vocabulary
-        y = self.F(outputs)
-
-        return y, hidden
+        return x, state
