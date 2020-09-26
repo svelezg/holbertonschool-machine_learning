@@ -45,15 +45,14 @@ class Encoder(tf.keras.layers.Layer):
         :return: tensor of shape (batch, input_seq_len, dm)
             containing the encoder output
         """
-        seq_len = tf.shape(x)[1]
-
-        pos_encoding = tf.expand_dims(self.positional_encoding, 0)
-        pos_encoding = tf.cast(pos_encoding, dtype=tf.float32)
+        seq_len = x.shape[1]
 
         # adding embedding and position encoding.
         x = self.embedding(x)  # (batch_size, input_seq_len, d_model)
+
         x *= tf.math.sqrt(tf.cast(self.dm, tf.float32))
-        x += pos_encoding[:, :seq_len, :]
+
+        x += self.positional_encoding[:seq_len]
 
         x = self.dropout(x, training=training)
 
