@@ -3,6 +3,7 @@
 load_frozen_lake = __import__('0-load_env').load_frozen_lake
 q_init = __import__('1-q_init').q_init
 
+
 env = load_frozen_lake()
 Q = q_init(env)
 print(Q.shape)
