@@ -46,7 +46,8 @@ class Dataset:
             self.data_train.shuffle(train_dataset_size)
 
         # split the dataset into padded batches of size batch_size
-        padded_shapes = tf.data.get_output_shapes(self.data_train)
+        # padded_shapes = tf.data.get_output_shapes(self.data_train) V1
+        padded_shapes = ([None], [None])
         self.data_train = \
             self.data_train.padded_batch(batch_size,
                                          padded_shapes=padded_shapes)
@@ -62,7 +63,8 @@ class Dataset:
         self.data_valid = self.data_valid.filter(filter_max_length)
 
         # split the dataset into padded batches of size batch_size
-        padded_shapes = tf.data.get_output_shapes(self.data_valid)
+        # padded_shapes = tf.data.get_output_shapes(self.data_valid) V1
+        padded_shapes = ([None], [None])
         self.data_valid = \
             self.data_valid.padded_batch(batch_size,
                                          padded_shapes=padded_shapes)
