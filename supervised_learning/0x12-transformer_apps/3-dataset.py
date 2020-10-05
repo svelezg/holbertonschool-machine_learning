@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """contains the Dataset class"""
 
-import tensorflow as tf
+import tensorflow.compat.v2 as tf
 import tensorflow_datasets as tfds
 
 
@@ -17,6 +17,8 @@ class Dataset:
         examples, metadata = tfds.load('ted_hrlr_translate/pt_to_en',
                                        with_info=True,
                                        as_supervised=True)
+        self.metadata = metadata
+
         self.data_train, self.data_valid = examples['train'], \
             examples['validation']
 
@@ -38,8 +40,10 @@ class Dataset:
         self.data_train = self.data_train.cache()
 
         # shuffle the entire dataset
+        train_dataset_size = self.metadata.splits['train'].num_examples
+
         self.data_train = \
-            self.data_train.shuffle(20000)
+            self.data_train.shuffle(train_dataset_size)
 
         # split the dataset into padded batches of size batch_size
         padded_shapes = tf.data.get_output_shapes(self.data_train)
