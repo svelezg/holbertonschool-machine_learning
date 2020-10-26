@@ -660,7 +660,7 @@ Complete the following script to visualize the `pd.DataFrame`:
 
     $ ./14-visualize.py
 
-![Task14.png]()
+![https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x00-pandas/Task14.png]()
 ```
 **Repo:**
 
