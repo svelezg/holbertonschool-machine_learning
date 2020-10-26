@@ -1,6 +1,6 @@
 # holbertonschool-machine_learning
 
-<img src="https://github.com/svelezg/holbertonschool-machine_learning/tensorflowkeras.png" width="350"/>
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/tensorflowkeras.png" width="350"/>
 
 
 ## Authors
