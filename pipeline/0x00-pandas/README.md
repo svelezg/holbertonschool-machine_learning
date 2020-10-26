@@ -57,17 +57,8 @@ Write a function `def from_numpy(array):` that creates a `pd.DataFrame` from a `
 *   The columns of the `pd.DataFrame` should be labeled in alphabetical order and capitalized. There will not be more than 26 columns.
 *   Returns: the newly created `pd.DataFrame`
 ```
-    $ cat 0-main.py
-    #!/usr/bin/env python3
 
-    import numpy as np
-    from_numpy = __import__('0-from_numpy').from_numpy
-
-    np.random.seed(0)
-    A = np.random.randn(5, 8)
-    print(from_numpy(A))
-    B = np.random.randn(9, 3)
-    print(from_numpy(B))
+    
     $ ./0-main.py
               A         B         C         D         E         F         G         H
     0  1.764052  0.400157  0.978738  2.240893  1.867558 -0.977278  0.950088 -0.151357
@@ -102,11 +93,7 @@ Write a python script that created a `pd.DataFrame` from a dictionary:
 *   The `pd.DataFrame` should be saved into the variable `df`
 ```
     $ cat 1-main.py
-    #!/usr/bin/env python3
-
-    df = __import__('1-from_dictionary').df
-
-    print(df)
+   
     $ ./1-main.py
        First Second
     A    0.0    one
@@ -120,6 +107,7 @@ Write a python script that created a `pd.DataFrame` from a dictionary:
 *   GitHub repository: `holbertonschool-machine_learning`
 *   Directory: `pipeline/0x00-pandas`
 *   File: `1-from_dict.py`
+
 #### 2\. From File 
 
 Write a function `def from_file(filename, delimiter):` that loads data from a file as a `pd.DataFrame`:
@@ -129,14 +117,7 @@ Write a function `def from_file(filename, delimiter):` that loads data from a fi
 *   Returns: the loaded `pd.DataFrame`
 ```
     $ cat 2-main.py
-    #!/usr/bin/env python3
-
-    from_file = __import__('2-from_file').from_file
-
-    df1 = from_file('coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv', ',')
-    print(df1.head())
-    df2 = from_file('bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', ',')
-    print(df2.tail())
+    
     $ ./2-main.py
         Timestamp   Open   High    Low  Close  Volume_(BTC)  Volume_(Currency)  Weighted_Price
     0  1417411980  300.0  300.0  300.0  300.0          0.01                3.0           300.0
@@ -659,9 +640,11 @@ Complete the following script to visualize the `pd.DataFrame`:
     # YOUR CODE HERE
 
     $ ./14-visualize.py
-
-![https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x00-pandas/Task14.png]()
 ```
+
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x00-pandas/Task14.png"/>
+
+
 **Repo:**
 
 *   GitHub repository: `holbertonschool-machine_learning`
