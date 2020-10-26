@@ -1,11 +1,19 @@
 # holbertonschool-machine_learning
 
-## First Trimester
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/tensorflowkeras.png" width="350"/>
+
+
+## Authors
+* **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
+* **Problem statement:** Alexa Orrico 
+
 ### Mathematics:
 - Intro to Linear Algebra
 - Intro to Calculus
 - Intro to Plotting
 - Intro to Probability
+- Advanced Linear Algebra
+- Advanced Probability
 
 ### Supervised Learning:
 - Binary Classification
@@ -14,15 +22,20 @@
 - Regularization Techniques
 - Convolutional Neural Networks
 - Deep Convolutional Architectures
+- Recurrent Neural Networks
+- Transformers
+- Seq-to-Seq modeling
 
 ### Object Detection
 ### Face Verification
 ### Neural Style Transfer
+### Stock predictions
+### Speech to Text
+### Machine Translation
+### Recommender Systems
 
-## Second Trimester
-### Mathematics:
-- Advanced Linear Algebra
-- Advanced Probability
+
+
 
 ### Unsupervised Learning:
 - Dimensionality Reduction
@@ -33,17 +46,8 @@
 - Hyperparameter Optimization
 - Hidden Markov Models
 
-### Supervised Learning:
-- Recurrent Neural Networks
-- Transformers
-- Seq-to-Seq modeling
 
-### Stock predictions
-### Speech to Text
-### Machine Translation
-### Recommender Systems
 
-## Third Trimester
 ### Reinforcement Learning:
 - Agent-Environment Framework
 - Multi-armed Bandit problems
@@ -62,4 +66,3 @@
 - Map Reduce
 - Hosting on cloud platforms
 
-### Portfolio Project
