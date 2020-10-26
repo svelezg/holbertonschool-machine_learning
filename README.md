@@ -1,6 +1,6 @@
 # holbertonschool-machine_learning
 
-<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/tensorflowkeras.png" width="350"/>
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/tensorflowkeras.png" width="450"/>
 
 
 ## Authors
@@ -25,16 +25,13 @@
 - Recurrent Neural Networks
 - Transformers
 - Seq-to-Seq modeling
-
-### Object Detection
-### Face Verification
-### Neural Style Transfer
-### Stock predictions
-### Speech to Text
-### Machine Translation
-### Recommender Systems
-
-
+* **Object Detection**
+* **Face Verification**
+* **Neural Style Transfer**
+* **Stock predictions**
+* **Speech to Text**
+* **Machine Translation**
+* **Recommender Systems**
 
 
 ### Unsupervised Learning:
@@ -56,8 +53,7 @@
 - Policy and Value Functions
 - Temporal Difference Learning
 - Deep Reinforcement Learning
-
-### Develop a Game Agent
+* **Develop a Game Agent**
 
 ### The Pipeline:
 - Web scraping
