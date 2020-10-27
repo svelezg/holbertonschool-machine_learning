@@ -15,4 +15,5 @@ df = pd.concat([df2, df1],
                keys=["bitstamp", "coinbase"])
 df = df.swaplevel(0, 1, axis=0)
 df = df.sort_index()
+
 print(df)
