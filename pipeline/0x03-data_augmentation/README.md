@@ -2,22 +2,11 @@
 
 ## Authors
 * **Solution:** Santiago Vélez G. [svelez.velezgarcia@gmail.com](svelez.velezgarcia@gmail.com) [@svelezg](https://github.com/svelezg)
-* **Problem statement:** Alexa Orrico [Holberton School](https://www.holbertonschool.com/)
+* **Problem statement:** Alexa Orrico
 
-## Resources
 
-**Read or watch**:
-
-*   [Data Augmentation | How to use Deep Learning when you have Limited Data — Part 2](/rltoken/2jHe5oim91wZro4SRdoB1w "Data Augmentation | How to use Deep Learning when you have Limited Data — Part 2")
-*   [tf.image](/rltoken/SJyavhXgzGprWBKoU0p2Ow "tf.image")
-*   [tf.keras.preprocessing.image](/rltoken/gezEJPsqC-6-mGpI0B38Wg "tf.keras.preprocessing.image")
-*   [Automating Data Augmentation: Practice, Theory and New Direction](/rltoken/wboFN7gUujerC1dfHX24PQ "Automating Data Augmentation: Practice, Theory and New Direction")
 
 ## Learning Objectives
-
-At the end of this project, you are expected to be able to [explain to anyone](/rltoken/UY4u9LTJumHV5HGaINEnDA "explain to anyone"), **without the help of Google**:
-
-### General
 
 *   What is data augmentation?
 *   When should you perform data augmentation?
@@ -52,35 +41,6 @@ At the end of this project, you are expected to be able to [explain to anyone](/
 
 ## Tasks
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #### 0\. Flip 
 
 Write a function `def flip_image(image):` that flips an image horizontally:
@@ -88,8 +48,7 @@ Write a function `def flip_image(image):` that flips an image horizontally:
 *   `image` is a 3D `tf.Tensor` containing the image to flip
 *   Returns the flipped image
 
-    $ cat 0-main.py
-    
+   
     $ ./0-main.py
 
 <img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/0-main.png" width="350" height="350"/> 
@@ -137,7 +96,6 @@ Write a function `def rotate_image(image):` that rotates an image by 90 degrees 
 *   `image` is a 3D `tf.Tensor` containing the image to rotate
 *   Returns the rotated image
 
-    $ cat 2-main.py
     
     $ ./2-main.py
 
@@ -151,11 +109,6 @@ Write a function `def rotate_image(image):` that rotates an image by 90 degrees 
 
 
 
-
-
-
-
-
 #### 3\. Shear 
 
 Write a function `def shear_image(image, intensity):` that randomly shears an image:
@@ -164,7 +117,6 @@ Write a function `def shear_image(image, intensity):` that randomly shears an im
 *   `intensity` is the intensity with which the image should be sheared
 *   Returns the sheared image
 
-    $ cat 3-main.py
     
     $ ./3-main.py
 
@@ -187,7 +139,6 @@ Write a function `def change_brightness(image, max_delta):` that randomly change
 *   `max_delta` is the maximum amount the image should be brightened (or darkened)
 *   Returns the altered image
 
-    $ cat 4-main.py
     
     $ ./4-main.py
 
@@ -210,7 +161,6 @@ Write a function `def change_hue(image, delta):` that changes the hue of an imag
 *   `delta` is the amount the hue should change
 *   Returns the altered image
 
-    $ cat 5-main.py
     
     $ ./5-main.py
 
@@ -228,17 +178,9 @@ Write a function `def change_hue(image, delta):` that changes the hue of an imag
 
 #### 6\. Automation 
 
-Write a blog post describing step by step how to perform automated data augmentation. Try to explain every step you know of, and give examples. A total beginner should understand what you have written.
+Post describing step by step how to perform automated data augmentation.
 
-*   Have at least one picture, at the top of the blog post
-*   Publish your blog post on Medium or LinkedIn
-*   Share your blog post at least on LinkedIn
-*   Write professionally and intelligibly
-*   Please, remember that these blogs must be written in English to further your technical ability in a variety of settings
-
-**_Remember, future employers will see your articles; take this seriously, and produce something that will be an asset to your future_**
-
-When done, please add all urls below (blog post, LinkedIn post, etc.)
+[Data Augmentation Automation for Images](https://svelezg.medium.com/data-augmentation-automation-for-images-d072dd3a56b4)
 
 
 
@@ -255,7 +197,6 @@ Write a function `def pca_color(image, alphas):` that performs PCA color augment
 *   `alphas` a tuple of length 3 containing the amount that each channel should change
 *   Returns the augmented image
 
-    $ cat 100-main.py
     
     $ ./100-main.py
 
