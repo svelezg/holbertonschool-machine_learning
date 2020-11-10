@@ -92,7 +92,7 @@ Write a function `def flip_image(image):` that flips an image horizontally:
     
     $ ./0-main.py
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/10/3c70d4fb24140e583ec2cc640bba178f090c3829.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20201110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201110T105028Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=116b7ef94191363aab95bac752e7b2231962f1cd02d4e9387a9149df82619bb8)
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/0-main.png" width="350" height="350"/> 
 
 **Repo:**
 
@@ -115,7 +115,7 @@ Write a function `def crop_image(image, size):` that performs a random crop of a
     
     $ ./1-main.py
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/10/e3b06484b6d2c0dcdd99a447fb2e83e2975b758a.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20201110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201110T105028Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c567ee8158e67b21b58224e97be642eb4509df9c32303974a08050255ab7ce07)
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/1-main.png" width="350" height="350"/> 
 
 **Repo:**
 
@@ -141,7 +141,7 @@ Write a function `def rotate_image(image):` that rotates an image by 90 degrees 
     
     $ ./2-main.py
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/10/670106424f5b215f33b4c0f39699ae1ffe89dbb3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20201110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201110T105028Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=7ef67e16000d894f879723a96bf66841c564dd4a2c8cb124c8e30d48277af356)
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/2-main.png" width="350" height="350"/> 
 
 **Repo:**
 
@@ -168,7 +168,7 @@ Write a function `def shear_image(image, intensity):` that randomly shears an im
     
     $ ./3-main.py
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/10/cd5148646829e2f9b540cea1833d34d5f89faf2c.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20201110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201110T105028Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=d709b873f81dc028943f433ff126ac18a81c1f579edddf468c129e9e33cf08fc)
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/3-main.png" width="350" height="350"/> 
 
 **Repo:**
 
@@ -191,7 +191,7 @@ Write a function `def change_brightness(image, max_delta):` that randomly change
     
     $ ./4-main.py
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/10/3001edca791b04ccde934a44fe3095b1e544a425.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20201110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201110T105028Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=c125a408d4a77343d1cac4385be80bf07b0bfa2843835f4c9e3ed499fbde67c1)
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/4-main.png" width="350" height="350"/> 
 
 **Repo:**
 
@@ -214,7 +214,7 @@ Write a function `def change_hue(image, delta):` that changes the hue of an imag
     
     $ ./5-main.py
 
-![](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2020/10/a1e9035f2000dbb5649032ac424d1ebe980e8a07.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20201110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20201110T105028Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=0e63c48754c5a59a50d0f4eac224d48d186bdcb9b89d5a0005296d429f871775)
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/5-main.png" width="350" height="350"/> 
 
 **Repo:**
 
@@ -259,7 +259,7 @@ Write a function `def pca_color(image, alphas):` that performs PCA color augment
     
     $ ./100-main.py
 
-<img src="https://github.com/svelezg/linear_transforms/blob/master/0x03-data_augmentation/images/100-main.png" width="350" height="350"/> 
+<img src="https://github.com/svelezg/holbertonschool-machine_learning/blob/master/pipeline/0x03-data_augmentation/images/100-main.png" width="350" height="350"/> 
 
 **Repo:**
 
