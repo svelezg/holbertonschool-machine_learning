@@ -1,0 +1,130 @@
+import pathlib
+
+from transformers import AutoTokenizer, TFAutoModelForQuestionAnswering
+import tensorflow as tf
+import operator
+
+
+def semantic_score(sentence, reference):
+    """
+    :param question: string containing the question to answer
+    :param reference: string containing the reference document
+    from which to find the answer
+    :return: string containing the answer
+    """
+
+    tokenizer = AutoTokenizer.from_pretrained(
+        "bert-large-uncased-whole-word-masking-finetuned-squad")
+    model = TFAutoModelForQuestionAnswering.from_pretrained(
+        "bert-large-uncased-whole-word-masking-finetuned-squad",
+        return_dict=True)
+
+    inputs = tokenizer(sentence, reference, add_special_tokens=True,
+                       return_tensors="tf")
+    input_ids = inputs["input_ids"].numpy()[0]
+
+    text_tokens = tokenizer.convert_ids_to_tokens(input_ids)
+    output = model(inputs)
+
+    # Get the most likely beginning of answer with the argmax of the score
+    answer_start = tf.argmax(
+        output.start_logits, axis=1
+    ).numpy()[0]
+    start = output.start_logits[:, answer_start].numpy()[0]
+    # print('start:', answer_start, start)
+
+    # Get the most likely end of answer with the argmax of the score
+    answer_end = (
+            tf.argmax(output.end_logits, axis=1) + 1
+    ).numpy()[0]
+    end = output.start_logits[:, answer_end].numpy()[0]
+    # print('end:', answer_end, end)
+
+    return start, end
+
+
+def semantic_search(corpus_path, sentence):
+    """
+    performs semantic search on a corpus of documents
+    :param corpus_path: path to the corpus of reference documents
+    on which to perform semantic search
+    :param sentence: sentence from which to perform semantic search
+    :return: reference text of the document most similar to sentence
+    """
+    my_dict = {}
+    for path in pathlib.Path(corpus_path).iterdir():
+        if path.is_file():
+            # print('\n', '\n', '*******************\n', path)
+
+            with open(path, 'rb') as f:
+                reference = f.read().decode(errors='replace')
+                start, end = semantic_score(sentence, reference)
+                avg = (start + end) / 2
+                # print('avg:', avg)
+
+                my_dict[path] = avg
+                f.close()
+
+    my_doc = max(my_dict.items(), key=operator.itemgetter(1))[0]
+    with open(my_doc, 'rb') as f:
+        reference = f.read().decode(errors='replace')
+
+    return reference
+
+
+def question_answer(question, reference):
+    """
+    :param question: string containing the question to answer
+    :param reference: string containing the reference document
+    from which to find the answer
+    :return: string containing the answer
+    """
+
+    tokenizer = AutoTokenizer.from_pretrained(
+        "bert-large-uncased-whole-word-masking-finetuned-squad")
+    model = TFAutoModelForQuestionAnswering.from_pretrained(
+        "bert-large-uncased-whole-word-masking-finetuned-squad",
+        return_dict=True)
+
+    inputs = tokenizer(question, reference, add_special_tokens=True,
+                       return_tensors="tf")
+    input_ids = inputs["input_ids"].numpy()[0]
+
+    text_tokens = tokenizer.convert_ids_to_tokens(input_ids)
+    output = model(inputs)
+
+    # Get the most likely beginning of answer with the argmax of the score
+    answer_start = tf.argmax(
+        output.start_logits, axis=1
+    ).numpy()[0]
+
+    # Get the most likely end of answer with the argmax of the score
+    answer_end = (
+            tf.argmax(output.end_logits, axis=1) + 1
+    ).numpy()[0]
+
+    answer = tokenizer.convert_tokens_to_string(
+        tokenizer.convert_ids_to_tokens(input_ids[answer_start:answer_end]))
+
+    return answer
+
+
+def qa_bot(corpus_path):
+    """
+    answers questions from multiple reference texts
+    :param corpus_path: path to the corpus of reference documents
+    """
+    while 1:
+        question = input("Q: ")
+
+        if question.lower() in ['exit', 'goodbye', 'bye']:
+            print("A: Goodbye")
+            exit(0)
+        else:
+            reference = semantic_search(corpus_path, question)
+            answer = question_answer(question, reference)
+
+            if answer not in ['[CLS]']:
+                print("A:", answer)
+            else:
+                print("A:", 'Sorry, I do not understand your question.')
